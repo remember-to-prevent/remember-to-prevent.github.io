@@ -1,0 +1,433 @@
+import type { TimelineData } from "@/content/types";
+
+/**
+ * Remember to Prevent — Chapter 01
+ * WWII interactive timeline (Task 4-b3 rewrite).
+ *
+ * 17 events, 1931–1945, bilingual (EN / 繁體中文), sorted by ISO date.
+ * Disputed figures are expressed as documented ranges (Nanjing, Sook Ching,
+ * Hiroshima–Nagasaki); documented figures are presented as documented
+ * (Babi Yar 33,771; Auschwitz ≥1.1 million).
+ * All events cite the file's own registry (ids prefixed "b3-").
+ */
+export const timelineWwii: TimelineData = {
+  id: "wwii",
+  title: { en: "Interactive Timeline: 1931–1945", zh: "互動時間軸：1931–1945" },
+  subtitle: {
+    en: "Select an event to read its context and sources.",
+    zh: "點選任一事件，閱讀其背景與出處。",
+  },
+  events: [
+    {
+      id: "manchuria",
+      date: "1931-09-18",
+      dateLabel: { en: "18 September 1931", zh: "1931年9月18日" },
+      title: { en: "The Mukden Incident: Japan seizes Manchuria", zh: "九一八事變（滿洲事變）：日本奪取滿洲" },
+      place: { en: "Mukden (Shenyang), Northeast China", zh: "中國東北瀋陽（奉天）" },
+      summary: {
+        en: "Kwantung Army officers stage a railway explosion as a pretext and seize Manchuria; the League of Nations fails to reverse the aggression.",
+        zh: "關東軍軍官自導自演鐵路爆炸作為藉口，奪取滿洲；國際聯盟未能扭轉侵略。",
+      },
+      detail: {
+        en: "On the night of 18 September 1931, officers of Japan's Kwantung Army detonated a small charge on the South Manchuria Railway near Mukden (today Shenyang) and blamed Chinese saboteurs. The staged incident — remembered in China as the September 18 Incident and in Japan as the Manchurian Incident — became the pretext for the seizure of Manchuria. Within five months Japan controlled the whole region, and in 1932 it established the puppet state of Manchukuo, installing Puyi, the last emperor of the Qing dynasty, at its head. China appealed to the League of Nations; its Lytton Report refused to recognize the conquest, and Japan replied in 1933 by walking out of the League. No sanction followed and no power intervened — the first demonstration of the decade's lesson that aggression left unanswered invites further aggression. Many historians trace the Pacific war, and the fourteen-year conflict in China, to this night.",
+        zh: "1931年9月18日夜，日本關東軍軍官在瀋陽（奉天）附近的南滿鐵路上自行引爆一枚小型炸藥，卻誣指中國人破壞鐵路。這場自導自演的事變——在中國記憶中是九一八事變，日本稱滿洲事變——成為日軍奪取滿洲的藉口。不到五個月，日本控制全境，並於1932年扶植傀儡政權「滿洲國」，由清朝末代皇帝溥儀出任執政。中國訴諸國際聯盟；李頓報告書拒絕承認此一佔領，日本則於1933年退出國聯作為回應。制裁始終未曾認真討論，也沒有任何強權出手干預——侵略若未受遏止，必將招致更大的侵略，這是1930年代的第一課。許多歷史學家將太平洋戰爭、乃至長達十四年的中日衝突，追溯至這一夜。",
+      },
+      theater: "asia-pacific",
+      citationIds: ["b3-britannica-wwii"],
+    },
+    {
+      id: "abyssinia",
+      date: "1935-10-03",
+      dateLabel: { en: "3 October 1935", zh: "1935年10月3日" },
+      title: { en: "Italy invades Abyssinia (Ethiopia)", zh: "義大利入侵阿比西尼亞（衣索比亞）" },
+      place: { en: "Ethiopia (Abyssinia)", zh: "阿比西尼亞（今衣索比亞）" },
+      summary: {
+        en: "Fascist Italy invades Ethiopia from its colonies; the League of Nations votes limited sanctions but never stops the aggression.",
+        zh: "義大利法西斯政權自殖民地入侵衣索比亞；國際聯盟表決有限制裁，卻始終未能阻止侵略。",
+      },
+      detail: {
+        en: "On 3 October 1935 Italy invaded Ethiopia — then usually called Abyssinia, a member of the League of Nations — from the colonies of Eritrea and Italian Somaliland. The League declared Italy the aggressor and voted limited sanctions, but an oil embargo and the closure of the Suez Canal were never imposed, and trade with non-member states continued. Italian forces used overwhelming air power and mustard gas against soldiers and civilians alike; Addis Ababa fell in May 1936 and the country was annexed into 'Italian East Africa'. Emperor Haile Selassie warned the League in June 1936: 'It is us today. It will be you tomorrow.' The sanctions were lifted within weeks. The crisis discredited the League, drew Mussolini toward alliance with Hitler, and taught the dictators that the democracies would pay almost any price to avoid war.",
+        zh: "1935年10月3日，義大利自厄利垂亞與義屬索馬利蘭向衣索比亞（時稱阿比西尼亞，國際聯盟會員國）發動入侵。國聯認定義大利為侵略者並表決通過有限制裁，但石油禁運與封鎖蘇伊士運河始終未曾實施，與非會員國的貿易也未中斷。義軍以壓倒性的空中武力與芥子毒氣對付軍隊與平民；1936年5月阿迪斯阿貝巴陷落，衣索比亞被併入「義屬東非」。1936年6月，海爾·塞拉西皇帝在國聯大會提出警告：「今天是我們，明天就輪到你們。」數週之後，制裁即遭解除。這場危機使國聯威信盡失，將墨索里尼推向與希特勒結盟，也讓獨裁者們更加確信：民主國家為避免戰爭，幾乎願意付出任何代價。",
+      },
+      theater: "africa",
+      citationIds: ["b3-britannica-wwii"],
+    },
+    {
+      id: "marco-polo-bridge",
+      date: "1937-07-07",
+      dateLabel: { en: "7 July 1937", zh: "1937年7月7日" },
+      title: { en: "Marco Polo Bridge Incident: full-scale war in China", zh: "盧溝橋事變：中日全面戰爭爆發" },
+      place: { en: "Wanping, near Beiping (Beijing)", zh: "北平（今北京）近郊宛平" },
+      summary: {
+        en: "A night firefight at the Marco Polo Bridge escalates into full-scale war between Japan and China — the beginning of the eight-year War of Resistance.",
+        zh: "盧溝橋的一場夜間駁火升高為中日全面戰爭——八年全面抗戰於焉展開。",
+      },
+      detail: {
+        en: "On the night of 7 July 1937, Japanese troops on exercises near the Marco Polo Bridge demanded entry to the walled town of Wanping to search for a missing soldier; a firefight followed, and local truces could not contain it. Both sides reinforced, fighting spread to Beiping and Tianjin, and in August the war reached Shanghai. Chiang Kai-shek had resolved to resist: in his Lushan statement he declared that 'neither North nor South, young nor old' would be exempt from the duty of resistance. The war that began here lasted eight years, merged into the wider Second World War after December 1941, and cost China military and civilian deaths estimated from well over ten million to around twenty million. Within months the capital Nanjing fell — to the massacre recorded in the next event. A clash beside a stone bridge thus opened what would be the longest theater of the Second World War.",
+        zh: "1937年7月7日夜，在盧溝橋附近演習的日軍以一名失蹤士兵為由，要求進入宛平縣城搜索，隨後爆發駁火；局部停火無法控制局面。雙方不斷增兵，戰火蔓延至北平與天津，8月更延燒到上海。蔣介石已決心抵抗，在廬山談話中宣示抗戰「地無分南北，年無分老幼」。這場戰爭持續八年，於1941年12月之後併入更廣闊的第二次世界大戰，中國軍民死亡估計自一千餘萬人至約兩千萬人不等。數月之間，首都南京陷落——隨之而來的是下一則事件所記的大屠殺。一座石橋旁的衝突，就此開啟了第二次世界大戰中為時最長的戰場。",
+      },
+      theater: "asia-pacific",
+      citationIds: ["b3-britannica-wwii"],
+    },
+    {
+      id: "nanjing-massacre",
+      date: "1937-12-13",
+      dateLabel: { en: "December 1937 – January 1938", zh: "1937年12月至1938年1月" },
+      title: { en: "The Nanjing Massacre", zh: "南京大屠殺" },
+      place: { en: "Nanjing, China", zh: "中國南京" },
+      summary: {
+        en: "Japanese forces capture the Chinese capital and kill prisoners of war and civilians over roughly six weeks; death estimates range from tens of thousands to about 300,000.",
+        zh: "日軍攻陷中國首都，約六週間屠殺戰俘與平民；死亡人數估計自數萬人至約三十萬人不等。",
+      },
+      detail: {
+        en: "Nanjing fell on 13 December 1937, and for roughly six weeks Japanese troops killed Chinese prisoners of war and civilians on a large scale, alongside widespread rape, looting and arson. A small international committee led by the German businessman John Rabe had declared a neutral Safety Zone that sheltered an estimated 200,000 or more civilians, even as killing continued around it. The death toll remains contested to this day: the International Military Tribunal for the Far East accepted estimates above 200,000, Chinese official findings put the number at approximately 300,000, and some Japanese estimates are far lower — in the tens of thousands. The gap reflects real evidentiary disputes — burial records, survivor testimony, the classification of military and civilian dead — but no serious scholarship denies that a massacre of prisoners and civilians on a large scale took place. Recognition of the atrocity, its scale and its framing remains a live issue between Japan and China and across the region's historical memory.",
+        zh: "南京於1937年12月13日陷落，此後約六週間，日軍大規模屠殺中國戰俘與平民，並伴隨廣泛的強暴、劫掠與縱火。由德國商人約翰·拉貝等人組成的國際委員會劃設中立「安全區」，庇護估計逾二十萬名平民，而區外的殺戮持續進行。死亡人數至今仍有爭議：遠東國際軍事法庭採認的估計超過二十萬人，中國官方認定約三十萬人，部分日本方面的估計則遠低於此、在數萬人之譜。差異反映證據與方法上的真實分歧——埋屍紀錄、倖存者證詞、軍人與平民的界定等——但沒有嚴謹的歷史研究否認大規模屠殺戰俘與平民確曾發生。這場暴行的承認、規模與詮釋，至今仍是中日之間乃至區域歷史記憶的敏感議題。",
+      },
+      theater: "asia-pacific",
+      citationIds: ["b3-britannica-nanjing", "b3-britannica-wwii"],
+    },
+    {
+      id: "munich",
+      date: "1938-09-30",
+      dateLabel: { en: "29–30 September 1938", zh: "1938年9月29日至30日" },
+      title: { en: "The Munich Agreement", zh: "慕尼黑協定" },
+      place: { en: "Munich, Germany", zh: "德國慕尼黑" },
+      summary: {
+        en: "Britain, France, Italy and Germany agree to transfer Czechoslovakia's Sudetenland to Germany; Czechoslovakia is not at the table.",
+        zh: "英、法、義、德四國同意將捷克斯洛伐克的蘇台德地區轉讓德國；捷克代表不在會議桌上。",
+      },
+      detail: {
+        en: "At a one-day conference in Munich on 29–30 September 1938, Hitler, Mussolini, Chamberlain and Daladier agreed that Czechoslovakia must cede its Sudeten borderlands — fortifications, industry and some three million people — to Germany; no Czechoslovak representative was allowed in the room. Britain and France, which months earlier had pledged to defend Czechoslovakia's borders, presented the terms to Prague as an ultimatum; Poland and Hungary seized further slices within weeks. Chamberlain returned home claiming 'peace for our time'; six months later, in March 1939, Germany occupied what remained of the country and turned Bohemia and Moravia into a protectorate. Munich became the emblem of appeasement — the attempt to buy peace by meeting an aggressor's stated demands. The lesson drawn from it is still contested: that concession to aggression invites more aggression, and at the same time that the 'Munich analogy' can be used to make any compromise look like surrender — a warning historians repeat whenever the comparison is invoked to justify a war.",
+        zh: "1938年9月29日至30日，希特勒、墨索里尼、張伯倫與達拉第在慕尼黑的一日會議中議定：捷克斯洛伐克必須將蘇台德邊境地區——邊防要塞、工業與約三百萬人口——割讓給德國；捷克代表始終不得進入會場。數月前才承諾保衛捷克疆界的英法兩國，把條件當作最後通牒交付布拉格；數週之內，波蘭與匈牙利也各自奪走部分領土。張伯倫回國後宣稱帶回了「我們這個時代的和平」；僅僅六個月後的1939年3月，德國便佔領捷克其餘領土，將波希米亞與摩拉維亞改為保護國。慕尼黑自此成為綏靖政策的象徵——以滿足侵略者的索求換取和平的嘗試。人們從中記取的教訓至今仍在辯論：對侵略讓步將招致更大的侵略；與此同時，「慕尼黑類比」也可能被用來把一切妥協都描繪成投降——每當這個類比被用來合理化戰爭時，歷史學家總會重申這層警訊。",
+      },
+      theater: "europe",
+      citationIds: ["b3-britannica-wwii"],
+    },
+    {
+      id: "nazi-soviet-pact-poland",
+      date: "1939-08-23",
+      dateLabel: { en: "23 August – 17 September 1939", zh: "1939年8月23日至9月17日" },
+      title: { en: "The Nazi–Soviet Pact and the invasion of Poland", zh: "德蘇互不侵犯條約與入侵波蘭" },
+      place: { en: "Moscow; Poland", zh: "莫斯科；波蘭" },
+      summary: {
+        en: "Germany and the USSR sign a non-aggression pact whose secret protocol divides Eastern Europe; eight days later Germany invades Poland, and Britain and France declare war.",
+        zh: "德蘇簽署互不侵犯條約，秘密議定書瓜分東歐；八天後德國入侵波蘭，英法對德宣戰。",
+      },
+      detail: {
+        en: "On 23 August 1939 in Moscow, the foreign ministers Ribbentrop and Molotov signed a German–Soviet non-aggression pact — publicly a ten-year pledge of neutrality, secretly a partition plan for Eastern Europe. The secret protocol assigned Finland, Estonia, Latvia and Bessarabia to the Soviet sphere and divided Poland itself along the Narew, Vistula and San rivers. Freed from the fear of a two-front war, Germany invaded Poland at dawn on 1 September 1939 behind a staged border provocation, combining tanks, aircraft and the deliberate bombing of cities in what the press called Blitzkrieg. Britain and France, honoring their guarantees, declared war on 3 September but could not relieve Poland; the following June France fell after the evacuation from Dunkirk, and the Battle of Britain was fought in the air. On 17 September the Red Army occupied eastern Poland under the secret protocol; between the two occupation regimes the country lost its independence, at Katyn in 1940 the Soviets murdered some 22,000 captured Polish officers and officials, and its Jewish citizens were forced into ghettos. The pact was torn apart when Germany invaded the USSR on 22 June 1941 (Operation Barbarossa), opening the largest and deadliest theater of the war.",
+        zh: "1939年8月23日，里賓特洛甫與莫洛托夫在莫斯科簽署德蘇互不侵犯條約——公開是十年的互不侵犯承諾，秘密的卻是瓜分東歐的計畫。秘密議定書將芬蘭、愛沙尼亞、拉脫維亞與比薩拉比亞劃入蘇聯勢力範圍，並沿納雷夫河、維斯瓦河與桑河瓜分波蘭。解除兩線作戰的後顧之憂後，德國於9月1日拂曉在一場偽造的邊境挑釁掩護下入侵波蘭，以戰車、飛機與對城市的蓄意轟炸，打出世人所稱的閃電戰。英法基於保證於9月3日對德宣戰，卻無力馳援波蘭；翌年6月，法國在敦克爾克大撤退後淪陷，不列顛空戰隨即在英倫上空展開。9月17日，紅軍依秘密議定書進佔波蘭東部；在兩個佔領政權之間，波蘭失去獨立——1940年蘇聯在卡廷屠殺約兩萬兩千名被俘波蘭軍官與官員，猶太居民則被趕入猶太區。1941年6月22日，德國發動巴巴羅薩作戰入侵蘇聯，條約就此撕毀；戰爭中規模最大、奪走最多生命的東線戰場於焉開啟。",
+      },
+      theater: "europe",
+      citationIds: ["b3-avalon-pact", "b3-ushmm-learn"],
+    },
+    {
+      id: "babi-yar",
+      date: "1941-09-29",
+      dateLabel: { en: "29–30 September 1941", zh: "1941年9月29日至30日" },
+      title: { en: "The Babi Yar massacre", zh: "巴比雅爾大屠殺" },
+      place: { en: "Kyiv (Kiev), Soviet Ukraine", zh: "蘇聯烏克蘭基輔" },
+      summary: {
+        en: "German shooting squads murder 33,771 Jews at a ravine in Kyiv over two days — among the largest single massacres of the Holocaust.",
+        zh: "德軍行刑隊兩天內在基輔的溝壑槍殺33,771名猶太人——大屠殺中規模最大的單一屠殺之一。",
+      },
+      detail: {
+        en: "Three months after the invasion of the Soviet Union, German forces occupied Kyiv on 19 September 1941. Days later, posters ordered the city's Jews to assemble with documents and belongings for 'resettlement'; on 29–30 September, Sonderkommando 4a of Einsatzgruppe C, with police battalions and local auxiliaries, marched the men, women and children to the Babi Yar ravine and shot them. The figure of 33,771 comes from the perpetrators' own situation report — a bureaucratic count of mass murder. In the two years that followed, Roma, Soviet prisoners of war, Ukrainian nationalists and psychiatric patients were also killed there, bringing the dead at the site toward 100,000. Across the occupied East, shootings like this one murdered well over a million Jews — the 'Holocaust by bullets' that ran alongside the death camps. In Soviet times the Jewish identity of the victims was not officially memorialized; the ravine remains a place of contested remembrance.",
+        zh: "德軍入侵蘇聯三個月後，於1941年9月19日佔領基輔。數日之後，市內張貼告示，命令猶太居民攜帶證件與行李集合「遷居」；9月29日至30日，別動隊C支隊轄下的特別分隊4a會同警察營與當地輔助人員，將男女老幼押往巴比雅爾溝壑槍殺。33,771這個數字出自加害者自己的情勢報告——一份官僚式的屠殺統計。此後兩年，羅姆人、蘇軍戰俘、烏克蘭民族主義者與精神病患也在此遇害，該地的總遇害人數估計接近十萬。在整個德佔東歐，類似的集體槍決奪走逾百萬猶太人的生命——與滅絕營並行的「子彈大屠殺」。蘇聯時期，此地受害者的猶太身分未獲正式銘記；這道溝壑至今仍是記憶政治的爭議之地。",
+      },
+      theater: "europe",
+      citationIds: ["b3-yadvashem-babi-yar", "b3-ushmm-learn"],
+    },
+    {
+      id: "pearl-harbor",
+      date: "1941-12-07",
+      dateLabel: { en: "7 December 1941", zh: "1941年12月7日" },
+      title: { en: "Pearl Harbor: the United States enters the war", zh: "珍珠港事件：美國參戰" },
+      place: { en: "Pearl Harbor, Oahu, Hawaii", zh: "夏威夷歐胡島珍珠港" },
+      summary: {
+        en: "Carrier aircraft of the Imperial Japanese Navy strike the U.S. Pacific Fleet, killing more than 2,400 Americans; the United States enters the war.",
+        zh: "日本海軍艦載機突襲美國太平洋艦隊，逾2,400名美國人喪生；美國自此參戰。",
+      },
+      detail: {
+        en: "At about 7:50 on the morning of 7 December 1941, some 350 aircraft from six Japanese carriers attacked the U.S. Pacific Fleet at anchor and the airfields of Oahu; Tokyo had intended a declaration of war to arrive first, but decoding delays meant the note was delivered after the bombs had fallen. Eight battleships were sunk or damaged and 2,403 Americans were killed; the fleet carriers, at sea that morning, escaped — and would decide the coming war in the Pacific. On 8 December the U.S. Congress declared war on Japan, and Germany and Italy declared war on the United States on 11 December, fusing the European and Asian conflicts into a genuinely global war. President Roosevelt called 7 December 'a date which will live in infamy'. In the months that followed, fear and prejudice — not evidence of disloyalty — drove the forced removal of some 120,000 people of Japanese ancestry, most of them U.S. citizens, into internment camps; the government formally apologized in 1988. The attack also opened Japan's wager that a crippled fleet would accept a negotiated peace — a wager settled at Midway seven months later.",
+        zh: "1941年12月7日清晨約7時50分，六艘日本航空母艦的約350架艦載機，突襲停泊中的美國太平洋艦隊與歐胡島各機場；東京原打算讓宣戰照會先行送達，但譯電延誤使照會在炸彈落下之後才遞交。八艘戰艦沉沒或受損，2,403名美國人喪生；當天出海的航空母艦倖免於難——日後正是它們決定了太平洋戰局。12月8日，美國國會對日宣戰；德義兩國於12月11日對美宣戰，歐亞兩場衝突自此合流為真正的全球戰爭。羅斯福總統稱12月7日是「永遠蒙羞的日子」。其後數月，恐懼與偏見——而非不忠的證據——使約十二萬名日裔居民（多數為美國公民）被強迫遷入拘留營；美國政府於1988年正式道歉。這場攻擊同時開啟了日本的豪賭：以為癱瘓艦隊就能換來美國接受談判和平——七個月後，這場賭局在中途島見分曉。",
+      },
+      theater: "asia-pacific",
+      citationIds: ["b3-nww2m-pearl", "b3-britannica-wwii"],
+    },
+    {
+      id: "wannsee",
+      date: "1942-01-20",
+      dateLabel: { en: "20 January 1942", zh: "1942年1月20日" },
+      title: { en: "The Wannsee Conference", zh: "萬湖會議" },
+      place: { en: "Wannsee, Berlin", zh: "柏林萬湖" },
+      summary: {
+        en: "Fifteen senior officials meet for about ninety minutes at a Berlin villa to coordinate the 'Final Solution' — the deportation and murder of Europe's Jews.",
+        zh: "十五名高級官員在柏林郊外別墅開會約九十分鐘，協調「最終解決方案」——遣送與屠殺歐洲猶太人。",
+      },
+      detail: {
+        en: "On 20 January 1942, SS Obergruppenführer Reinhard Heydrich convened fifteen officials of the SS, police, party and ministries at a lakeside villa in Wannsee to coordinate what the minutes call the 'Final Solution of the Jewish Question'. The meeting lasted about an hour and a half; its business was organizational — who would deport whom, from which countries, under whose authority. The surviving protocol, prepared by Adolf Eichmann and discovered only in 1947, lists roughly eleven million Jews as targets, including the Jews of countries not yet under German control. Mass murder was already underway — the shootings of the Einsatzgruppen, the gas vans of Chełmno — and within months the death camps of Bełżec, Sobibór and Treblinka began operating, while Auschwitz-Birkenau expanded into the largest killing center. Wannsee is studied today as the emblem of bureaucratic complicity: genocide sustained by timetables, rail capacity and administrators doing their jobs, as much as by ideology.",
+        zh: "1942年1月20日，海德里希在柏林市郊萬湖畔的別墅，召集十五名黨衛隊、警察、黨務與部會官員，協調會議紀錄所稱的「猶太人問題的最終解決方案」。會議歷時約九十分鐘；處理的是組織事務——由誰遣送、自哪些國家遣送、歸誰管轄。由艾希曼整理、遲至1947年才被發現的萬湖會議紀錄，列出約一千一百萬名作為對象的猶太人，其中包括尚未落入德國掌控的國家的猶太人口。此時集體屠殺早已進行——別動隊的槍決、海烏姆諾的毒氣車——數月之內，貝烏熱茨、索比堡與特雷布林卡滅絕營相繼運轉，奧斯威辛—比克瑙則擴建成最大的殺戮中心。今日的萬湖會議是官僚共犯結構的象徵：支撐種族滅絕的不僅是意識形態，還有時刻表、鐵路運量，以及把屠殺當成日常公務處理的行政官員。",
+      },
+      theater: "europe",
+      citationIds: ["b3-avalon-wannsee", "b3-ushmm-learn"],
+    },
+    {
+      id: "singapore",
+      date: "1942-02-15",
+      dateLabel: { en: "15 February 1942", zh: "1942年2月15日" },
+      title: { en: "The fall of Singapore", zh: "新加坡陷落" },
+      place: { en: "Singapore", zh: "新加坡" },
+      summary: {
+        en: "After a seventy-day campaign down Malaya, Japan captures the 'Gibraltar of the East'; some 80,000 Commonwealth and local troops surrender — the largest capitulation in British history.",
+        zh: "日軍席捲馬來亞七十天後攻陷「東方直布羅陀」；約八萬名大英國協與本地部隊投降——英國史上最大規模的投降。",
+      },
+      detail: {
+        en: "Japan's 25th Army landed in Malaya and Thailand on the same night that carrier aircraft struck Pearl Harbor, and drove down the peninsula in seventy days. Two of Britain's newest capital ships, sent to intercept without air cover, were sunk by Japanese aircraft on 10 December 1941 — a warning of what naval air power now meant. On 8 February 1942 Japanese troops crossed the Johore Strait onto Singapore island; a week later Lieutenant-General Arthur Percival surrendered with some 80,000 British, Indian, Australian and local troops. Churchill called it 'the worst disaster' in British military history; the fall shattered British prestige in Asia, pushed Australia to look to the United States, and fed the movements that ended colonial rule after the war. The occupation that followed brought the Sook Ching massacres of ethnic Chinese — with death estimates ranging from a few thousand to Singapore's official figure of 25,000–50,000 — and forced labor on the Burma 'Death Railway', on which more than 12,000 of some 60,000 Allied prisoners died, alongside tens of thousands of Asian laborers.",
+        zh: "日本第25軍於1941年12月8日——與珍珠港遇襲同一夜——登陸馬來亞與泰國，以七十天時間席捲馬來半島。英國兩艘最新主力艦在缺乏空中掩護下奉命攔截，12月10日即遭日機擊沉——海軍航空兵力時代的清楚警訊。1942年2月8日，日軍渡過柔佛海峽登上新加坡島；一週之後，白思華中將率約八萬名英國、印度、澳洲與本地部隊投降。邱吉爾稱之為英國軍事史上「最慘重的災難」；新加坡陷落重創英國在亞洲的威望，促使澳洲轉而倚重美國，也助長了戰後終結殖民統治的潮流。隨後的佔領時期，日軍對華人社群發動「肅清」屠殺——死亡估計自數千人至新加坡官方估計的兩萬五千至五萬人不等——並強徵勞工修築泰緬「死亡鐵路」，約六萬名盟軍戰俘中逾一萬兩千人死亡，亞洲勞工的死亡更以數萬計。",
+      },
+      theater: "asia-pacific",
+      citationIds: ["b3-britannica-wwii"],
+    },
+    {
+      id: "midway",
+      date: "1942-06-04",
+      dateLabel: { en: "4–7 June 1942", zh: "1942年6月4日至7日" },
+      title: { en: "The Battle of Midway", zh: "中途島海戰" },
+      place: { en: "Midway Atoll, Pacific Ocean", zh: "太平洋中途島環礁" },
+      summary: {
+        en: "U.S. carrier aircraft sink four Japanese fleet carriers in three days; the initiative in the Pacific war begins to change hands.",
+        zh: "美軍艦載機三日內擊沉四艘日本艦隊航艦；太平洋戰爭的主導權開始易手。",
+      },
+      detail: {
+        en: "In June 1942 Japan sent a vast fleet to seize Midway Atoll, hoping to lure out and destroy the remaining American carriers; but U.S. codebreakers had reconstructed Japanese plans in advance, and an ambush was prepared. On 4 June, American dive bombers caught three Japanese carriers as their decks were crowded with rearming aircraft and set them ablaze within minutes; a fourth was disabled by a follow-up strike that afternoon. Japan lost all four carriers — Akagi, Kaga, Sōryū and Hiryū, veterans of the attack on Pearl Harbor — together with a heavy cruiser and some 250 aircraft; the United States lost the carrier Yorktown and about 150 aircraft. Around 3,000 Japanese sailors and airmen died, including some 110 experienced pilots whom Japan could not quickly replace. Six months after Pearl Harbor, the United States took the strategic initiative and landed at Guadalcanal in August; Midway is remembered as the battle where intelligence, timing and luck met industrial reality.",
+        zh: "1942年6月，日本派出龐大艦隊意圖攻佔中途島環礁，誘殲僅存的美軍航艦；但美軍密碼破譯人員已事先還原日方計畫，佈好了埋伏。6月4日，美軍俯衝轟炸機趁三艘日本航艦甲板上滿是換裝彈藥的飛機之際發動突襲，數分鐘內使其陷入火海；第四艘於當天下午的後續攻擊中喪失戰力。日本折損全部四艘航艦——曾參與突襲珍珠港的赤城、加賀、蒼龍與飛龍——外加一艘重巡洋艦與約250架飛機；美軍則損失約克鎮號航艦與約150架飛機。約三千名日本官兵陣亡，其中包括約110名難以替代的資深飛行員。珍珠港事件六個月後，美軍奪得戰略主動權，並於8月登陸瓜達康納爾；中途島海戰從此被記住為情報、時機與運氣遇上工業實力的轉折點。",
+      },
+      theater: "asia-pacific",
+      citationIds: ["b3-britannica-wwii"],
+    },
+    {
+      id: "stalingrad",
+      date: "1943-02-02",
+      dateLabel: { en: "2 February 1943", zh: "1943年2月2日" },
+      title: { en: "Stalingrad: the German surrender", zh: "史達林格勒戰役：德軍投降" },
+      place: { en: "Stalingrad (Volgograd), Soviet Union", zh: "蘇聯史達林格勒（今伏爾加格勒）" },
+      summary: {
+        en: "The five-month battle for the city on the Volga ends with the destruction of the German Sixth Army — the turning point of the war in the East.",
+        zh: "伏爾加河畔這座城市長達五個月的會戰，以德國第六軍團覆滅告終——東線戰爭的轉捩點。",
+      },
+      detail: {
+        en: "From August 1942 the German Sixth Army fought the Soviets for Stalingrad — a city bearing Stalin's name — block by block and ruin by ruin. In November, the Soviet Operation Uranus encircled some 250,000 Axis troops; Hitler forbade a breakout, and the promised airlift never delivered more than a fraction of the food, fuel and ammunition needed. Starving and freezing, the pocket shrank through the winter; Field Marshal Paulus surrendered with the southern remnant on 31 January 1943, and the last resistance ended on 2 February. About 91,000 prisoners were taken, of whom only some 5,000–6,000 ever returned to Germany, most as late as 1955; Axis casualties across the campaign ran to roughly 800,000, with Soviet losses higher still. Together with the defeat in North Africa that May, Stalingrad put Germany on the strategic defensive for the rest of the war; the regime answered with Goebbels' call for 'total war' and three days of national mourning.",
+        zh: "自1942年8月起，德國第六軍團在這座以史達林為名的城市，與蘇軍逐街逐巷、逐屋逐樓地爭奪。11月，蘇軍的天王星行動包圍約25萬名軸心國部隊；希特勒禁止突圍，承諾的空運補給始終遠低於所需的糧食、燃料與彈藥。飢寒交迫的包圍圈在嚴冬中不斷縮小；保盧斯元帥於1943年1月31日率南面殘部投降，最後的抵抗於2月2日結束。約九萬一千名德軍被俘，其中僅約五千至六千人重返德國，多數遲至1955年；整場戰役軸心國傷亡約80萬人，蘇軍損失更為慘重。加上同年5月的北非潰敗，史達林格勒迫使德國在剩餘的戰爭中轉入戰略守勢；納粹政權的回應，是戈培爾「總體戰」的號召與連續三天的國喪。",
+      },
+      theater: "europe",
+      citationIds: ["b3-britannica-wwii"],
+    },
+    {
+      id: "warsaw-ghetto-uprising",
+      date: "1943-04-19",
+      dateLabel: { en: "19 April – 16 May 1943", zh: "1943年4月19日至5月16日" },
+      title: { en: "The Warsaw Ghetto Uprising", zh: "華沙猶太區起義" },
+      place: { en: "Warsaw, German-occupied Poland", zh: "德佔波蘭華沙" },
+      summary: {
+        en: "Several hundred Jewish fighters attack the German forces sent to complete the ghetto's destruction; the uprising becomes the emblem of Jewish resistance.",
+        zh: "數百名猶太戰士襲擊前來完成清剿猶太區的德軍；這場起義成為猶太抵抗的象徵。",
+      },
+      detail: {
+        en: "In the summer of 1942, some 250,000–300,000 of the ghetto's Jews were deported to Treblinka and murdered within weeks; a remnant of tens of thousands, many in hiding, remained. When SS and police units entered on 19 April 1943 — the eve of Passover — to complete the liquidation, several hundred young fighters of the Jewish Combat Organization and the Jewish Military Union attacked them with pistols, grenades and a handful of rifles. The Germans, under SS General Jürgen Stroop, burned the ghetto street by street; the fighting lasted until 16 May, when Stroop blew up the Great Synagogue and reported the Jewish quarter destroyed. More than 10,000 Jews died in the fighting and the sweeps that followed, and roughly 42,000 more were deported to the death camps. Mordechai Anielewicz, the 24-year-old commander of the Jewish Combat Organization, died in his command bunker in May; a few fighters escaped through the sewers. The largest single act of Jewish resistance in the war, the uprising inspired revolts in other ghettos and in the death camps, and is commemorated each April, around Israel's Holocaust Remembrance Day.",
+        zh: "1942年夏天，猶太區內約二十五萬至三十萬人被遣往特雷布林卡滅絕營，數週之內遇害；僅餘數萬人，許多藏匿於密室之中。1943年4月19日逾越節前夕，當黨衛隊與警察部隊開入猶太區執行最終清剿時，數百名「猶太戰鬥組織」與「猶太軍事聯盟」的年輕戰士，以手槍、手榴彈與少量步槍迎擊。在施特羅普將軍指揮下，德軍逐街縱火焚燒猶太區；戰鬥持續至5月16日，施特羅普炸毀大猶太會堂，並回報猶太區已不復存在。逾一萬名猶太人死於戰鬥與其後的搜捕，另有約四萬兩千人被遣往滅絕營。24歲的猶太戰鬥組織指揮官莫迪凱·安尼列維奇於5月戰死於指揮碉堡；少數戰士經由下水道逃出。作為戰時規模最大的單一猶太抵抗行動，這場起義啟發了其他猶太區與滅絕營內的反抗，每年4月——以色列大屠殺紀念日前後——都受到紀念。",
+      },
+      theater: "europe",
+      citationIds: ["b3-ushmm-learn", "b3-yadvashem-holocaust"],
+    },
+    {
+      id: "d-day",
+      date: "1944-06-06",
+      dateLabel: { en: "6 June 1944", zh: "1944年6月6日" },
+      title: { en: "D-Day: the Normandy landings", zh: "諾曼第登陸" },
+      place: { en: "Normandy, France", zh: "法國諾曼第" },
+      summary: {
+        en: "Nearly 160,000 Allied troops land on five Normandy beaches behind a fleet of almost 7,000 vessels; the liberation of Western Europe begins.",
+        zh: "近十六萬名盟軍在近七千艘艦艇支援下，登陸諾曼第五處灘頭；西歐的解放自此展開。",
+      },
+      detail: {
+        en: "On 6 June 1944 — chosen after a narrow window of weather opened, and masked by a deception campaign that kept German reserves watching Calais — more than 132,000 soldiers crossed the Channel to five beaches code-named Utah, Omaha, Gold, Juno and Sword, while some 24,000 airborne troops dropped inland overnight. At Omaha, American infantry met withering fire and suffered around 2,400 casualties; across the day, Allied casualties were roughly 10,000, with more than 4,000 killed. The lodgment held, the armies broke out of the hedgerow country within weeks, and Paris was liberated on 25 August 1944. In the East, the Soviet Operation Bagration, launched that June, shattered German Army Group Centre; Germany was now fighting on fronts it could no longer reinforce. Liberation could not undo the murder already accomplished: even as the Allies fought inland, trains were still carrying the Jews of Hungary to Auschwitz. D-Day remains the largest seaborne invasion in history — and, for the soldiers who crossed that morning, simply the day they had to survive.",
+        zh: "1944年6月6日——因一線放晴的空檔而成行，並以欺敵計畫牽制德軍預備隊於加萊——逾13萬2千名士兵渡海登陸猶他、奧馬哈、黃金、朱諾與寶劍五處灘頭，另有約2萬4千名傘兵於前夜空降內陸。在奧馬哈灘頭，美軍步兵遭遇猛烈火力，傷亡約2,400人；當日盟軍整體傷亡約一萬人，逾4,000人陣亡。灘頭陣地守住後，盟軍數週內突破樹籬地帶，巴黎於1944年8月25日解放。在東線，蘇軍於同年6月發動巴格拉基昂行動，重創德國中央集團軍；德國自此在無力增援的戰線上作戰。解放無法挽回既成的屠殺：盟軍在諾曼第內陸奮戰之際，載運匈牙利猶太人的列車仍在駛向奧斯威辛。諾曼第登陸至今仍是史上最大規模的海上登陸作戰——而對當晨渡海的士兵而言，那只是他們必須活下來的一天。",
+      },
+      theater: "europe",
+      citationIds: ["b3-britannica-wwii"],
+    },
+    {
+      id: "auschwitz",
+      date: "1945-01-27",
+      dateLabel: { en: "27 January 1945", zh: "1945年1月27日" },
+      title: { en: "The liberation of Auschwitz", zh: "奧斯威辛解放" },
+      place: { en: "Oświęcim, occupied Poland", zh: "德佔波蘭奧什維辛" },
+      summary: {
+        en: "Soviet soldiers find about 7,000 surviving prisoners; at least 1.1 million people, most of them Jews, had been murdered at the camp complex.",
+        zh: "蘇軍發現約7,000名倖存囚犯；這座營區中至少有110萬人遇害，其中大多數是猶太人。",
+      },
+      detail: {
+        en: "On 27 January 1945, soldiers of the Soviet 322nd Rifle Division entered Auschwitz and found about 7,000 prisoners too weak to be moved, among them some 600 children. Days earlier the SS had driven some 56,000 prisoners out of the complex on death marches westward; thousands died of cold, exhaustion and shooting on the way. At least 1.1 million people had been murdered at Auschwitz-Birkenau — most of them Jews deported from every corner of occupied Europe and killed in the gas chambers on arrival; the dead also included tens of thousands of Poles, Roma and Soviet prisoners of war. The liberators found storehouses of victims' belongings — hair, spectacles, shoes — and crematoria that the retreating SS had tried to blow up. Poland turned the site into a state museum in 1947, and the United Nations designated 27 January as International Holocaust Remembrance Day in 2005. Auschwitz remains the emblem of industrialized mass murder — and the reason the date is kept.",
+        zh: "1945年1月27日，蘇軍第322步槍師的士兵進入奧斯威辛，發現約7,000名虛弱得無法移動的囚犯，其中包括約600名兒童。數日之前，黨衛隊已將約5萬6千名囚犯驅往西行的死亡行軍；成千上萬人死於嚴寒、力竭或槍殺。在奧斯威辛—比克瑙，至少110萬人遇害——其中大多數是自德佔歐洲各地被遣來、抵達即遭毒氣殺害的猶太人；死者還包括數以萬計的波蘭人、羅姆人與蘇軍戰俘。解放者發現存放受害者遺物——頭髮、眼鏡、鞋子——的庫房，以及撤退的黨衛隊試圖炸毀的焚化爐。波蘭於1947年將此地闢為國家博物館；聯合國於2005年將1月27日定為國際大屠殺紀念日。奧斯威辛自此成為工業化集體謀殺的代名詞——也是這個日子被銘記的原因。",
+      },
+      theater: "europe",
+      citationIds: ["b3-nww2m-auschwitz", "b3-yadvashem-holocaust"],
+    },
+    {
+      id: "ve-day",
+      date: "1945-05-08",
+      dateLabel: { en: "8 May 1945", zh: "1945年5月8日" },
+      title: { en: "VE Day: the end of the war in Europe", zh: "歐戰勝利日" },
+      place: { en: "Europe", zh: "歐洲" },
+      summary: {
+        en: "Germany surrenders unconditionally, effective 8 May 1945; Europe counts its dead, its displaced and its ruins.",
+        zh: "德國無條件投降，於1945年5月8日生效；歐洲清點死者、流離與廢墟。",
+      },
+      detail: {
+        en: "Germany's surrender was signed at Reims on 7 May and ratified in Berlin late on 8 May, taking effect at 23:01 Central European Time — which is why the West marks 8 May and Russia 9 May. Hitler had killed himself in his Berlin bunker on 30 April as Soviet troops fought through the city; the war in Europe ended with the country occupied and in ruins. Celebrations filled the streets of London, Paris and New York — while the war in Asia continued for three more months, and millions of displaced persons, freed forced laborers and camp survivors were still on the roads of Europe. Deaths in the European war ran to the tens of millions: the Soviet Union lost more than 20 million people, Poland about six million — including some three million Polish Jews — close to a fifth of its pre-war population. The reckoning began at once: the United Nations Charter was signed in June 1945, and the trial of the major war criminals opened at Nuremberg that November. Europe's division into occupation zones — and soon into blocs — was already drawn on the ground.",
+        zh: "德國的投降文件於5月7日在蘭斯簽署，5月8日深夜在柏林完成批准，於中歐時間23時01分生效——這正是西方在5月8日、俄羅斯在5月9日紀念勝利的原因。4月30日，蘇軍在柏林巷戰之際，希特勒在地堡中自殺；歐戰在德國全境遭佔領、城市化為廢墟之際落幕。倫敦、巴黎與紐約街頭一片歡騰——但亞洲的戰事還要再打三個月，而數以百萬計的流離者、獲釋的強制勞工與集中營倖存者，仍流浪在歐洲的道路上。歐戰死亡人數以千萬計：蘇聯損失逾兩千萬人，波蘭約六百萬人——包括約三百萬波蘭猶太人——接近戰前人口的五分之一。清算隨即展開：聯合國憲章於1945年6月簽署，紐倫堡主要戰犯審判於11月開庭。歐洲由盟國分區佔領——並迅速凝結為兩大集團——的新版圖，已在地面上畫定。",
+      },
+      theater: "europe",
+      citationIds: ["b3-britannica-wwii"],
+    },
+    {
+      id: "hiroshima-nagasaki",
+      date: "1945-08-06",
+      dateLabel: { en: "6 & 9 August 1945", zh: "1945年8月6日與9日" },
+      title: { en: "Hiroshima and Nagasaki: Japan surrenders", zh: "廣島與長崎：日本投降" },
+      place: { en: "Hiroshima and Nagasaki, Japan", zh: "日本廣島與長崎" },
+      summary: {
+        en: "U.S. atomic bombs destroy the two cities; by the end of 1945 the death toll is estimated at 110,000–210,000. Japan surrenders — announced 15 August, signed 2 September.",
+        zh: "美軍原子彈毀滅兩座城市；至1945年底死亡估計約11萬至21萬人。日本投降——8月15日宣布，9月2日簽署降書。",
+      },
+      detail: {
+        en: "On 6 August 1945 an American B-29 dropped a uranium bomb on Hiroshima; three days later a plutonium bomb fell on Nagasaki — and the Soviet Union, keeping its Yalta pledge, declared war on Japan and invaded Manchuria the same day. The blasts, firestorms and radiation killed an estimated 110,000–210,000 people by the end of 1945, most of them civilians, and radiation sickness and cancers continued to kill for decades. How much the bombs — as against Soviet entry, blockade and other factors — weighed in Japan's surrender remains a genuine, unresolved debate among historians. Japan announced acceptance of the Allied terms on 15 August, when the Emperor's recorded voice — heard for the first time by his subjects — told the nation the war was lost; the formal Instrument of Surrender was signed aboard the USS Missouri in Tokyo Bay on 2 September 1945, ending the Second World War. By common estimates the war had killed between 65 and 85 million people, the majority of them civilians, and the nuclear age it opened has shadowed world politics ever since. In Hiroshima and Nagasaki the hibakusha — the surviving victims of the bombings — carried illness and stigma for the rest of their lives, and the two cities' peace ceremonies continue today.",
+        zh: "1945年8月6日，一架美軍B-29轟炸機在廣島投下鈾彈；三天後，鈽彈落於長崎——同一天，履行雅爾達承諾的蘇聯對日宣戰，揮兵進入滿洲。爆炸、大火與輻射至1945年底估計造成約11萬至21萬人死亡，其中大多數是平民，其後數十年，輻射病與癌症仍不斷奪走生命。原子彈、蘇聯參戰、海上封鎖等因素各占多少比重，歷史學家至今仍在辯論；這場辯論真實存在，也尚無定論。8月15日，日本宣布接受盟國條件，天皇錄製的聲音——臣民第一次聽到——告知國民戰敗；1945年9月2日，正式降書於東京灣的密蘇里號戰艦上簽署，第二次世界大戰結束。依常見估計，這場戰爭奪走約6,500萬至8,500萬人的生命，其中大多數是平民；它開啟的核子時代，自此籠罩世局。在廣島與長崎，「被爆者」——原爆倖存者——終生承受病痛與污名；兩座城市的和平紀念儀式延續至今。",
+      },
+      theater: "asia-pacific",
+      citationIds: ["b3-nww2m-atomic", "b3-britannica-wwii"],
+    },
+  ],
+  citations: [
+    {
+      id: "b3-britannica-wwii",
+      publisher: "Encyclopædia Britannica",
+      title: { en: "World War II", zh: "第二次世界大戰" },
+      url: "https://www.britannica.com/event/World-War-II",
+      kind: "reference",
+      accessDate: "2026-10-17",
+      note: {
+        en: "Automated check blocked (HTTP 403, bot protection); canonical institutional URL; browser verification pending.",
+        zh: "自動檢查遭封鎖（HTTP 403，防爬蟲）；此為該機構正式頁面；待瀏覽器驗證。",
+      },
+    },
+    {
+      id: "b3-britannica-nanjing",
+      publisher: "Encyclopædia Britannica",
+      title: { en: "Nanjing Massacre", zh: "南京大屠殺" },
+      url: "https://www.britannica.com/event/Nanjing-Massacre",
+      kind: "reference",
+      accessDate: "2026-10-17",
+      note: {
+        en: "Automated check blocked (HTTP 403, bot protection); canonical institutional URL; browser verification pending.",
+        zh: "自動檢查遭封鎖（HTTP 403，防爬蟲）；此為該機構正式頁面；待瀏覽器驗證。",
+      },
+    },
+    {
+      id: "b3-ushmm-learn",
+      publisher: "United States Holocaust Memorial Museum",
+      title: { en: "Learn — Holocaust education resources", zh: "學習資源——認識大屠殺" },
+      url: "https://www.ushmm.org/learn",
+      kind: "institutional",
+      accessDate: "2026-10-17",
+      note: {
+        en: "Verified HTTP 200 on 2026-10-17.",
+        zh: "2026-10-17 驗證 HTTP 200。",
+      },
+    },
+    {
+      id: "b3-yadvashem-holocaust",
+      publisher: "Yad Vashem",
+      title: { en: "The Holocaust — thematic and chronological narrative", zh: "大屠殺——專題與時序敘事" },
+      url: "https://www.yadvashem.org/holocaust/about.html",
+      kind: "institutional",
+      accessDate: "2026-10-17",
+      note: {
+        en: "Verified HTTP 200 on 2026-10-17.",
+        zh: "2026-10-17 驗證 HTTP 200。",
+      },
+    },
+    {
+      id: "b3-yadvashem-babi-yar",
+      publisher: "Yad Vashem",
+      title: { en: "Babi Yar and the Jews of Kiev — learning environment", zh: "巴比雅爾與基輔的猶太人——教學資源" },
+      url: "https://www.yadvashem.org/education/educational-materials/lesson-plans/babi-yar.html",
+      kind: "institutional",
+      accessDate: "2026-10-17",
+      note: {
+        en: "Verified HTTP 200 on 2026-10-17.",
+        zh: "2026-10-17 驗證 HTTP 200。",
+      },
+    },
+    {
+      id: "b3-avalon-wannsee",
+      publisher: "The Avalon Project, Yale Law School",
+      title: { en: "Wannsee Protocol, 20 January 1942", zh: "萬湖會議議定書（1942年1月20日）" },
+      url: "https://avalon.law.yale.edu/imt/wannsee.asp",
+      kind: "primary",
+      accessDate: "2026-10-17",
+      note: {
+        en: "Verified HTTP 200 on 2026-10-17.",
+        zh: "2026-10-17 驗證 HTTP 200。",
+      },
+    },
+    {
+      id: "b3-avalon-pact",
+      publisher: "The Avalon Project, Yale Law School",
+      title: { en: "Treaty of Non-Aggression Between Germany and the USSR, 23 August 1939", zh: "德蘇互不侵犯條約（1939年8月23日）" },
+      url: "https://avalon.law.yale.edu/20th_century/nonagres.asp",
+      kind: "primary",
+      accessDate: "2026-10-17",
+      note: {
+        en: "Verified HTTP 200 on 2026-10-17.",
+        zh: "2026-10-17 驗證 HTTP 200。",
+      },
+    },
+    {
+      id: "b3-nww2m-auschwitz",
+      publisher: "The National WWII Museum",
+      title: { en: "The Liberation of Auschwitz", zh: "奧斯威辛的解放" },
+      url: "https://www.nationalww2museum.org/war/articles/liberation-auschwitz",
+      kind: "institutional",
+      accessDate: "2026-10-17",
+      note: {
+        en: "Verified HTTP 200 on 2026-10-17.",
+        zh: "2026-10-17 驗證 HTTP 200。",
+      },
+    },
+    {
+      id: "b3-nww2m-atomic",
+      publisher: "The National WWII Museum",
+      title: { en: "The Atomic Bombings of Japan", zh: "對日本的原子彈轟炸" },
+      url: "https://www.nationalww2museum.org/war/topics/atomic-bombings-japan",
+      kind: "institutional",
+      accessDate: "2026-10-17",
+      note: {
+        en: "Verified HTTP 200 on 2026-10-17.",
+        zh: "2026-10-17 驗證 HTTP 200。",
+      },
+    },
+    {
+      id: "b3-nww2m-pearl",
+      publisher: "The National WWII Museum",
+      title: { en: "Pearl Harbor Attack, December 7, 1941", zh: "珍珠港攻擊（1941年12月7日）" },
+      url: "https://www.nationalww2museum.org/war/topics/pearl-harbor-december-7-1941",
+      kind: "institutional",
+      accessDate: "2026-10-17",
+      note: {
+        en: "Verified HTTP 200 on 2026-10-17.",
+        zh: "2026-10-17 驗證 HTTP 200。",
+      },
+    },
+  ],
+};

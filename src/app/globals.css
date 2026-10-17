@@ -1,0 +1,281 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ------------------------------------------------------------------ */
+/* Remember to Prevent — Chapter 01 · editorial design system           */
+/* Palette: near-black charcoal · archival paper · muted bronze · poppy */
+/* One curated light "paper" scheme; charcoal passages are part of the  */
+/* story design (documented decision — no dark-mode toggle).            */
+/* ------------------------------------------------------------------ */
+
+@theme {
+  --color-paper: #f4efe5;
+  --color-paper-raised: #fbf8f1;
+  --color-paper-deep: #e9e1cf;
+  --color-ink: #211e1a;
+  --color-ink-raised: #2c2823;
+  --color-ink-soft: #3a352e;
+  --color-stone: #6b6357;
+  --color-stone-light: #a69c8c;
+  --color-bronze: #96774c;
+  --color-bronze-deep: #6f5735;
+  --color-bronze-light: #c2a878;
+  --color-poppy: #a93f2b;
+  --color-poppy-deep: #7e2d26;
+
+  --animate-poppy-bloom: poppy-bloom 900ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  --animate-cue-float: cue-float 2.2s ease-in-out infinite;
+}
+
+@keyframes poppy-bloom {
+  from {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes cue-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+@theme inline {
+  --font-display: var(--font-fraunces), var(--font-noto-serif-tc), "Georgia", "Times New Roman", serif;
+  --font-serif: var(--font-newsreader), var(--font-noto-serif-tc), "Georgia", "Times New Roman", serif;
+  --font-sans: var(--font-inter), var(--font-noto-sans-tc), ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.25rem;
+  --background: #f4efe5;
+  --foreground: #211e1a;
+  --card: #fbf8f1;
+  --card-foreground: #211e1a;
+  --popover: #fbf8f1;
+  --popover-foreground: #211e1a;
+  --primary: #211e1a;
+  --primary-foreground: #f4efe5;
+  --secondary: #e9e1cf;
+  --secondary-foreground: #211e1a;
+  --muted: #e9e1cf;
+  --muted-foreground: #6b6357;
+  --accent: #e9e1cf;
+  --accent-foreground: #211e1a;
+  --destructive: #a93f2b;
+  --border: #dcd3bf;
+  --input: #dcd3bf;
+  --ring: #96774c;
+  --chart-1: #96774c;
+  --chart-2: #a93f2b;
+  --chart-3: #6b6357;
+  --chart-4: #c2a878;
+  --chart-5: #7e2d26;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-serif antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  /* Sticky-header-safe anchor jumps */
+  section[id],
+  [id^="ch"] {
+    scroll-margin-top: 6.5rem;
+  }
+  ::selection {
+    background: #c2a878;
+    color: #211e1a;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Editorial utilities                                                  */
+/* ------------------------------------------------------------------ */
+
+/* Skip link — visually hidden until keyboard focus */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  transform: translateY(-200%);
+  transition: transform 150ms ease;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  padding: 0.625rem 1rem;
+  border-radius: 4px;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* Scroll-reveal (progressive enhancement; content visible without JS/motion) */
+.rtp-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.rtp-reveal[data-revealed="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Thin, elegant scrollbars for nav rows and long lists */
+.nav-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-bronze) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+.nav-scroll::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
+}
+.nav-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--color-bronze) 70%, transparent);
+  border-radius: 999px;
+}
+.nav-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.rtp-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--color-bronze-light) 80%, transparent) transparent;
+  /* Contain paint so clipped list content does not leak into document scroll
+     height (Chrome treats internal scroller overflow as root scrollable
+     otherwise, leaving a large blank gap below the footer). */
+  contain: paint;
+  overscroll-behavior: contain;
+}
+.rtp-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.rtp-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--color-bronze-light) 85%, transparent);
+  border-radius: 8px;
+}
+.rtp-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Archival paper grain (subtle, applied on charcoal passages) */
+.rtp-grain {
+  position: relative;
+  isolation: isolate;
+}
+.rtp-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+}
+
+/* Editorial drop cap for English lead paragraphs */
+.rtp-dropcap::first-letter {
+  font-family: var(--font-display);
+  font-weight: 600;
+  float: left;
+  font-size: 3.05em;
+  line-height: 0.82;
+  padding-right: 0.14em;
+  padding-top: 0.08em;
+  color: var(--color-bronze-deep);
+}
+
+/* Timeline rail */
+.rtp-rail {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--color-bronze-light) 6%,
+    var(--color-bronze-light) 94%,
+    transparent
+  );
+}
+
+/* Chart tap hint chip */
+.rtp-hint {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--color-stone);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion — every feature stays operable, nothing animates      */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .rtp-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
