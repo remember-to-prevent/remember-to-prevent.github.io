@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import {
   Fraunces,
   Inter,
@@ -45,6 +45,11 @@ const notoSansTC = Noto_Sans_TC({
   display: "swap",
   preload: false,
 });
+
+export const viewport: Viewport = {
+  // Matches the site-wide dark reading theme (warm charcoal).
+  themeColor: "#211e1a",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://remember-to-prevent.github.io/"),

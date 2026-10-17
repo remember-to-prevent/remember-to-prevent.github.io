@@ -35,7 +35,7 @@ export function CitationNote({
           <Popover key={id} open={openId === id} onOpenChange={(o) => setOpenId(o ? id : null)}>
             <PopoverTrigger
               asChild
-              className="rounded-sm text-bronze-deep underline decoration-bronze-light decoration-dotted underline-offset-2 hover:text-poppy focus-visible:text-poppy"
+              className="rounded-sm text-bronze-light underline decoration-bronze-light decoration-dotted underline-offset-2 hover:text-poppy focus-visible:text-poppy"
             >
               <button
                 type="button"
@@ -47,22 +47,22 @@ export function CitationNote({
             <PopoverContent
               side="top"
               align="center"
-              className="w-80 border-bronze/40 bg-paper-raised p-4 text-ink shadow-xl"
+              className="w-80 border-bronze/40 bg-ink-raised p-4 text-paper shadow-xl"
             >
-              <p className="font-sans text-xs font-semibold tracking-wide text-bronze-deep uppercase">
+              <p className="font-sans text-xs font-semibold tracking-wide text-bronze-light uppercase">
                 {t(ui.common.sources)}
               </p>
               <p className="mt-1 font-serif text-sm leading-snug font-medium">
                 {citation.title[lang]}
               </p>
-              <p className="mt-1 font-sans text-xs text-stone">
+              <p className="mt-1 font-sans text-xs text-stone-light">
                 {citation.publisher} · {citation.kind}
               </p>
-              <p className="mt-1 font-sans text-xs text-stone">
+              <p className="mt-1 font-sans text-xs text-stone-light">
                 {t(ui.common.accessed)}: {citation.accessDate}
               </p>
               {citation.note ? (
-                <p className="mt-2 font-sans text-xs leading-snug text-stone italic">
+                <p className="mt-2 font-sans text-xs leading-snug text-stone-light italic">
                   {citation.note[lang]}
                 </p>
               ) : null}
@@ -98,7 +98,7 @@ export function SourceList({
     <dl className={cn("grid gap-3 sm:grid-cols-2", className)}>
       {registry.map((c, i) => (
         <div key={c.id} className="border-l-2 border-bronze-light pl-3">
-          <dt className="font-sans text-xs font-semibold text-bronze-deep">
+          <dt className="font-sans text-xs font-semibold text-bronze-light">
             [{i + 1}] {c.publisher}
           </dt>
           <dd className="mt-0.5 font-serif text-sm leading-snug">

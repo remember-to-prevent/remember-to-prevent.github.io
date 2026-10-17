@@ -15,6 +15,8 @@ export const ui = {
     wordmarkChapter: { en: "Chapter 01", zh: "第一章" } satisfies Localized,
     navLabel: { en: "Chapter navigation", zh: "章節導覽" } satisfies Localized,
     navMore: { en: "Scroll chapters", zh: "捲動章節" } satisfies Localized,
+    navScrollLeft: { en: "Scroll chapter navigation left", zh: "向左捲動章節導覽" } satisfies Localized,
+    navScrollRight: { en: "Scroll chapter navigation right", zh: "向右捲動章節導覽" } satisfies Localized,
     langLabel: { en: "Language", zh: "語言" } satisfies Localized,
     langEn: "EN",
     langZh: "繁中",
@@ -111,13 +113,35 @@ export const ui = {
     sideHeader: { en: "Alignment", zh: "陣營" } satisfies Localized,
     noteHeader: { en: "Note", zh: "說明" } satisfies Localized,
     tapCue: {
-      en: "Tap a country to see its alignment",
-      zh: "點選國家以查看陣營",
+      en: "Tap a country to see its details in the panel below",
+      zh: "點選國家，於下方面板查看詳情",
+    } satisfies Localized,
+    selectCountryLabel: { en: "Select a country", zh: "選擇國家" } satisfies Localized,
+    selectCountryPlaceholder: { en: "— Choose from the list —", zh: "— 從清單選擇 —" } satisfies Localized,
+    clearSelection: { en: "Clear selection", zh: "清除選取" } satisfies Localized,
+    selectedCountryLabel: { en: "Selected", zh: "已選取" } satisfies Localized,
+    panelEmpty: {
+      en: "Select a country on the map or from the list to read its wartime status, dates, and context.",
+      zh: "點選地圖上的國家或從清單選擇，即可閱讀其戰時狀態、日期與背景。",
+    } satisfies Localized,
+    panelNoRecord: {
+      en: "No classification is recorded for this territory in this simplified snapshot. The base map uses modern boundaries for orientation only.",
+      zh: "此簡化時點圖並未記錄這個領土的分類。底圖僅以現代疆界作定位之用。",
+    } satisfies Localized,
+    panelContextLabel: { en: "Context", zh: "背景說明" } satisfies Localized,
+    panelMethodLabel: { en: "Methodology", zh: "方法說明" } satisfies Localized,
+    panelMethodNote: {
+      en: "Displayed on modern boundaries for orientation — historical borders differed; see the methodology note below the map.",
+      zh: "以現代疆界示意——歷史疆界與此不同；詳見地圖下方的方法說明。",
     } satisfies Localized,
   },
   chart: {
     rangeNote: { en: "Range of estimates", zh: "估計區間" } satisfies Localized,
     millions: { en: "millions", zh: "百萬" } satisfies Localized,
+    scaleCaption: {
+      en: "Bars span documented min–max estimates · unit:",
+      zh: "長條橫跨文獻記載之最小至最大估計 · 單位：",
+    } satisfies Localized,
     dataNote: {
       en: "Estimates differ across sources; bars show documented ranges, not precise counts.",
       zh: "各來源估計不盡相同；長條呈現文獻區間，並非精確計數。",

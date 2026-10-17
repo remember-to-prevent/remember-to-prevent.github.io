@@ -5,9 +5,12 @@
 
 /* ------------------------------------------------------------------ */
 /* Remember to Prevent — Chapter 01 · editorial design system           */
-/* Palette: near-black charcoal · archival paper · muted bronze · poppy */
-/* One curated light "paper" scheme; charcoal passages are part of the  */
-/* story design (documented decision — no dark-mode toggle).            */
+/* Site-wide dark reading theme (Task 07 refinement):                   */
+/*   deep warm charcoal page · slightly lighter raised cards            */
+/*   soft off-white text · muted stone secondary                        */
+/*   restrained bronze/gold accents · poppy-red reserved for meaning    */
+/* Narrative rhythm: chapters step between ink / ink-deep / ink-warm    */
+/* so six dark chapters still breathe, and the archival grain stays.    */
 /* ------------------------------------------------------------------ */
 
 @theme {
@@ -15,6 +18,8 @@
   --color-paper-raised: #fbf8f1;
   --color-paper-deep: #e9e1cf;
   --color-ink: #211e1a;
+  --color-ink-deep: #1b1815;
+  --color-ink-warm: #26211c;
   --color-ink-raised: #2c2823;
   --color-ink-soft: #3a352e;
   --color-stone: #6b6357;
@@ -80,33 +85,34 @@
   --color-chart-5: var(--chart-5);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
+  --radius-lg: calc(var(--radius));
   --radius-xl: calc(var(--radius) + 4px);
 }
 
 :root {
   --radius: 0.25rem;
-  --background: #f4efe5;
-  --foreground: #211e1a;
-  --card: #fbf8f1;
-  --card-foreground: #211e1a;
-  --popover: #fbf8f1;
-  --popover-foreground: #211e1a;
-  --primary: #211e1a;
-  --primary-foreground: #f4efe5;
-  --secondary: #e9e1cf;
-  --secondary-foreground: #211e1a;
-  --muted: #e9e1cf;
-  --muted-foreground: #6b6357;
-  --accent: #e9e1cf;
-  --accent-foreground: #211e1a;
+  /* Dark reading theme: warm charcoal surfaces, soft off-white text. */
+  --background: #211e1a;
+  --foreground: #f4efe5;
+  --card: #2c2823;
+  --card-foreground: #f4efe5;
+  --popover: #2c2823;
+  --popover-foreground: #f4efe5;
+  --primary: #c2a878;
+  --primary-foreground: #211e1a;
+  --secondary: #3a352e;
+  --secondary-foreground: #f4efe5;
+  --muted: #3a352e;
+  --muted-foreground: #a69c8c;
+  --accent: #3a352e;
+  --accent-foreground: #f4efe5;
   --destructive: #a93f2b;
-  --border: #dcd3bf;
-  --input: #dcd3bf;
-  --ring: #96774c;
+  --border: #4a4335;
+  --input: #4a4335;
+  --ring: #c2a878;
   --chart-1: #96774c;
   --chart-2: #a93f2b;
-  --chart-3: #6b6357;
+  --chart-3: #a69c8c;
   --chart-4: #c2a878;
   --chart-5: #7e2d26;
 }
@@ -150,12 +156,13 @@
   z-index: 100;
   transform: translateY(-200%);
   transition: transform 150ms ease;
-  background: var(--color-ink);
+  background: var(--color-ink-raised);
   color: var(--color-paper);
   padding: 0.625rem 1rem;
   border-radius: 4px;
   font-family: var(--font-sans);
   font-size: 0.875rem;
+  border: 1px solid color-mix(in oklab, var(--color-bronze) 60%, transparent);
 }
 .skip-link:focus-visible {
   transform: translateY(0);
@@ -211,7 +218,7 @@
   background: transparent;
 }
 
-/* Archival paper grain (subtle, applied on charcoal passages) */
+/* Archival paper grain (subtle, on charcoal passages) */
 .rtp-grain {
   position: relative;
   isolation: isolate;
@@ -225,7 +232,7 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
 }
 
-/* Editorial drop cap for English lead paragraphs */
+/* Editorial drop cap for English lead paragraphs (dark theme: light bronze) */
 .rtp-dropcap::first-letter {
   font-family: var(--font-display);
   font-weight: 600;
@@ -234,7 +241,7 @@
   line-height: 0.82;
   padding-right: 0.14em;
   padding-top: 0.08em;
-  color: var(--color-bronze-deep);
+  color: var(--color-bronze-light);
 }
 
 /* Timeline rail */
@@ -253,7 +260,7 @@
   font-family: var(--font-sans);
   font-size: 0.75rem;
   letter-spacing: 0.02em;
-  color: var(--color-stone);
+  color: var(--color-stone-light);
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;

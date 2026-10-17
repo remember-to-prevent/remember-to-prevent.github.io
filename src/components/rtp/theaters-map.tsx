@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { EChartsCoreOption } from "echarts/core";
 import type { Topology } from "topojson-specification";
 import topologyData from "world-atlas/countries-110m.json";
 import { feature } from "topojson-client";
+import { splitAntimeridian } from "@/lib/antimeridian";
 import type { MapSnapshot, MapParticipant } from "@/content/types";
 import { mapWwi, mapWwii } from "@/content/data/theaters";
 import { ui } from "@/content/ui";
@@ -18,24 +19,32 @@ type WorldFeature = {
   type: "Feature";
   id?: string | number;
   properties: { name?: string } | null;
+  geometry: { type: "Polygon" | "MultiPolygon"; coordinates: unknown };
 };
 type WorldCollection = { type: "FeatureCollection"; features: WorldFeature[] };
 
-const world = feature(
+const rawWorld = feature(
   topology,
   topology.objects.countries,
 ) as unknown as WorldCollection;
 
+// Task 03 — repair the base geometry: cut antimeridian-crossing rings
+// (Russia / Fiji) so no full-width horizontal streaks are drawn, then
+// exclude Antarctica for readability. See src/lib/antimeridian.ts.
+const repairedWorld = splitAntimeridian(rawWorld as never) as unknown as WorldCollection;
+const world: WorldCollection = {
+  type: "FeatureCollection",
+  features: repairedWorld.features.filter((f) => String(f.id) !== "010"),
+};
+
 // ISO numeric id → ECharts region name (resolved from the same dataset we render).
 const idToName = new Map<string, string>();
-const nameToId = new Map<string, string>();
 for (const f of world.features) {
   if (f.id == null) continue;
   const id = String(f.id);
   const name = f.properties?.name ?? "";
   if (name) {
     idToName.set(id, name);
-    nameToId.set(name, id);
   }
 }
 
@@ -53,18 +62,46 @@ const SIDE_COLORS_INK = {
   neutral: "#3a352e",
 } as const;
 
+const SIDE_SELECTED_INK = {
+  allies: "#d3ab6e",
+  central: "#c25238",
+  axis: "#c25238",
+  neutral: "#57503f",
+} as const;
+
+/** Alignment label for a side (module-level so memoization stays clean). */
+function sideLabelOf(
+  side: MapParticipant["side"],
+  t: (value: import("@/content/types").Localized) => string,
+) {
+  return side === "allies"
+    ? t(ui.map.legendAllies)
+    : side === "central"
+      ? t(ui.map.legendCentral)
+      : side === "axis"
+        ? t(ui.map.legendAxis)
+        : t(ui.map.legendNeutral);
+}
+
 /**
- * The world at war — simplified alliance snapshots (WWI mid-1917 / WWII late-1942)
- * on a modern-borders base map, with an explicit disclosure and a table
- * alternative for keyboard and screen-reader users.
+ * The world at war — simplified alliance snapshots (WWI mid-1917 / WWII
+ * late-1942) on a modern-borders base map, with an explicit disclosure.
+ *
+ * Interaction model (Task 04, following the Global Food Crisis pattern):
+ * clicking/tapping a country SELECTS it and a persistent information panel
+ * below the map shows its alignment, dates, and context; a country list
+ * (native select) provides the same access for keyboard and small-screen
+ * users; hover tooltips remain only as brief supplementary help.
  */
-export function TheatersMap({ tone = "paper" }: { tone?: "paper" | "ink" }) {
+export function TheatersMap({ tone = "ink" }: { tone?: "paper" | "ink" }) {
   const { t, lang } = useLang();
   const ink = tone === "ink";
   const [war, setWar] = useState<"wwi" | "wwii">("wwi");
   const [showTable, setShowTable] = useState(false);
+  const [selected, setSelected] = useState<string | null>(null);
 
   const snapshot: MapSnapshot = war === "wwi" ? mapWwi : mapWwii;
+  const enemySide: "central" | "axis" = war === "wwi" ? "central" : "axis";
 
   const nameToParticipant = useMemo(() => {
     const map = new Map<string, MapParticipant>();
@@ -75,34 +112,34 @@ export function TheatersMap({ tone = "paper" }: { tone?: "paper" | "ink" }) {
     return map;
   }, [snapshot]);
 
-  const enemySide: "central" | "axis" = war === "wwi" ? "central" : "axis";
+  const sideLabel = (side: MapParticipant["side"]) => sideLabelOf(side, t);
 
   const option = useMemo<EChartsCoreOption>(() => {
     const colors = ink ? SIDE_COLORS_INK : SIDE_COLORS;
+    const selectedColors = SIDE_SELECTED_INK;
     return {
       backgroundColor: "transparent",
       animation: true,
       animationDuration: 600,
+      animationDurationUpdate: 300,
       tooltip: {
         trigger: "item" as const,
-        backgroundColor: ink ? "#2C2823" : "#FBF8F1",
-        borderColor: ink ? "#96774C66" : "#DCD3BF",
+        backgroundColor: "#2C2823",
+        borderColor: "#96774C66",
         borderWidth: 1,
-        padding: [10, 14],
+        padding: [8, 12],
         textStyle: {
-          color: ink ? "#F4EFE5" : "#211E1A",
+          color: "#F4EFE5",
           fontFamily: "var(--font-inter), var(--font-noto-sans-tc), sans-serif",
           fontSize: 12,
         },
-        extraCssText: "max-width: 260px; white-space: normal;",
+        extraCssText: "max-width: 220px; white-space: normal;",
         formatter: (params: Record<string, unknown>) => {
           const name = String(params.name ?? "");
+          if (!name) return "";
           const p = nameToParticipant.get(name);
-          if (!p) return "";
-          return `
-            <div style="font-weight:600; margin-bottom:2px;">${p.name[lang]}</div>
-            <div style="margin-top:4px; opacity:0.9; line-height:1.5;">${p.note[lang]}</div>
-          `;
+          if (!p) return `<div>${name}</div>`;
+          return `<div style="font-weight:600;">${p.name[lang]}</div><div style="margin-top:2px; opacity:0.85;">${sideLabelOf(p.side, t)}</div>`;
         },
       },
       series: [
@@ -112,7 +149,16 @@ export function TheatersMap({ tone = "paper" }: { tone?: "paper" | "ink" }) {
           roam: false,
           aspectScale: 0.9,
           selectedMode: false,
-          zoom: 1.05,
+          zoom: 1,
+          // Fill the container edge-to-edge — the default series padding
+          // shrinks the world into the middle ~80% of the canvas and leaves
+          // large empty margins (the "unsatisfactory proportions" defect).
+          // The container height is sized to the map aspect so nothing is
+          // cropped: world bbox 360°×139.5° × aspectScale 0.9 ≈ 2.32:1.
+          left: 0,
+          top: 0,
+          right: 0,
+          bottom: 0,
           itemStyle: {
             areaColor: colors.neutral,
             borderColor: ink ? "#F4EFE5" : "#211E1A",
@@ -121,39 +167,76 @@ export function TheatersMap({ tone = "paper" }: { tone?: "paper" | "ink" }) {
           },
           emphasis: {
             label: { show: false },
-            itemStyle: { areaColor: ink ? "#c2a878" : "#c2a878" },
+            itemStyle: { areaColor: ink ? "#6b5f43" : "#c2a878" },
           },
           data: snapshot.participants
-            .map((p): { name: string; value: number; itemStyle: { areaColor: string } } | null => {
+            .map((p): { name: string; value: number; itemStyle: { areaColor: string; borderColor?: string; borderWidth?: number } } | null => {
               const name = idToName.get(p.id);
               if (!name) return null;
+              const isSel = name === selected;
               return {
                 name,
                 value: 1,
-                itemStyle: { areaColor: colors[p.side] },
+                itemStyle: isSel
+                  ? {
+                      areaColor: selectedColors[p.side],
+                      borderColor: "#F4EFE5",
+                      borderWidth: 1.4,
+                    }
+                  : { areaColor: colors[p.side] },
               };
             })
-            .filter((d): d is { name: string; value: number; itemStyle: { areaColor: string } } => d !== null),
+            .filter((d): d is { name: string; value: number; itemStyle: { areaColor: string; borderColor?: string; borderWidth?: number } } => d !== null),
         },
       ],
     };
-  }, [snapshot, ink, lang, nameToParticipant]);
+  }, [snapshot, ink, lang, t, selected, nameToParticipant]);
 
   const chartRef = useEChart(
     () => option,
     [option],
     async (core) => {
-      // Exclude Antarctica for readability; register under a stable name.
-      const filtered = {
-        ...world,
-        features: world.features.filter((f) => String(f.id) !== "010"),
-      };
+      // Register the antimeridian-repaired, Antarctica-free world map.
       core.registerMap(
         "rtp-world",
-        filtered as unknown as Parameters<typeof core.registerMap>[1],
+        world as unknown as Parameters<typeof core.registerMap>[1],
       );
     },
+    {
+      // Click/tap a country to select it; clicking empty ocean clears.
+      click: (params) => {
+        const name = String(params.name ?? "");
+        setSelected(name || null);
+      },
+    },
   );
+
+  // ECharts stretches the map to fill its container regardless of aspect
+  // ratio. Sizing the container to the map's own aspect (world bbox
+  // 360°×139.5° × aspectScale 0.9 → height = width × 139.5/(360×0.9)) keeps
+  // the projection undistorted at every viewport width, with no empty
+  // margins and no cropping of geographic features.
+  const aspectRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const el = aspectRef.current;
+    if (!el) return;
+    const setHeight = () => {
+      const w = el.clientWidth;
+      if (w > 0) el.style.height = `${Math.max(100, Math.round(w * (139.5 / (360 * 0.9))))}px`;
+    };
+    setHeight();
+    const ro = new ResizeObserver(setHeight);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const participant = selected ? (nameToParticipant.get(selected) ?? null) : null;
+
+  const warSwitch = (id: "wwi" | "wwii") => {
+    setWar(id);
+    setSelected(null);
+    setShowTable(false);
+  };
 
   return (
     <figure
@@ -171,75 +254,28 @@ export function TheatersMap({ tone = "paper" }: { tone?: "paper" | "ink" }) {
         </p>
       </figcaption>
 
-      {/* War toggle */}
-      <div
-        role="group"
-        aria-label={t(ui.map.snapshotLabel)}
-        className="mt-3 inline-flex rounded-full border border-bronze/40 p-0.5"
-      >
-        {(["wwi", "wwii"] as const).map((id) => (
-          <button
-            key={id}
-            type="button"
-            aria-pressed={war === id}
-            onClick={() => {
-              setWar(id);
-              setShowTable(false);
-            }}
-            className={cn(
-              "rounded-full px-4 py-1.5 font-sans text-xs font-semibold transition-colors",
-              war === id ? "bg-bronze text-ink" : ink ? "text-stone-light hover:text-paper" : "text-stone hover:text-ink",
-            )}
-          >
-            {id === "wwi" ? t(ui.map.wwiButton) : t(ui.map.wwiiButton)}
-          </button>
-        ))}
-      </div>
-
-      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1">
-        <span className="rtp-hint">
-          <GlobeIcon />
-          {t(ui.map.tapCue)}
-        </span>
-        <span className="rtp-hint text-[0.7rem]">{t(ui.common.keyboardHint)}</span>
-      </div>
-
-      {/* Same mount-preservation pattern as RangeChart: the map container is
-          never unmounted, only hidden, so the ECharts instance stays bound to
-          its DOM node and repaints (via the hook's ResizeObserver) whenever
-          the chart view becomes active again. */}
-      <div
-        ref={chartRef}
-        role="img"
-        aria-label={`${t(ui.map.title)} — ${snapshot.dateLabel[lang]}. ${snapshot.disclosure[lang]}`}
-        className={cn("mt-2 h-[380px] w-full sm:h-[500px]", showTable && "hidden")}
-      />
-      {showTable && <MapTable snapshot={snapshot} ink={ink} />}
-
-      {/* Legend */}
-      <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
-        <LegendSwatch
-          color={ink ? SIDE_COLORS_INK.allies : SIDE_COLORS.allies}
-          label={war === "wwi" ? t(ui.map.legendAllies) : t(ui.map.legendAllies)}
-        />
-        <LegendSwatch
-          color={ink ? SIDE_COLORS_INK[enemySide] : SIDE_COLORS[enemySide]}
-          label={war === "wwi" ? t(ui.map.legendCentral) : t(ui.map.legendAxis)}
-        />
-        <LegendSwatch color={ink ? SIDE_COLORS_INK.neutral : SIDE_COLORS.neutral} label={t(ui.map.legendNeutral)} />
-      </div>
-
-      {/* Disclosure */}
-      <p
-        className={cn(
-          "mt-3 border-l-2 border-bronze pl-3 font-sans text-[0.7rem] leading-relaxed",
-          ink ? "text-stone-light" : "text-stone",
-        )}
-      >
-        {snapshot.disclosure[lang]}
-      </p>
-
-      <div className="mt-3 flex justify-end">
+      {/* Controls: war snapshot (left) · chart/table view (right) */}
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+        <div
+          role="group"
+          aria-label={t(ui.map.snapshotLabel)}
+          className="inline-flex rounded-full border border-bronze/40 p-0.5"
+        >
+          {(["wwi", "wwii"] as const).map((id) => (
+            <button
+              key={id}
+              type="button"
+              aria-pressed={war === id}
+              onClick={() => warSwitch(id)}
+              className={cn(
+                "rounded-full px-4 py-1.5 font-sans text-xs font-semibold transition-colors",
+                war === id ? "bg-bronze text-ink" : "text-stone-light hover:text-paper",
+              )}
+            >
+              {id === "wwi" ? t(ui.map.wwiButton) : t(ui.map.wwiiButton)}
+            </button>
+          ))}
+        </div>
         <button
           type="button"
           onClick={() => setShowTable((v) => !v)}
@@ -254,6 +290,152 @@ export function TheatersMap({ tone = "paper" }: { tone?: "paper" | "ink" }) {
           {showTable ? t(ui.map.hideTable) : t(ui.map.viewTable)}
         </button>
       </div>
+
+      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1">
+        <span className="rtp-hint">
+          <GlobeIcon />
+          {t(ui.map.tapCue)}
+        </span>
+      </div>
+
+      {/* Same mount-preservation pattern as RangeChart: the map container is
+          never unmounted, only hidden, so the ECharts instance stays bound to
+          its DOM node and repaints (via the hook's ResizeObserver) whenever
+          the chart view becomes active again. The outer div is sized by JS to
+          the map's own aspect ratio (see the aspectRef effect above). */}
+      <div ref={aspectRef} className={cn("mt-2 h-[150px] w-full", showTable && "hidden")}>
+        <div
+          ref={chartRef}
+          role="img"
+          aria-label={`${t(ui.map.title)} — ${snapshot.dateLabel[lang]}. ${snapshot.disclosure[lang]}`}
+          className="h-full w-full"
+        />
+      </div>
+      {showTable && (
+        <MapTable
+          snapshot={snapshot}
+          ink={ink}
+          selected={selected}
+          onSelect={(name) => setSelected(name)}
+        />
+      )}
+
+      {/* Legend */}
+      <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
+        <LegendSwatch color={ink ? SIDE_COLORS_INK.allies : SIDE_COLORS.allies} label={t(ui.map.legendAllies)} />
+        <LegendSwatch color={ink ? SIDE_COLORS_INK[enemySide] : SIDE_COLORS[enemySide]} label={war === "wwi" ? t(ui.map.legendCentral) : t(ui.map.legendAxis)} />
+        <LegendSwatch color={ink ? SIDE_COLORS_INK.neutral : SIDE_COLORS.neutral} label={t(ui.map.legendNeutral)} />
+      </div>
+
+      {/* Persistent selection panel (Task 04) — country list + details.
+          Remains inside the visualization container, below the map. */}
+      <div className="mt-4 rounded-lg border border-bronze/25 bg-ink-soft/30 p-4 sm:p-5" aria-live="polite">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="flex items-center gap-2 sm:flex-1">
+            <label htmlFor="rtp-country-select" className="sr-only">
+              {t(ui.map.selectCountryLabel)}
+            </label>
+            <select
+              id="rtp-country-select"
+              value={participant && selected ? selected : ""}
+              onChange={(e) => setSelected(e.target.value || null)}
+              className={cn(
+                "w-full rounded-md border bg-transparent px-3 py-2 font-sans text-sm",
+                ink
+                  ? "border-bronze/40 text-paper focus:border-bronze-light"
+                  : "border-ink/20 text-ink",
+                !selected && "text-stone-light",
+              )}
+            >
+              <option value="" className="bg-ink-raised text-stone-light">
+                {t(ui.map.selectCountryPlaceholder)}
+              </option>
+              {(["allies", enemySide, "neutral"] as const).map((group) => {
+                const members = snapshot.participants.filter((p) => p.side === group);
+                if (members.length === 0) return null;
+                return (
+                  <optgroup key={group} label={sideLabel(group)} className="bg-ink-raised">
+                    {members.map((p) => {
+                      const name = idToName.get(p.id);
+                      if (!name) return null;
+                      return (
+                        <option key={p.id} value={name} className="bg-ink-raised text-paper">
+                          {p.name[lang]}
+                        </option>
+                      );
+                    })}
+                  </optgroup>
+                );
+              })}
+            </select>
+          </div>
+          {selected ? (
+            <button
+              type="button"
+              onClick={() => setSelected(null)}
+              className={cn(
+                "shrink-0 rounded-full border px-3.5 py-2 font-sans text-xs font-semibold transition-colors",
+                "border-bronze/50 text-bronze-light hover:bg-bronze/20",
+              )}
+            >
+              ✕ {t(ui.map.clearSelection)}
+            </button>
+          ) : null}
+        </div>
+
+        {participant ? (
+          <div className="mt-4 border-t border-bronze/20 pt-4">
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <h5 className="font-display text-lg font-semibold text-paper">
+                {participant.name[lang]}
+              </h5>
+              <span
+                className={cn(
+                  "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-sans text-[0.68rem] font-semibold tracking-wide uppercase",
+                  "border-bronze/40 text-bronze-light",
+                )}
+              >
+                <span
+                  aria-hidden="true"
+                  className="inline-block h-2.5 w-2.5 rounded-sm border border-paper/20"
+                  style={{ backgroundColor: SIDE_COLORS_INK[participant.side] }}
+                />
+                {sideLabel(participant.side)}
+              </span>
+            </div>
+            <p className="mt-1 font-sans text-[0.7rem] text-stone-light">
+              {snapshot.dateLabel[lang]}
+            </p>
+            <p className="mt-3 font-serif text-[0.95rem] leading-relaxed text-paper/90">
+              {participant.note[lang]}
+            </p>
+            <p className="mt-3 font-sans text-[0.68rem] leading-relaxed text-stone-light/90">
+              {t(ui.map.panelMethodNote)}
+            </p>
+          </div>
+        ) : selected ? (
+          <div className="mt-4 border-t border-bronze/20 pt-4">
+            <h5 className="font-display text-lg font-semibold text-paper">{selected}</h5>
+            <p className="mt-2 font-serif text-[0.95rem] leading-relaxed text-paper/85">
+              {t(ui.map.panelNoRecord)}
+            </p>
+          </div>
+        ) : (
+          <p className="mt-3 font-serif text-sm leading-relaxed text-stone-light">
+            {t(ui.map.panelEmpty)}
+          </p>
+        )}
+      </div>
+
+      {/* Disclosure */}
+      <p
+        className={cn(
+          "mt-3 border-l-2 border-bronze pl-3 font-sans text-[0.7rem] leading-relaxed",
+          ink ? "text-stone-light" : "text-stone",
+        )}
+      >
+        {snapshot.disclosure[lang]}
+      </p>
     </figure>
   );
 }
@@ -267,16 +449,19 @@ function LegendSwatch({ color, label }: { color: string; label: string }) {
   );
 }
 
-function MapTable({ snapshot, ink }: { snapshot: MapSnapshot; ink: boolean }) {
+function MapTable({
+  snapshot,
+  ink,
+  selected,
+  onSelect,
+}: {
+  snapshot: MapSnapshot;
+  ink: boolean;
+  selected: string | null;
+  onSelect: (name: string) => void;
+}) {
   const { t, lang } = useLang();
-  const sideLabel = (side: MapParticipant["side"]) =>
-    side === "allies"
-      ? t(ui.map.legendAllies)
-      : side === "central"
-        ? t(ui.map.legendCentral)
-        : side === "axis"
-          ? t(ui.map.legendAxis)
-          : t(ui.map.legendNeutral);
+  const sideLabel = (side: MapParticipant["side"]) => sideLabelOf(side, t);
 
   return (
     <div className="rtp-scroll mt-3 max-h-96 overflow-y-auto">
@@ -296,13 +481,33 @@ function MapTable({ snapshot, ink }: { snapshot: MapSnapshot; ink: boolean }) {
           </tr>
         </thead>
         <tbody>
-          {snapshot.participants.map((p) => (
-            <tr key={`${p.id}-${p.side}`} className={cn("border-b", ink ? "border-bronze/20" : "border-ink/10")}>
-              <td className="py-2 pr-3 font-serif text-sm font-medium">{p.name[lang]}</td>
-              <td className="py-2 pr-3 font-sans text-xs font-semibold whitespace-nowrap">{sideLabel(p.side)}</td>
-              <td className="py-2 font-serif text-xs leading-snug opacity-80">{p.note[lang]}</td>
-            </tr>
-          ))}
+          {snapshot.participants.map((p) => {
+            const name = idToName.get(p.id);
+            const isSelected = name != null && name === selected;
+            return (
+              <tr
+                key={`${p.id}-${p.side}`}
+                aria-current={isSelected ? "true" : undefined}
+                className={cn(
+                  "border-b transition-colors",
+                  ink ? "border-bronze/20 hover:bg-ink-soft/50" : "border-ink/10 hover:bg-paper-deep/50",
+                  isSelected && (ink ? "bg-ink-soft/70" : "bg-paper-deep/70"),
+                )}
+              >
+                <td className="py-2 pr-3 font-serif text-sm font-medium">
+                  <button
+                    type="button"
+                    onClick={() => name && onSelect(name)}
+                    className="rounded-sm text-left hover:text-bronze-light focus-visible:text-bronze-light"
+                  >
+                    {p.name[lang]}
+                  </button>
+                </td>
+                <td className="py-2 pr-3 font-sans text-xs font-semibold whitespace-nowrap">{sideLabel(p.side)}</td>
+                <td className="py-2 font-serif text-xs leading-snug opacity-80">{p.note[lang]}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

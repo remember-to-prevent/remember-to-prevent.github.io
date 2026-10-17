@@ -12,22 +12,30 @@ import { cn } from "@/lib/utils";
  * Chapter shell — editorial layout with guiding question, sections,
  * labelled callouts (fact / reflection / testimony / methodology),
  * inline citation markers, and a closing source list.
+ *
+ * Dark reading theme (Task 07): every tone is a warm charcoal passage.
+ * A single coherent content-width system is used throughout — the guiding
+ * question, lead, sections, callouts and sources all share one measure
+ * (fixes the desktop-only alignment inconsistency of the narrower
+ * max-w-2xl question block).
  */
+export type ChapterTone = "paper" | "ink" | "deep" | "warm";
+
 export function Chapter({
   content,
-  tone = "paper",
+  tone = "ink",
   children,
   interactive,
 }: {
   content: ChapterContent;
-  tone?: "paper" | "ink";
+  tone?: ChapterTone;
   /** Content rendered between lead and sections (e.g. timeline). */
   children?: ReactNode;
   /** Interactive blocks rendered after sections. */
   interactive?: ReactNode;
 }) {
   const { t, lang } = useLang();
-  const ink = tone === "ink";
+  const ink = tone !== "paper";
 
   return (
     <section
@@ -35,7 +43,13 @@ export function Chapter({
       aria-labelledby={`${content.id}-title`}
       className={cn(
         "relative px-4 py-16 sm:px-6 sm:py-24 lg:py-28",
-        ink ? "rtp-grain bg-ink text-paper" : "bg-paper text-ink",
+        tone === "deep"
+          ? "rtp-grain bg-ink-deep text-paper"
+          : tone === "warm"
+            ? "rtp-grain bg-ink-warm text-paper"
+            : ink
+              ? "rtp-grain bg-ink text-paper"
+              : "bg-paper text-ink",
       )}
     >
       <div className="mx-auto max-w-3xl">
@@ -70,9 +84,10 @@ export function Chapter({
             >
               {content.title[lang]}
             </h2>
+            {/* Guiding question — same measure as the body text below it. */}
             <p
               className={cn(
-                "mt-4 max-w-2xl font-serif text-lg leading-relaxed italic sm:text-xl",
+                "mt-4 font-serif text-lg leading-relaxed italic sm:text-xl",
                 ink ? "text-stone-light" : "text-stone",
               )}
             >
@@ -83,7 +98,7 @@ export function Chapter({
                 <p
                   key={i}
                   className={cn(
-                    !ink && i === 0 && lang === "en" && "rtp-dropcap text-[1.15rem]",
+                    i === 0 && lang === "en" && "rtp-dropcap text-[1.15rem]",
                     ink ? "text-paper/90" : "text-ink/90",
                   )}
                 >
@@ -97,15 +112,17 @@ export function Chapter({
         {/* Optional interactive before the sections (timeline etc.) */}
         {children ? <div className="mt-12">{children}</div> : null}
 
-        {/* Sections */}
-        <div className="mt-12 space-y-12">
-          {content.sections.map((section, idx) => (
+        {/* Sections — subtle raised cards keep related paragraphs together */}
+        <div className="mt-12 space-y-8">
+          {content.sections.map((section) => (
             <Reveal key={section.id}>
               <article
                 aria-labelledby={`${content.id}-${section.id}-h`}
                 className={cn(
-                  "border-t pt-8",
-                  ink ? "border-bronze/30" : "border-ink/10",
+                  "rounded-lg border p-5 sm:p-7",
+                  ink
+                    ? "border-bronze/20 bg-ink-raised/60"
+                    : "border-ink/10 bg-paper-raised",
                 )}
               >
                 <h3
@@ -117,10 +134,14 @@ export function Chapter({
                 >
                   {section.heading[lang]}
                 </h3>
-                <div className="mt-4 space-y-4 font-serif leading-[1.85] text-ink/90 [text-wrap:pretty]">
+                <div
+                  className={cn(
+                    "mt-4 space-y-4 font-serif leading-[1.85] [text-wrap:pretty]",
+                    ink ? "text-paper/85" : "text-ink/90",
+                  )}
+                >
                   {section.paragraphs.map((p, i) => (
-                    <p key={i} className={ink ? "text-paper/85" : undefined}>
-                      {p[lang]}
+                    <p key={i}>{p[lang]}
                       {i === section.paragraphs.length - 1 && section.citationIds.length > 0 ? (
                         <CitationNote
                           ids={section.citationIds}
@@ -138,10 +159,6 @@ export function Chapter({
                     alreadyCited={section.citationIds}
                   />
                 ) : null}
-                <span className="sr-only">—</span>
-                <span aria-hidden="true" className={cn("mt-6 block select-none text-center font-display text-lg", ink ? "text-bronze/60" : "text-bronze-deep/40")}>
-                  ❧ {idx + 1} ❧
-                </span>
               </article>
             </Reveal>
           ))}
@@ -156,10 +173,15 @@ export function Chapter({
             <details
               className={cn(
                 "group mt-12 rounded-md border p-4",
-                ink ? "border-bronze/30 bg-ink-raised" : "border-ink/10 bg-paper-raised",
+                ink ? "border-bronze/25 bg-ink-raised" : "border-ink/10 bg-paper-raised",
               )}
             >
-              <summary className="cursor-pointer font-sans text-sm font-semibold tracking-wide uppercase select-none">
+              <summary
+                className={cn(
+                  "cursor-pointer font-sans text-sm font-semibold tracking-wide uppercase select-none",
+                  ink ? "text-bronze-light" : "text-bronze-deep",
+                )}
+              >
                 {t(ui.common.sourceNote)} ({content.citations.length})
               </summary>
               <SourceList registry={content.citations} className="mt-4" />
@@ -200,11 +222,17 @@ function Callout({
 
   const styles: Record<string, string> = {
     fact: ink
-      ? "border-l-bronze-light bg-ink-raised text-paper/90"
+      ? "border-l-bronze-light bg-ink-soft/50 text-paper/90"
       : "border-l-bronze bg-paper-raised text-ink/90",
-    reflection: "border-l-poppy bg-poppy/[0.07] text-ink/90 dark-panel",
-    testimony: "border-l-bronze-light bg-transparent italic",
-    methodology: "border-l-stone bg-paper-deep/70 text-ink/85",
+    reflection: ink
+      ? "border-l-poppy bg-poppy/10 text-paper/90"
+      : "border-l-poppy bg-poppy/[0.07] text-ink/90",
+    testimony: ink
+      ? "border-l-bronze-light bg-transparent italic text-paper/85"
+      : "border-l-bronze-light bg-transparent italic text-ink/90",
+    methodology: ink
+      ? "border-l-stone-light bg-ink-soft/40 text-paper/85"
+      : "border-l-stone bg-paper-deep/70 text-ink/85",
   };
 
   return (
@@ -212,9 +240,6 @@ function Callout({
       className={cn(
         "mt-6 rounded-r-md border-l-4 p-4 sm:p-5",
         styles[callout.kind] ?? styles.fact,
-        callout.kind === "reflection" && ink && "bg-poppy/[0.15] text-paper/90 border-l-poppy",
-        callout.kind === "testimony" && ink && "text-paper/85",
-        callout.kind === "methodology" && ink && "bg-ink-raised text-paper/85 border-l-stone-light",
       )}
     >
       <p

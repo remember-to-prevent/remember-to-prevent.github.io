@@ -89,6 +89,7 @@ export function RangeChart({
       xAxis: {
         type: "value" as const,
         max: axisMax,
+        min: 0,
         axisLabel: {
           color: ink ? "#A69C8C" : "#6B6357",
           fontFamily: "var(--font-inter), sans-serif",
@@ -96,7 +97,7 @@ export function RangeChart({
           formatter: (v: number) => (v >= 1 ? String(Math.round(v)) : v.toFixed(1)),
         },
         splitLine: {
-          lineStyle: { color: ink ? "#3A352E" : "#DCD3BF", type: "dashed" as const },
+          lineStyle: { color: ink ? "#3F3A32" : "#DCD3BF", type: "dashed" as const },
         },
         axisLine: { show: false },
         axisTick: { show: false },
@@ -112,7 +113,9 @@ export function RangeChart({
           width: 150,
           overflow: "truncate" as const,
         },
-        axisLine: { show: false },
+        // Baseline at value 0 — anchors the floating bars so readers see
+        // each bar STARTS at its documented minimum, not at zero.
+        axisLine: { show: true, lineStyle: { color: ink ? "#4A4335" : "#C2A878", width: 1 } },
         axisTick: { show: false },
       },
       series: [
@@ -122,7 +125,7 @@ export function RangeChart({
           itemStyle: { color: "transparent" },
           emphasis: { itemStyle: { color: "transparent" } },
           data: dataset.series.map((s) => s.min),
-          barWidth: "52%",
+          barWidth: "56%",
           silent: true,
           tooltip: { show: false },
         },
@@ -151,7 +154,7 @@ export function RangeChart({
             value: Number((s.max - s.min).toFixed(3)),
             // carry precision via custom field on data item
           })),
-          barWidth: "52%",
+          barWidth: "56%",
           label: {
             show: true,
             position: "right" as const,
@@ -218,8 +221,19 @@ export function RangeChart({
         role="img"
         aria-label={`${dataset.title[lang]} — ${dataset.subtitle[lang]}`}
         className={cn("mt-2 h-[var(--chart-h)] w-full", showTable && "hidden")}
-        style={{ ["--chart-h" as string]: `${Math.max(180, dataset.series.length * 64 + 40)}px` }}
+        style={{ ["--chart-h" as string]: `${Math.max(200, dataset.series.length * 68 + 40)}px` }}
       />
+      {/* Axis-unit caption (Task 05): states what the bars encode and the
+          measurement unit, so the floating range bars read unambiguously. */}
+      <p
+        className={cn(
+          "mt-1 font-sans text-[0.68rem] tracking-wide",
+          showTable && "hidden",
+          ink ? "text-stone-light" : "text-stone",
+        )}
+      >
+        {t(ui.chart.scaleCaption)} {dataset.unit[lang]}
+      </p>
       {showTable && <DataTable dataset={dataset} ink={ink} />}
 
       <div className="mt-3 flex flex-wrap items-center justify-between gap-3">

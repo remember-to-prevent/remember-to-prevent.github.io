@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { chapters } from "@/content";
 import { ui } from "@/content/ui";
@@ -10,14 +10,19 @@ import { cn } from "@/lib/utils";
 
 /**
  * Sticky editorial header. On every screen size the chapter navigation stays
- * visible as a horizontally scrollable row (with thin scrollbar + edge fade
- * affordances), and the language switch is always reachable — nothing is
- * hidden behind a hamburger.
+ * visible as a horizontally scrollable row; clearly discoverable left/right
+ * arrow buttons appear whenever more chapters are hidden in that direction
+ * (mobile-first fix, Task 01). Touch users can swipe the row directly, the
+ * arrows scroll smoothly (respecting prefers-reduced-motion), and nothing
+ * overlaps the wordmark or the language switch.
  */
 export function SiteHeader() {
   const { lang, setLang, t } = useLang();
   const [active, setActive] = useState<string>("ch1");
   const [scrolled, setScrolled] = useState(false);
+  const navRef = useRef<HTMLDivElement | null>(null);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(true);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -43,6 +48,46 @@ export function SiteHeader() {
     }
     return () => observer.disconnect();
   }, []);
+
+  /* Track which edges of the chapter row still hide content. Re-measured on
+     scroll, resize (ResizeObserver on the row), and language change (labels
+     change width). */
+  const measure = useCallback(() => {
+    const el = navRef.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
+    setAtStart(el.scrollLeft <= 2);
+    setAtEnd(max <= 4 || el.scrollLeft >= max - 2);
+  }, []);
+
+  useEffect(() => {
+    const el = navRef.current;
+    if (!el) return;
+    measure();
+    el.addEventListener("scroll", measure, { passive: true });
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    window.addEventListener("resize", measure);
+    // Font loading can change label widths after first paint.
+    if (typeof document !== "undefined" && document.fonts?.ready) {
+      void document.fonts.ready.then(measure);
+    }
+    return () => {
+      el.removeEventListener("scroll", measure);
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [measure, lang]);
+
+  const scrollNav = (direction: 1 | -1) => {
+    const el = navRef.current;
+    if (!el) return;
+    const amount = Math.max(160, el.clientWidth * 0.72);
+    const reduce =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollBy({ left: direction * amount, behavior: reduce ? "auto" : "smooth" });
+  };
 
   return (
     <header
@@ -93,37 +138,101 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {/* Row 2 — chapter navigation (always visible, scrollable) */}
+      {/* Row 2 — chapter navigation (always visible; scrollable with arrows) */}
       <nav aria-label={t(ui.header.navLabel)} className="mx-auto max-w-5xl px-4 pb-2 sm:px-6">
-        <div className="nav-scroll flex items-center gap-1 overflow-x-auto">
-          {chapters.map((ch) => {
-            const isActive = active === ch.id;
-            return (
-              <a
-                key={ch.id}
-                href={`#${ch.id}`}
-                aria-current={isActive ? "true" : undefined}
-                className={cn(
-                  "shrink-0 rounded-sm px-2.5 py-1.5 font-sans text-[0.78rem] font-medium whitespace-nowrap transition-colors",
-                  isActive
-                    ? "text-bronze-light underline decoration-poppy decoration-2 underline-offset-[6px]"
-                    : "text-stone-light hover:text-paper",
-                )}
-              >
-                <span aria-hidden="true" className="mr-1 text-[0.7rem] text-bronze/80">
-                  {ch.number}
-                </span>
-                {ch.navLabel[lang]}
-              </a>
-            );
-          })}
-          <span
-            aria-hidden="true"
-            className="pointer-events-none sticky right-0 ml-auto hidden h-6 w-8 bg-gradient-to-l from-ink to-transparent md:block"
+        <div className="flex items-center gap-1">
+          <NavArrow
+            direction="left"
+            hidden={atStart}
+            label={t(ui.header.navScrollLeft)}
+            onClick={() => scrollNav(-1)}
+          />
+          <div
+            ref={navRef}
+            data-at-start={atStart ? "true" : undefined}
+            data-at-end={atEnd ? "true" : undefined}
+            className="nav-scroll relative flex min-w-0 flex-1 items-center gap-1 overflow-x-auto"
+          >
+            {chapters.map((ch) => {
+              const isActive = active === ch.id;
+              return (
+                <a
+                  key={ch.id}
+                  href={`#${ch.id}`}
+                  aria-current={isActive ? "true" : undefined}
+                  className={cn(
+                    "shrink-0 rounded-sm px-2.5 py-1.5 font-sans text-[0.78rem] font-medium whitespace-nowrap transition-colors",
+                    isActive
+                      ? "text-bronze-light underline decoration-poppy decoration-2 underline-offset-[6px]"
+                      : "text-stone-light hover:text-paper",
+                  )}
+                >
+                  <span aria-hidden="true" className="mr-1 text-[0.7rem] text-bronze/80">
+                    {ch.number}
+                  </span>
+                  {ch.navLabel[lang]}
+                </a>
+              );
+            })}
+            {/* Edge fades — visible only while content is hidden past that edge */}
+            <span
+              aria-hidden="true"
+              className={cn(
+                "pointer-events-none sticky right-0 ml-auto h-6 w-8 bg-gradient-to-l from-ink to-transparent transition-opacity",
+                atEnd ? "opacity-0" : "opacity-100",
+              )}
+            />
+          </div>
+          <NavArrow
+            direction="right"
+            hidden={atEnd}
+            label={t(ui.header.navScrollRight)}
+            onClick={() => scrollNav(1)}
           />
         </div>
       </nav>
     </header>
+  );
+}
+
+function NavArrow({
+  direction,
+  hidden,
+  label,
+  onClick,
+}: {
+  direction: "left" | "right";
+  hidden: boolean;
+  label: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      title={label}
+      tabIndex={hidden ? -1 : 0}
+      className={cn(
+        "flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-bronze/40 text-bronze-light transition-all duration-200",
+        "hover:bg-ink-raised hover:text-paper focus-visible:bg-ink-raised",
+        hidden ? "pointer-events-none scale-75 opacity-0" : "opacity-100",
+      )}
+    >
+      <svg
+        viewBox="0 0 12 12"
+        width="11"
+        height="11"
+        aria-hidden="true"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {direction === "left" ? <path d="M7.5 2.5 L4 6 L7.5 9.5" /> : <path d="M4.5 2.5 L8 6 L4.5 9.5" />}
+      </svg>
+    </button>
   );
 }
 
