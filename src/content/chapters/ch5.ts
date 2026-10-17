@@ -277,7 +277,7 @@ export const ch5: ChapterContent = {
         en: "Convention on the Prevention and Punishment of the Crime of Genocide (1948) — full text",
         zh: "《防止及懲治種族滅絕罪公約》（1948）——全文",
       },
-      url: "https://www.ohchr.org/en/instruments-mechanisms/instruments/international-convention-prevention-and-punishment-crime-genocide",
+      url: "https://www.ohchr.org/en/instruments-mechanisms/instruments/convention-prevention-and-punishment-crime-genocide",
       kind: "primary",
       accessDate: "2026-10-17",
       note: {

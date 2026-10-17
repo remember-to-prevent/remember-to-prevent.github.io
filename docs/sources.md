@@ -184,7 +184,7 @@ Publisher string in the data (as written in each file): "The Avalon Project, Yal
 
 | ID | Title (EN) | 標題（繁體中文） | Kind | URL | Verification note (EN) | Used in |
 | --- | --- | --- | --- | --- | --- | --- |
-| `c-ohchr-genocide-convention` | Convention on the Prevention and Punishment of the Crime of Genocide (1948) — full text | 《防止及懲治種族滅絕罪公約》（1948）——全文 | primary | <https://www.ohchr.org/en/instruments-mechanisms/instruments/international-convention-prevention-and-punishment-crime-genocide> | Automated check blocked (HTTP 403, bot protection); canonical institutional URL; browser verification pending. | Ch 05 |
+| `c-ohchr-genocide-convention` | Convention on the Prevention and Punishment of the Crime of Genocide (1948) — full text | 《防止及懲治種族滅絕罪公約》（1948）——全文 | primary | <https://www.ohchr.org/en/instruments-mechanisms/instruments/convention-prevention-and-punishment-crime-genocide> | Automated check blocked (HTTP 403, bot protection); canonical institutional URL; browser verification pending. | Ch 05 |
 
 ### United States Holocaust Memorial Museum · 美國大屠殺紀念博物館
 
