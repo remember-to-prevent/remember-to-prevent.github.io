@@ -204,16 +204,17 @@ export function TheatersMap({ tone = "paper" }: { tone?: "paper" | "ink" }) {
         <span className="rtp-hint text-[0.7rem]">{t(ui.common.keyboardHint)}</span>
       </div>
 
-      {!showTable ? (
-        <div
-          ref={chartRef}
-          role="img"
-          aria-label={`${t(ui.map.title)} — ${snapshot.dateLabel[lang]}. ${snapshot.disclosure[lang]}`}
-          className="mt-2 h-[380px] w-full sm:h-[500px]"
-        />
-      ) : (
-        <MapTable snapshot={snapshot} ink={ink} />
-      )}
+      {/* Same mount-preservation pattern as RangeChart: the map container is
+          never unmounted, only hidden, so the ECharts instance stays bound to
+          its DOM node and repaints (via the hook's ResizeObserver) whenever
+          the chart view becomes active again. */}
+      <div
+        ref={chartRef}
+        role="img"
+        aria-label={`${t(ui.map.title)} — ${snapshot.dateLabel[lang]}. ${snapshot.disclosure[lang]}`}
+        className={cn("mt-2 h-[380px] w-full sm:h-[500px]", showTable && "hidden")}
+      />
+      {showTable && <MapTable snapshot={snapshot} ink={ink} />}
 
       {/* Legend */}
       <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">

@@ -47,7 +47,7 @@ const notoSansTC = Noto_Sans_TC({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://remember-to-prevent.com/"),
+  metadataBase: new URL("https://remember-to-prevent.github.io/"),
   title:
     "Remember to Prevent — Chapter 01: Two World Wars. Lessons for Humanity. Actions for Tomorrow.",
   description:
@@ -96,7 +96,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Remember to Prevent — Chapter 01",
-    alternateName: "謹記以防 — 第一章",
+    alternateName: "銘記歷史，防止重演 — 第一章",
     description:
       "An independent, bilingual historical education project on the First and Second World Wars, their human cost, and realistic actions that reduce the risk of future catastrophe.",
     inLanguage: ["en", "zh-TW"],

@@ -208,17 +208,19 @@ export function RangeChart({
         </span>
       </div>
 
-      {!showTable ? (
-        <div
-          ref={chartRef}
-          role="img"
-          aria-label={`${dataset.title[lang]} — ${dataset.subtitle[lang]}`}
-          className="mt-2 h-[var(--chart-h)] w-full"
-          style={{ ["--chart-h" as string]: `${Math.max(180, dataset.series.length * 64 + 40)}px` }}
-        />
-      ) : (
-        <DataTable dataset={dataset} ink={ink} />
-      )}
+      {/* The chart container stays mounted at all times; the table view only
+          hides it. Unmounting would detach the ECharts instance from its
+          container and leave a blank canvas when switching back — the
+          ResizeObserver in useEChart re-syncs the canvas size the moment
+          the container becomes visible again. */}
+      <div
+        ref={chartRef}
+        role="img"
+        aria-label={`${dataset.title[lang]} — ${dataset.subtitle[lang]}`}
+        className={cn("mt-2 h-[var(--chart-h)] w-full", showTable && "hidden")}
+        style={{ ["--chart-h" as string]: `${Math.max(180, dataset.series.length * 64 + 40)}px` }}
+      />
+      {showTable && <DataTable dataset={dataset} ink={ink} />}
 
       <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
         <p className={cn("font-sans text-[0.7rem] leading-snug", ink ? "text-stone-light" : "text-stone")}>

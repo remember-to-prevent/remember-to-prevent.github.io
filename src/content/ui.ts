@@ -11,7 +11,7 @@ export const ui = {
     zh: "跳至主要內容",
   } satisfies Localized,
   header: {
-    wordmark: { en: "Remember to Prevent", zh: "謹記以防" } satisfies Localized,
+    wordmark: { en: "Remember to Prevent", zh: "銘記歷史，防止重演" } satisfies Localized,
     wordmarkChapter: { en: "Chapter 01", zh: "第一章" } satisfies Localized,
     navLabel: { en: "Chapter navigation", zh: "章節導覽" } satisfies Localized,
     navMore: { en: "Scroll chapters", zh: "捲動章節" } satisfies Localized,
@@ -26,7 +26,7 @@ export const ui = {
       en: "An independent historical education project",
       zh: "獨立歷史教育計畫",
     } satisfies Localized,
-    title: { en: "Remember to Prevent", zh: "謹記以防" } satisfies Localized,
+    title: { en: "Remember to Prevent", zh: "銘記歷史，防止重演" } satisfies Localized,
     chapter: { en: "Chapter 01", zh: "第一章" } satisfies Localized,
     tagline: {
       en: "The Past Cannot Be Changed. The Future Is Still Ours to Shape.",

@@ -1,6 +1,6 @@
 # Remember to Prevent — Chapter 01
 
-**謹記以防 — 第一章**
+**銘記歷史，防止重演 — 第一章**
 
 > AN INDEPENDENT HISTORICAL EDUCATION PROJECT
 >
@@ -30,7 +30,7 @@ In this sandbox environment, open the site through the **Preview Panel** — not
 
 ## Tech stack
 
-- **Next.js 16 (App Router)** single-page scrollytelling application; TypeScript 5.
+- **Next.js 16 (App Router)** single-page scrollytelling application; TypeScript 5. **Dual-mode build:** `output: "standalone"` for the sandbox dev/preview runtime, `output: "export"` (static) for GitHub Pages — selected by the `NEXT_OUTPUT` environment variable in `next.config.ts`.
 - **Tailwind CSS 4** with a custom editorial palette (charcoal `#211E1A` · archival paper `#F4EFE5` · muted bronze `#96774C` · restrained poppy `#A93F2B`) + **shadcn/ui** component primitives (button, popover, toast — the scaffolding for a few interactive controls).
 - **Apache ECharts 6**, tree-shaken (`echarts/core` + `BarChart`, `CustomChart`, `MapChart` + grid/tooltip/legend/visual-map/geo/graphic components, canvas renderer), loaded lazily and SSR-safely through `src/components/rtp/use-echart.ts`.
 - **world-atlas `countries-110m` + topojson-client** — map boundary data is bundled locally at build time (Natural Earth–derived, public domain); **no runtime CDN dependency**.
@@ -71,9 +71,12 @@ src/content/
   data/one-minute.ts          One Minute to Remember copy
   ui.ts                       bilingual UI chrome strings
 scripts/make-og-image.ts      regenerates public/og-image.png from an original SVG (bun scripts/make-og-image.ts)
+.github/workflows/deploy.yml  GitHub Actions: lint → static export (verified) → Pages deploy
 docs/                         sources · methodology · data-dictionary · limitations · image-rights
 public/                       favicon.svg · og-image.png · robots.txt
 ```
+
+> The scaffold's unused `/api` route (`src/app/api/route.ts`, a Hello-World handler nothing on the site ever called) was removed because API routes are incompatible with `output: "export"`. The site is fully client-side; no functionality was lost.
 
 ## Content pipeline
 
@@ -88,29 +91,32 @@ bun run dev        # dev server on port 3000 (tee dev.log)
 bun run lint       # eslint .
 bunx tsc --noEmit  # type check (site code clean; pre-existing errors only in scaffold examples/ and skills/)
 bun scripts/make-og-image.ts   # regenerate the OG image
-bun run build      # production build (standalone output)
-bun run start      # serve the production build
+bun run build      # production build (standalone output, sandbox runtime)
+NEXT_OUTPUT=export bun run build:export   # static export → out/ (GitHub Pages build)
+bun run start      # serve the standalone production build
 ```
 
 `db:push` / `db:generate` / `db:migrate` / `db:reset` exist in `package.json` from the scaffold — **this site does not use a database in v1**; those scripts are inert here.
 
 ## Deployment
 
-**Current form: the sandbox single-page app described above.** It has not been deployed anywhere.
+**GitHub Pages via GitHub Actions — implemented and the build verified locally; the live run happens when the repository owner pushes to `main`.**
 
-**GitHub Pages / static hosting — UNTESTED in this environment.** The editorial master prompt targeted a static GitHub Pages site; this implementation is a Next.js App Router application, so publishing to Pages requires a static export that has **not been run or verified here**. The expected steps:
+- **Dual-mode `next.config.ts`** — the default build keeps `output: "standalone"` (the sandbox dev/preview runtime); when CI sets `NEXT_OUTPUT=export`, the same source builds as a fully static site into `out/`. `NEXT_PUBLIC_BASE_PATH` is also honoured for project-site repositories; this repository is an organization root site (`remember-to-prevent.github.io`), so it deploys at `/` with no base path.
+- **`.github/workflows/deploy.yml`** — on every push to `main` (and via manual `workflow_dispatch`): `bun install --frozen-lockfile` → `bun run lint` → static export (`NEXT_OUTPUT=export bun run build:export`) → verification that `out/index.html`, the `out/_next` build assets and the public files exist → `actions/upload-pages-artifact` → `actions/deploy-pages`, with the official Pages permissions and a `pages` concurrency group.
+- **Verified in this environment** (2026-10-17): the export build was run exactly as CI runs it, on a fresh dependency install from `bun.lock`; `out/index.html` (560 KB of prerendered content), 271 build assets, all fonts self-hosted; the exported site was served locally and browser-tested (language switching, chart/table toggle cycles, map toggle, navigation anchors, zero console errors). The **GitHub Actions run itself and the live GitHub Pages URL can only be verified after the owner pushes the repository** — see the workflow's own artifact-verification step, which fails the build if `out/index.html` is missing, so a green run means the real site (never a README-only deployment) was published.
 
-1. In `next.config.ts`, replace `output: "standalone"` with `output: "export"` (and remove the server-only `start` flow; the scaffold `/api` route would need deleting or ignoring — API routes are incompatible with static export).
-2. Run `bun run build` — with `output: 'export'`, Next.js emits the static site into `out/`.
-3. Publish the `out/` directory (e.g. to the `remember-to-prevent.github.io` repository, or via GitHub Actions on push).
-4. Client-side interactivity (timelines, charts, map, timer, action selector — all client components) works in a static export; anything needing a server at request time would not. `metadataBase` already points at `https://remember-to-prevent.com/`.
+**One-time GitHub setup (repository owner):** Repository → Settings → Pages → Build and deployment → Source → **GitHub Actions**. Then push to `main`. The site should appear at `https://remember-to-prevent.github.io/` within a few minutes of the run completing. If Pages previously served the README (old branch-based source), this settings change plus the new workflow replaces that behaviour — no `docs/` folder or branch artifact is used.
 
-**Custom domain (remember-to-prevent.com) — also UNTESTED, requires owner action.** Per GitHub Pages documentation: add a `CNAME` file (or the repository's Pages custom-domain setting) with the domain, then at the DNS provider either point `A` records at GitHub's servers — **192.30.252.153** and **192.30.252.154** — or, for a subdomain, add a `CNAME` record to `remember-to-prevent.github.io`; then wait for DNS propagation and enable HTTPS. No DNS changes have been made by this project.
+**Custom domain (remember-to-prevent.com) — future step, not yet active.** `metadataBase` currently points at the live default URL (`https://remember-to-prevent.github.io/`) so canonical/OG URLs resolve correctly today. When the domain is ready: in the DNS provider point the apex `A` records at GitHub's Pages servers (or a `CNAME` for a subdomain), then set the custom domain in Repository → Settings → Pages, and change the single `metadataBase` line in `src/app/layout.tsx` to `https://remember-to-prevent.com/`. No DNS changes have been made by this project.
 
 ## Quality verification — what was actually checked
 
 - **ESLint clean** across the repository (`bunx eslint .` → exit 0).
 - **TypeScript clean for all site code** (`bunx tsc --noEmit`; residual errors are confined to the scaffold's `examples/` and `skills/` folders, untouched by this project).
+- **Chart ↔ table switching fixed and verified**: the chart containers now stay mounted (hidden via CSS while the table is shown), so the ECharts instance is never orphaned from its DOM node; the hook's ResizeObserver repaints the canvas when the chart view becomes active again. All three Chapter 04 range charts and the Chapter 02 world map were driven through **three full chart → table → chart cycles each** (plus map WWI ↔ WWII switching) on both the dev preview and the exported static site, with programmatic verification that the canvas is visible and fully repainted after every switch — including after live viewport resizes (desktop 1280 → mobile 375) and on fresh mobile page loads.
+- **Traditional Chinese main heading** 「銘記歷史／防止重演」 verified on desktop (72 px display, 2 lines) and mobile 375 px (343 px wide, no overflow, no horizontal document scroll), with the English heading "Remember to Prevent" unchanged; the header wordmark and JSON-LD alternate name were updated to match, and the language switch + `localStorage` persistence were re-verified.
+- **Static export build verified end-to-end**: fresh `bun install --frozen-lockfile` + `NEXT_OUTPUT=export bun run build:export` (exactly what GitHub Actions runs) → `out/index.html`, 271 `_next` assets, self-hosted fonts, root-relative asset paths; the exported site was served locally and browser-tested with zero console entries and zero page errors.
 - **Automated browser verification** of the running site at desktop (1280×800) and mobile (375×667) viewports, in **both languages**, exercising every interactive (timelines and filters, map toggle and table, chart tooltips and table alternatives, pattern cards, action selector, One Minute start/pause/resume/restart/skip).
 - **Link verification**: every citation URL and action link checked by automated HTTP requests on 2026-10-17, with an independent re-check of all 41 unique citation URLs during documentation — statuses honestly recorded per record (see [`docs/sources.md`](docs/sources.md)).
 - Scope and limits of all of the above — what automation cannot tell us, which institutions block automated checks, and why no WCAG certification is claimed — are documented in [`docs/limitations.md`](docs/limitations.md).
