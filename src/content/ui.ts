@@ -146,6 +146,24 @@ export const ui = {
       en: "Estimates differ across sources; bars show documented ranges, not precise counts.",
       zh: "各來源估計不盡相同；長條呈現文獻區間，並非精確計數。",
     } satisfies Localized,
+    // Persistent selection panel (mobile chart interaction fix): the panel
+    // below each chart replaces the floating tooltip as the primary way to
+    // read a data range's full definition, sources, and context.
+    tapHint: {
+      en: "Tap a bar to read its full definition, sources, and context in the panel below",
+      zh: "點選任一長條，於下方面板閱讀完整定義、資料來源與背景說明",
+    } satisfies Localized,
+    keyboardHint: {
+      en: "Keyboard users: choose a category in the panel below, or use the table alternative.",
+      zh: "鍵盤使用者：可於下方面板選擇類別，或使用表格替代檢視。",
+    } satisfies Localized,
+    selectBarLabel: { en: "Select a category", zh: "選擇類別" } satisfies Localized,
+    selectBarPlaceholder: { en: "— Choose a category —", zh: "— 從清單選擇 —" } satisfies Localized,
+    clearSelection: { en: "Clear selection", zh: "清除選取" } satisfies Localized,
+    panelEmpty: {
+      en: "Select a bar on the chart or from the list to read its estimated range, definition, and sources.",
+      zh: "點選圖上的長條或從清單選擇，即可閱讀估計區間、定義與資料來源。",
+    } satisfies Localized,
   },
   oneMinute: {
     a11yLabel: { en: "One minute of remembrance timer", zh: "一分鐘追思計時器" } satisfies Localized,

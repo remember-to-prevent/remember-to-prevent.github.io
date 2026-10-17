@@ -71,11 +71,11 @@ export function Hero() {
 
         <span aria-hidden="true" className="order-5 mx-auto mt-7 h-px w-24 bg-poppy" />
 
-        <p className="order-6 mt-7 max-w-xl font-serif text-lg leading-relaxed italic text-balance text-paper/90 sm:text-2xl">
+        <p className="order-6 mx-auto mt-7 max-w-xl font-serif text-lg leading-relaxed italic text-balance text-paper/90 sm:text-2xl">
           {t(ui.hero.tagline)}
         </p>
 
-        <p className="order-7 mt-4 max-w-lg font-sans text-sm font-medium tracking-wide text-stone-light sm:text-base">
+        <p className="order-7 mx-auto mt-4 max-w-lg font-sans text-sm font-medium tracking-wide text-stone-light sm:text-base">
           {t(ui.hero.sub)}
         </p>
 
