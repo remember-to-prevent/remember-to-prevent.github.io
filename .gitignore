@@ -52,3 +52,20 @@ prompt
 server.log
 # Skills directory
 /skills/
+
+# --- Public-release hygiene (2026-10-27 sanitization) ---
+# Local SQLite databases (dev scaffold only — the static export never reads them)
+/db/*.db
+
+# GLM platform / internal development artifacts (kept locally, never published;
+# see the 2026-10-27 sanitization report before re-adding anything here)
+/.zscripts/
+Caddyfile
+/upload/
+/download/
+/worklog.md
+/UPDATE-INSTRUCTIONS.md
+/SOURCE-MANIFEST.txt
+
+# Platform demonstration code removed from the public source (was examples/)
+/examples/

@@ -45,8 +45,8 @@ export const ch1: ChapterContent = {
       callout: {
         kind: "fact",
         text: {
-          en: "The Unknown Warrior was buried in Westminster Abbey on Armistice Day, 11 November 1920, in the presence of King George V. His body was brought from France; his name, rank, and regiment were deliberately concealed, and no one knows who he was. His is the only gravestone in the Abbey that people cannot walk on, out of respect.",
-          zh: "無名戰士（The Unknown Warrior）於1920年11月11日國殤日安葬於西敏寺，英王喬治五世在場觀禮。其遺體自法國迎回；姓名、軍階與所屬部隊均被刻意隱去，至今無人知曉他是誰。他的墓石是西敏寺中唯一出於敬意而不得踩踏的一座。",
+          en: "The Unknown Warrior was buried in Westminster Abbey on Armistice Day, 11 November 1920, in the presence of King George V. An unidentified British serviceman, brought from France, he was deliberately left unidentified — his name, rank and regiment remain unknown. His is the only gravestone in the Abbey that people cannot walk on, out of respect.",
+          zh: "無名戰士（The Unknown Warrior）於1920年11月11日停戰紀念日安葬於西敏寺，英王喬治五世在場觀禮。他是一名自法國迎回、身分未能辨識的英國軍人，被刻意保持無名——其姓名、軍階與所屬部隊至今不明。他的墓石是西敏寺中唯一出於敬意而不得踩踏的一座。",
         },
         citationIds: ["a-westminster-unknown-warrior", "a-worldwar-armistice"],
       },
@@ -57,8 +57,8 @@ export const ch1: ChapterContent = {
       heading: { en: "Why numbers alone fail us", zh: "為何數字本身並不足夠" },
       paragraphs: [
         {
-          en: "How many people died in the two world wars? No honest answer is a single number. For the First World War, commonly cited estimates run from about nine to ten million military deaths, and to fifteen or twenty million and beyond once civilians are included; for the Second World War, the totals themselves span tens of millions of lives, depending on what is counted. The ranges are not carelessness — they are part of the finding.",
-          zh: "兩次世界大戰究竟死了多少人？誠實的答案不會是單一數字。以第一次世界大戰而言，常見估計約為900萬至1,000萬軍人死亡，納入平民則達1,500萬至2,000萬以上；第二次世界大戰的總數本身更橫跨數千萬生命，取決於統計口徑。這些區間並非疏漏——它們本身就是研究發現的一部分。",
+          en: "How many people died in the two world wars? No honest answer is a single number. For the First World War, attributed estimates run from roughly eight and a half to nearly ten million military deaths, and past fifteen million once civilians are included; for the Second World War, the totals themselves span tens of millions of lives, depending on what is counted. The ranges are not carelessness — they are part of the finding.",
+          zh: "兩次世界大戰究竟死了多少人？誠實的答案不會是單一數字。以第一次世界大戰而言，具名估計約為850萬至近1,000萬軍人死亡，納入平民則超過1,500萬；第二次世界大戰的總數本身更橫跨數千萬生命，取決於統計口徑。這些區間並非疏漏——它們本身就是研究發現的一部分。",
         },
         {
           en: "Behind every range stands a method. Borders moved and states collapsed; records were destroyed or never kept; the “missing” and the “dead” were not the same thing; famine and epidemic ran along the war's edges, and the 1918 influenza pandemic overlapped the war's end so closely that no one can fully separate its dead from the war's. Who counts as a victim — a colonial subject, a refugee, a forced labourer — is itself a decision.",

@@ -22,6 +22,36 @@ import { cn } from "@/lib/utils";
  * value, confined to the chart container) — it is never the primary way to
  * read detailed information, which previously overflowed the mobile viewport.
  */
+/**
+ * Unit formatting (audit RTP-F004): all values are stored in millions and
+ * every display path — bar label, tooltip, panel chip, table — expresses them
+ * in millions. The old code multiplied sub-million values by 1000 and
+ * appended "k" next to the word "millions" ("200–500k millions"), a
+ * contradictory double unit; that branch is gone. Module-level so the
+ * DataTable subcomponent shares the exact same formatting.
+ */
+function formatNum(n: number) {
+  if (Number.isInteger(n)) return String(n);
+  // Up to 2 decimals above one million, up to 3 below (0.018–0.022),
+  // trailing zeros stripped.
+  return String(Number(n.toFixed(n >= 1 ? 2 : 3)));
+}
+
+/** Range string in millions: "9–10", "0.25–0.5", "0.018–0.022". */
+function formatRange(min: number, max: number) {
+  return `${formatNum(min)}–${formatNum(max)}`;
+}
+
+/** Point estimate string in millions: "≈ 6", "≈ 0.02". */
+function formatPoint(point: number) {
+  return `≈ ${formatNum(point)}`;
+}
+
+/** Value text for a series, in millions (bar label + tooltip + table). */
+function seriesValueText(s: RangeSeries) {
+  return s.point != null ? formatPoint(s.point) : formatRange(s.min, s.max);
+}
+
 export function RangeChart({
   dataset,
   tone = "paper",
@@ -34,21 +64,6 @@ export function RangeChart({
   const [selected, setSelected] = useState<number | null>(null);
   const ink = tone === "ink";
 
-  const formatValue = (min: number, max: number) => {
-    if (max >= 1) {
-      return `${formatNum(min)}–${formatNum(max)}`;
-    }
-    return `${Math.round(min * 1000)}–${Math.round(max * 1000)}k`;
-  };
-
-  const formatNum = (n: number) =>
-    Number.isInteger(n) ? String(n) : n.toFixed(n < 1 ? 2 : 1);
-
-  // Panel range: expressed in the dataset's own unit (millions), matching the
-  // axis scale — preserves full precision for sub-million ranges (0.018–0.022).
-  const panelRange = (s: RangeSeries) =>
-    s.max >= 1 ? `${formatNum(s.min)}–${formatNum(s.max)}` : `${s.min}–${s.max}`;
-
   const citationLabel = (ids: string[]) =>
     ids
       .map((id) => dataset.citations.find((c) => c.id === id)?.publisher ?? "")
@@ -58,7 +73,12 @@ export function RangeChart({
   const chartRef = useEChart(
     () => {
       const labels = dataset.series.map((s) => s.label[lang]);
-      const axisMax = Math.max(...dataset.series.map((s) => s.max)) * 1.08 || 1;
+      // Axis maximum spans both ranges and point estimates.
+      const axisMax =
+        Math.max(...dataset.series.map((s) => (s.point != null ? s.point : s.max))) * 1.08 || 1;
+      // Point estimates render as a thin marker centered on the value —
+      // approximately 0.8% of the axis width, visibly a marker, not a range.
+      const markerHalf = axisMax * 0.004;
 
       // Selected-bar highlight: poppy red fill with a paper outline, matching
       // the selected-region treatment of the world map.
@@ -97,21 +117,19 @@ export function RangeChart({
           fontSize: 12,
         },
         extraCssText: "max-width: 200px; white-space: normal;",
-        // Brief supplementary help ONLY (label + value). The full note and
-        // sources live in the persistent panel below the chart — the floating
-        // tooltip used to carry them and overflowed the mobile viewport.
+        // Brief supplementary help ONLY (label + value + unit, in millions).
+        // The full note and sources live in the persistent panel below the
+        // chart — the floating tooltip used to carry them and overflowed the
+        // mobile viewport.
         formatter: (params: Record<string, unknown>) => {
           const idx = Number(params.dataIndex);
           const s = dataset.series[idx];
           if (!s) return "";
-          const unit =
-            s.max >= 1
-              ? ` <span style="font-size:11px; font-weight:400;">${t(ui.chart.millions)}</span>`
-              : "";
+          const approx = s.point != null ? ` · ${t(ui.chart.estimateNote)}` : "";
           return `
             <div style="font-weight:600;">${s.label[lang]}</div>
             <div style="margin-top:2px; font-weight:700; color:${ink ? "#C2A878" : "#6F5735"};">
-              ${formatValue(s.min, s.max)}${unit}
+              ${seriesValueText(s)} <span style="font-size:11px; font-weight:400;">${t(ui.chart.millions)}${approx}</span>
             </div>
           `;
         },
@@ -152,13 +170,16 @@ export function RangeChart({
         {
           type: "bar" as const,
           stack: "range",
-          // The transparent offset segment (0 → min) stays visually empty but
-          // is clickable, so the FULL row width is an easy tap target on
+          // The transparent offset segment stays visually empty but is
+          // clickable, so the FULL row width is an easy tap target on
           // mobile — visible segments of short ranges can be only a few px.
+          // For a point estimate the offset ends just before the marker.
           cursor: "pointer",
           itemStyle: { color: "transparent" },
           emphasis: { itemStyle: { color: "transparent" } },
-          data: dataset.series.map((s) => s.min),
+          data: dataset.series.map((s) =>
+            s.point != null ? Math.max(0, s.point - markerHalf) : s.min,
+          ),
           barWidth: "56%",
           tooltip: { show: false },
         },
@@ -188,7 +209,14 @@ export function RangeChart({
               value: number;
               itemStyle?: typeof selectedStyle;
               emphasis?: { itemStyle: { color: string } };
-            } = { value: Number((s.max - s.min).toFixed(3)) };
+            } = {
+              // A range draws its max−min width; a point estimate draws a
+              // thin marker (2 × markerHalf) centered on the value.
+              value:
+                s.point != null
+                  ? Number((markerHalf * 2).toFixed(4))
+                  : Number((s.max - s.min).toFixed(3)),
+            };
             if (i === selected) {
               item.itemStyle = selectedStyle;
               item.emphasis = { itemStyle: { color: ink ? "#D66449" : "#B4472E" } };
@@ -206,7 +234,7 @@ export function RangeChart({
             formatter: (params: Record<string, unknown>) => {
               const idx = Number(params.dataIndex);
               const s = dataset.series[idx];
-              return s ? formatValue(s.min, s.max) : "";
+              return s ? seriesValueText(s) : "";
             },
           },
         },
@@ -369,7 +397,7 @@ export function RangeChart({
                   ink ? "border-bronze/40 text-bronze-light" : "border-bronze-deep/40 text-bronze-deep",
                 )}
               >
-                {t(ui.chart.rangeNote)} · {panelRange(selectedSeries)}{" "}
+                {selectedSeries.point != null ? t(ui.chart.estimateNote) : t(ui.chart.rangeNote)} · {seriesValueText(selectedSeries)}{" "}
                 {t(ui.chart.millions)}
               </span>
             </div>
@@ -490,9 +518,7 @@ function DataTable({
                 </button>
               </td>
               <td className="py-2.5 pr-3 font-sans text-sm font-semibold whitespace-nowrap text-bronze-deep dark:text-bronze-light">
-                {s.max >= 1
-                  ? `${s.min}–${s.max}`
-                  : `${(s.min * 1000).toFixed(0)}–${(s.max * 1000).toFixed(0)}k`}{" "}
+                {seriesValueText(s)}{" "}
                 <span className="font-normal">{t(ui.chart.millions)}</span>
               </td>
               <td className="py-2.5 pr-3 font-serif text-xs leading-snug opacity-85">{s.note[lang]}</td>

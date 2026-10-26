@@ -8,7 +8,7 @@ Each record carries: `id`, `publisher`, `title` (English + 繁體中文), `url`,
 
 ## Shared access date
 
-**2026-10-17** (Australia/Brisbane timezone — the project owner's timezone). Every citation record carries `accessDate: "2026-10-17"`, and each verification note repeats the date. All automated HTTP checks described here were performed on that date with `curl -L` and a desktop user agent.
+**2026-10-17** (Australia/Brisbane timezone — the project owner's timezone) for all original records. The 2026-10-26 audit-remediation pass added **9 new citation records** with `accessDate: "2026-10-27"`; each such note states its own verification method (HTTP 200 re-check, search-index verification, or reliance on the independent audit's retrieved text where this environment is blocked). All automated HTTP checks for the original records were performed on 2026-10-17 with `curl -L` and a desktop user agent.
 
 **Independent re-verification.** While preparing this inventory, the documentation agent re-checked **all 41 unique citation URLs** on 2026-10-17 using the same automated method. Every record's note reproduced exactly: the 32 unique URLs behind "Verified HTTP 200" notes all returned HTTP 200, and the 9 unique URLs behind "403 / pending" notes all returned HTTP 403 (bot protection). No dead links, no redirects to unintended resources, no surprises.
 
@@ -16,13 +16,13 @@ Each record carries: `id`, `publisher`, `title` (English + 繁體中文), `url`,
 
 | Measure | Count |
 | --- | ---: |
-| Citation records (unique citation ids) | **52** |
-| Distinct URLs behind those records | 41 |
-| Records noting **HTTP 200 verified** (2026-10-17) | **40** |
-| Records noting **HTTP 403 to automated agents** — canonical institutional URL, **browser verification pending** | **12** |
+| Citation records (unique citation ids) | **61** (52 original + 9 remediation additions) |
+| Distinct URLs behind those records | 47 |
+| Records noting **HTTP 200 verified** (2026-10-17 or 2026-10-27) | **46** |
+| Records noting **HTTP 403 / blocked to automated agents** — canonical institutional URL, **browser verification pending** | **15** |
 | Records with no verification note | 0 |
 
-By kind: **institutional 29 · primary 11 · reference 11 · scholarly 1**. The 52 records span **20 distinct publisher domains** (see the publisher sections below; the Chapter 06 resource links below add 4 more domains: wfp.org, unesco.org, arolsen-archives.org, cwgc.org).
+By kind: **institutional 35 · primary 13 · reference 11 · scholarly 2**. The 61 records span **24 distinct publisher domains** (see the publisher sections below; the Chapter 06 resource links below add 4 more domains: wfp.org, unesco.org, arolsen-archives.org, cwgc.org).
 
 Kind meanings (from `src/content/types.ts`): `primary` — archival document / treaty text / testimony; `institutional` — museum, memorial, archive, Red Cross, UN; `scholarly` — peer-reviewed or academic-press work; `reference` — established encyclopedia / statistical reference.
 
@@ -102,12 +102,15 @@ Publisher string in the data (as written in each file): "Encyclopaedia Britannic
 | ID | Title (EN) | 標題（繁體中文） | Kind | URL | Verification note (EN) | Used in |
 | --- | --- | --- | --- | --- | --- | --- |
 | `b2-historycom-wwii` | World War II: Causes, Timeline, Key Battles, Facts & Legacy | 第二次世界大戰：起因、時序、關鍵戰役、史實與遺產 | reference | <https://www.history.com/articles/world-war-ii-history> | Verified HTTP 200 on 2026-10-17. Popular reference article; casualty figures cross-checked against The National WWII Museum's research starter. | Ch 04, casualties chart |
+| `b2-historycom-wwi-deaths` | How Many People Died in World War I? | 第一次世界大戰死了多少人？ | reference | <https://www.history.com/articles/how-many-people-died-in-world-war-i> | Verified HTTP 200 on 2026-10-27. Dedicated tally: slightly more than 9.7 million military dead and more than 6.8 million civilian dead. Added by the 2026-10-26 audit remediation. | Ch 04, casualties chart |
+| `b2-historycom-leningrad` | The Siege of Leningrad: When Hitler Used Starvation as a Weapon | 列寧格勒圍城：當希特勒以飢餓為武器 | reference | <https://www.history.com/articles/the-siege-of-leningrad> | Verified HTTP 200 on 2026-10-27. Estimates about 800,000 civilian deaths over the full siege. Added by the 2026-10-26 audit remediation. | Ch 04, hunger chart |
 
 ### Imperial War Museums · 帝國戰爭博物館
 
 | ID | Title (EN) | 標題（繁體中文） | Kind | URL | Verification note (EN) | Used in |
 | --- | --- | --- | --- | --- | --- | --- |
 | `a-iwm-wwi` | First World War — histories and collections | 第一次世界大戰——歷史與藏品 | institutional | <https://www.iwm.org.uk/> | Automated check blocked (HTTP 403, bot protection); canonical institutional URL; browser verification pending. | Ch 01, Ch 02, WWI timeline |
+| `b3-iwm-dday` | How D-Day Was Fought From The Sea | D-Day如何從海上打響 | institutional | <https://www.iwm.org.uk/history/second-world-war/d-day/how-d-day-was-fought-from-the-sea> | Automated check blocked (HTTP 403, bot protection); canonical institutional URL. Per the independent audit (S17), records more than 132,000 troops landed by sea on D-Day. Added by the 2026-10-26 audit remediation. | WWII timeline |
 
 ### International Committee of the Red Cross
 
@@ -145,6 +148,7 @@ Publisher string in the data (as written in each file): "The Avalon Project, Yal
 | `b1-avalon-wannsee` | The Wannsee Protocol, 20 January 1942 | 萬湖會議紀錄，1942年1月20日 | primary | <https://avalon.law.yale.edu/imt/wannsee.asp> | Verified HTTP 200 on 2026-10-17. | Ch 03 |
 | `b3-avalon-pact` | Treaty of Non-Aggression Between Germany and the USSR, 23 August 1939 | 德蘇互不侵犯條約（1939年8月23日） | primary | <https://avalon.law.yale.edu/20th_century/nonagres.asp> | Verified HTTP 200 on 2026-10-17. | WWII timeline |
 | `b3-avalon-wannsee` | Wannsee Protocol, 20 January 1942 | 萬湖會議議定書（1942年1月20日） | primary | <https://avalon.law.yale.edu/imt/wannsee.asp> | Verified HTTP 200 on 2026-10-17. | WWII timeline |
+| `b3-avalon-soviet-declaration` | Soviet Declaration of War on Japan, 8 August 1945 | 蘇聯對日宣戰聲明（1945年8月8日） | primary | <https://avalon.law.yale.edu/wwii/s4.asp> | Verified HTTP 200 on 2026-10-27. Statement dated 8 August 1945; state of war from the following day, 9 August. Added by the 2026-10-26 audit remediation. | WWII timeline |
 | `c-avalon-imt` | The International Military Tribunal for Germany — trial documents | 德國國際軍事法庭——審判文獻 | primary | <https://avalon.law.yale.edu/subject_menus/imt.asp> | Verified HTTP 200 on 2026-10-17. | Ch 05 |
 
 ### The Historical Journal (Cambridge Core)
@@ -185,6 +189,7 @@ Publisher string in the data (as written in each file): "The Avalon Project, Yal
 | ID | Title (EN) | 標題（繁體中文） | Kind | URL | Verification note (EN) | Used in |
 | --- | --- | --- | --- | --- | --- | --- |
 | `c-ohchr-genocide-convention` | Convention on the Prevention and Punishment of the Crime of Genocide (1948) — full text | 《防止及懲治種族滅絕罪公約》（1948）——全文 | primary | <https://www.ohchr.org/en/instruments-mechanisms/instruments/convention-prevention-and-punishment-crime-genocide> | Automated check blocked (HTTP 403, bot protection); canonical institutional URL; browser verification pending. | Ch 05 |
+| `c-un-treaty-genocide` | Convention on the Prevention and Punishment of the Crime of Genocide — status of the treaty | 《防止及懲治種族滅絕罪公約》——條約現況 | primary | <https://treaties.un.org/pages/ViewDetails.aspx?chapter=4&clang=_en&mtdsg_no=IV-1&src=TREATY> | Verified HTTP 200 on 2026-10-27. Records adoption 9 December 1948 and entry into force 12 January 1951. Added by the 2026-10-26 audit remediation. | Ch 05 |
 
 ### United States Holocaust Memorial Museum · 美國大屠殺紀念博物館
 
@@ -192,8 +197,35 @@ Publisher string in the data (as written in each file): "The Avalon Project, Yal
 | --- | --- | --- | --- | --- | --- | --- |
 | `b1-ushmm-learn` | Learn — the Holocaust and the Museum's educational resources | 「Learn」——大屠殺與該館教育資源入口 | institutional | <https://www.ushmm.org/learn> | Verified HTTP 200 on 2026-10-17. | Ch 03 |
 | `b2-ushmm-learn` | Holocaust Encyclopedia — Learn (introduction to the Holocaust) | 大屠殺百科——學習資源（大屠殺概覽） | institutional | <https://www.ushmm.org/learn> | Verified HTTP 200 on 2026-10-17. | Ch 04, holocaust chart |
+| `b3-ushmm-warsaw` | Warsaw Ghetto Uprising | 華沙猶太區起義 | institutional | <https://encyclopedia.ushmm.org/content/en/article/warsaw-ghetto-uprising> | Direct check blocked from this environment (connection timeout); content verified by the independent audit (S08) via retrieved text. Distinguishes about 7,000 killed, about 7,000 deported to Treblinka, and about 42,000 sent to forced-labor camps and Lublin/Majdanek. Added by the 2026-10-26 audit remediation. | WWII timeline |
 | `b3-ushmm-learn` | Learn — Holocaust education resources | 學習資源——認識大屠殺 | institutional | <https://www.ushmm.org/learn> | Verified HTTP 200 on 2026-10-17. | WWII timeline |
 | `c-ushmm-learning` | Learn — Holocaust Encyclopedia and teaching resources | Learn——大屠殺百科與教學資源 | institutional | <https://www.ushmm.org/learn> | Verified HTTP 200 on 2026-10-17. | Ch 05 |
+
+### Central European University — Research (M. E. Cox)
+
+| ID | Title (EN) | 標題（繁體中文） | Kind | URL | Verification note (EN) | Used in |
+| --- | --- | --- | --- | --- | --- | --- |
+| `b2-cox-blockade` | The blockade in the First World War (2024) | 第一次世界大戰的封鎖（2024） | scholarly | <https://research.ceu.edu/en/publications/the-blockade-in-the-first-world-war> | Verified HTTP 200 on 2026-10-27. Scholarly survey summarizing excess civilian death estimates of some 424,000–763,000 attributed to the wartime blockade. Added by the 2026-10-26 audit remediation. | Ch 04, hunger chart |
+
+### Hiroshima City / visual archives of the atomic bombing damage
+
+| ID | Title (EN) | 標題（繁體中文） | Kind | URL | Verification note (EN) | Used in |
+| --- | --- | --- | --- | --- | --- | --- |
+| `b1-hiroshima-archives` | Atomic Bomb Damage — damage overview (1976 city estimate submitted to the UN) | 原爆災害——災害概要（1976年向聯合國提交的廣島市估計） | institutional | <https://visual-archives-hiroshima.jp/en/damage/> | Verified HTTP 200 on 2026-10-27. Records Hiroshima's estimate of about 140,000 (±10,000) deaths by the end of 1945. Added by the 2026-10-26 audit remediation. | Ch 03, WWII timeline |
+| `b3-hiroshima-archives` | Atomic Bomb Damage — damage overview | 原爆災害——災害概要 | institutional | <https://visual-archives-hiroshima.jp/en/damage/> | Verified HTTP 200 on 2026-10-27. Same page as `b1-hiroshima-archives`, registered separately for the timeline's own registry. Added by the 2026-10-26 audit remediation. | WWII timeline |
+
+### Nagasaki National Peace Memorial Hall for the Atomic Bomb Victims
+
+| ID | Title (EN) | 標題（繁體中文） | Kind | URL | Verification note (EN) | Used in |
+| --- | --- | --- | --- | --- | --- | --- |
+| `b1-nagasaki-memorial` | Floor map — record of Nagasaki A-bomb damage | 樓層導覽——長崎原爆災害紀錄 | institutional | <https://www.peace-nagasaki.go.jp/en/floormap> | Verified HTTP 200 on 2026-10-27. Records about 70,000 deaths by the end of December 1945. Added by the 2026-10-26 audit remediation. | Ch 03, WWII timeline |
+| `b3-nagasaki-memorial` | Floor map — record of Nagasaki A-bomb damage | 樓層導覽——長崎原爆災害紀錄 | institutional | <https://www.peace-nagasaki.go.jp/en/floormap> | Verified HTTP 200 on 2026-10-27. Same page as `b1-nagasaki-memorial`, registered separately for the timeline's own registry. Added by the 2026-10-26 audit remediation. | WWII timeline |
+
+### Naval History and Heritage Command (Samuel J. Cox)
+
+| ID | Title (EN) | 標題（繁體中文） | Kind | URL | Verification note (EN) | Used in |
+| --- | --- | --- | --- | --- | --- | --- |
+| `b3-nhhc-midway` | H-006-4: The Victory at Midway | H-006-4：中途島的勝利 | institutional | <https://www.history.navy.mil/about-us/leadership/director/directors-corner/h-grams/h-gram-006/h-006-4.html> | Direct check blocked from this environment (DNS); content verified by the independent audit (S18). States that, contrary to most early accounts, Japanese flight decks were not packed with aircraft when the dive bombers struck. Added by the 2026-10-26 audit remediation. | WWII timeline |
 
 ### Westminster Abbey · 西敏寺
 
@@ -240,7 +272,7 @@ Statuses below combine the content agent's verification (worklog Task 4-c, 2026-
 | volunteer | The National Archives (UK) | The National Archives (UK) — get involved (volunteering and projects) | <https://www.nationalarchives.gov.uk/about/get-involved/> | HTTP 200 |
 | volunteer | Imperial War Museums | Imperial War Museums — museums, collections, and public programmes | <https://www.iwm.org.uk/> | HTTP 403 (bot protection) — canonical root, browser verification pending |
 | volunteer | United Nations | United Nations — how the UN works and how to engage | <https://www.un.org/en/> | HTTP 200 |
-| volunteer | UNESCO | UNESCO — Global Citizenship Education | <https://www.unesco.org/en/education/global-citizenship-education> | HTTP 200 (JS-rendered SPA) |
+| volunteer | UNESCO | UNESCO — Global Citizenship Education: what you need to know | <https://www.unesco.org/en/global-citizenship-peace-education/need-know> | Old path returned HTTP 404 in the 2026-10-26 audit; replaced with the current page, verified HTTP 200 on 2026-10-27 |
 | civic | Office of the United Nations High Commissioner for Human Rights (OHCHR) | OHCHR — human rights instruments and monitoring | <https://www.ohchr.org/> | HTTP 403 (bot protection) — canonical root, browser verification pending |
 | civic | United Nations | The United Nations and the Rule of Law | <https://www.un.org/ruleoflaw/> | HTTP 200 |
 | civic | International Committee of the Red Cross | ICRC — the Geneva Conventions and their Commentaries | <https://www.icrc.org/en/law-and-policy/geneva-conventions-and-their-commentaries> | HTTP 200 |

@@ -103,9 +103,10 @@ export const ui = {
     snapshotLabel: { en: "Snapshot", zh: "時點" } satisfies Localized,
     wwiButton: { en: "First World War", zh: "第一次世界大戰" } satisfies Localized,
     wwiiButton: { en: "Second World War", zh: "第二次世界大戰" } satisfies Localized,
-    legendAllies: { en: "Allied / Entente powers", zh: "協約國陣營" } satisfies Localized,
+    legendAllies: { en: "Allied / Entente powers", zh: "盟國／協約國陣營" } satisfies Localized,
     legendCentral: { en: "Central Powers", zh: "同盟國（三國同盟）" } satisfies Localized,
     legendAxis: { en: "Axis powers", zh: "軸心國" } satisfies Localized,
+    legendOccupied: { en: "Under Axis occupation", zh: "軸心占領下" } satisfies Localized,
     legendNeutral: { en: "Neutral / other", zh: "中立或其他" } satisfies Localized,
     viewTable: { en: "View participants as table", zh: "以表格檢視參戰方" } satisfies Localized,
     hideTable: { en: "Hide table", zh: "收合表格" } satisfies Localized,
@@ -137,14 +138,15 @@ export const ui = {
   },
   chart: {
     rangeNote: { en: "Range of estimates", zh: "估計區間" } satisfies Localized,
+    estimateNote: { en: "Approximate estimate", zh: "近似估計" } satisfies Localized,
     millions: { en: "millions", zh: "百萬" } satisfies Localized,
     scaleCaption: {
-      en: "Bars span documented min–max estimates · unit:",
-      zh: "長條橫跨文獻記載之最小至最大估計 · 單位：",
+      en: "Bars span attributed estimate ranges; ≈ markers mark single-source approximations · unit:",
+      zh: "長條橫跨具名來源的估計區間；≈ 標記為單一來源近似值 · 單位：",
     } satisfies Localized,
     dataNote: {
-      en: "Estimates differ across sources; bars show documented ranges, not precise counts.",
-      zh: "各來源估計不盡相同；長條呈現文獻區間，並非精確計數。",
+      en: "Estimates differ across sources; bars show attributed ranges and ≈ markers single-source approximations — never precise counts.",
+      zh: "各來源估計不盡相同；長條呈現具名區間、≈ 標記為單一來源近似值——絕非精確計數。",
     } satisfies Localized,
     // Persistent selection panel (mobile chart interaction fix): the panel
     // below each chart replaces the floating tooltip as the primary way to

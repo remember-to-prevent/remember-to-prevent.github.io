@@ -40,8 +40,8 @@ export const ch6: ChapterContent = {
       heading: { en: "An honest starting point", zh: "誠實的起點" },
       paragraphs: [
         {
-          en: "No individual action — not a donation, not a vote, not a share, not a vigil — has ever prevented a war on its own, and this page will not tell you otherwise. Wars are decided in cabinet rooms, general staffs, and economies; their prevention, where it has happened, has been the work of institutions, alliances, and whole publics over decades. Pretending otherwise is how remembrance turns into self-congratulation.",
-          zh: "沒有任何個人行動——捐款、投票、分享或守夜——曾經單獨阻止一場戰爭，本頁也不會對你說相反的話。戰爭是在內閣會議室、參謀本部與經濟體系裡被決定的；預防若曾發生，那是機構、聯盟與整體公眾數十年工作的成果。假裝不是如此，追思就會變成自我恭賀。",
+          en: "No individual action — not a donation, not a vote, not a share, not a vigil — can guarantee that a war is prevented, and this page will not tell you otherwise. Wars are decided in cabinet rooms, general staffs, and economies; their prevention, where it has happened, has been the work of institutions, alliances, and whole publics over decades. Pretending otherwise is how remembrance turns into self-congratulation.",
+          zh: "沒有任何個人行動——捐款、投票、分享或守夜——能夠保證阻止一場戰爭，本頁也不會對你說相反的話。戰爭是在內閣會議室、參謀本部與經濟體系裡被決定的；預防若曾發生，那是機構、聯盟與整體公眾數十年工作的成果。假裝不是如此，追思就會變成自我恭賀。",
         },
         {
           en: "Responsibility is layered, and mixing the layers helps no one. States carry duties no citizen can discharge alone; institutions keep or squander what citizens build; communities decide whether pressure lands on the vulnerable or the powerful; individuals answer for their own obedience, silence, and small refusals. A person who accepts the real scale of their action is more use than one performing a scale they do not have.",

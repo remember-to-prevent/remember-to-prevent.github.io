@@ -48,10 +48,13 @@ for (const f of world.features) {
   }
 }
 
+// Category colors (audit RTP-F001/F003): allied bronze, axis deep red,
+// occupied muted clay (control, not allegiance), neutral pale sand.
 const SIDE_COLORS = {
   allies: "#96774c",
   central: "#7e2d26",
   axis: "#7e2d26",
+  occupied: "#a97e6f",
   neutral: "#ddd3bb",
 } as const;
 
@@ -59,6 +62,7 @@ const SIDE_COLORS_INK = {
   allies: "#b08d5b",
   central: "#a93f2b",
   axis: "#a93f2b",
+  occupied: "#b98a77",
   neutral: "#3a352e",
 } as const;
 
@@ -66,6 +70,7 @@ const SIDE_SELECTED_INK = {
   allies: "#d3ab6e",
   central: "#c25238",
   axis: "#c25238",
+  occupied: "#d9a892",
   neutral: "#57503f",
 } as const;
 
@@ -80,7 +85,9 @@ function sideLabelOf(
       ? t(ui.map.legendCentral)
       : side === "axis"
         ? t(ui.map.legendAxis)
-        : t(ui.map.legendNeutral);
+        : side === "occupied"
+          ? t(ui.map.legendOccupied)
+          : t(ui.map.legendNeutral);
 }
 
 /**
@@ -320,11 +327,18 @@ export function TheatersMap({ tone = "ink" }: { tone?: "paper" | "ink" }) {
         />
       )}
 
-      {/* Legend */}
+      {/* Legend — swatches for the categories present in this snapshot
+          (WWII adds 'Under Axis occupation'; WWI has none). */}
       <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
-        <LegendSwatch color={ink ? SIDE_COLORS_INK.allies : SIDE_COLORS.allies} label={t(ui.map.legendAllies)} />
-        <LegendSwatch color={ink ? SIDE_COLORS_INK[enemySide] : SIDE_COLORS[enemySide]} label={war === "wwi" ? t(ui.map.legendCentral) : t(ui.map.legendAxis)} />
-        <LegendSwatch color={ink ? SIDE_COLORS_INK.neutral : SIDE_COLORS.neutral} label={t(ui.map.legendNeutral)} />
+        {( ["allies", enemySide, "occupied", "neutral"] as const )
+          .filter((group) => snapshot.participants.some((p) => p.side === group))
+          .map((group) => (
+            <LegendSwatch
+              key={group}
+              color={ink ? SIDE_COLORS_INK[group] : SIDE_COLORS[group]}
+              label={sideLabel(group)}
+            />
+          ))}
       </div>
 
       {/* Persistent selection panel (Task 04) — country list + details.
@@ -350,7 +364,7 @@ export function TheatersMap({ tone = "ink" }: { tone?: "paper" | "ink" }) {
               <option value="" className="bg-ink-raised text-stone-light">
                 {t(ui.map.selectCountryPlaceholder)}
               </option>
-              {(["allies", enemySide, "neutral"] as const).map((group) => {
+              {((["allies", enemySide, "occupied", "neutral"] as const)).map((group) => {
                 const members = snapshot.participants.filter((p) => p.side === group);
                 if (members.length === 0) return null;
                 return (
