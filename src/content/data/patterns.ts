@@ -66,8 +66,8 @@ export const patterns: PatternCard[] = [
     id: "institutional-erosion",
     title: { en: "Institutional erosion", zh: "制度侵蝕" },
     historical: {
-      en: "Germany's courts, press, and universities were not abolished overnight; they were hollowed. The Enabling Act of 23 March 1933 let the cabinet legislate by decree; Jewish and anti-Nazi judges, journalists, and professors were dismissed under the April 1933 civil service law; a regime-controlled publishing trust absorbed newspaper after newspaper. Each step looked procedural, and each made the next one smaller.",
-      zh: "德國的法院、新聞與大學並未在一夜之間被廢除；它們是被逐步掏空的。1933年3月23日的《授權法》讓內閣得以命令立法；依1933年4月的公務員法，猶太籍與反納粹的法官、記者與教授遭到辭退；由政權控制的出版集團，一份接一份地併吞報紙。每一步看來都像程序問題，而每一步都讓下一步顯得更小。",
+      en: "Germany's courts, press, and universities were not abolished overnight; they were hollowed. The Enabling Act of 23 March 1933 let the cabinet legislate by decree; Jewish and anti-Nazi judges, professors, and civil servants were dismissed under the April 1933 civil service law; the Editors Law of 4 October 1933 separately drove Jews and political opponents out of journalism; and a regime-controlled publishing trust absorbed newspaper after newspaper. Each step looked procedural, and each made the next one smaller.",
+      zh: "德國的法院、新聞與大學並未在一夜之間被廢除；它們是被逐步掏空的。1933年3月23日的《授權法》讓內閣得以命令立法；依1933年4月的公務員法，猶太籍與反納粹的法官、教授與公務員遭到辭退；1933年10月4日的《編輯法》另將猶太人與政治反對者逐出新聞業；由政權控制的出版集團，一份接一份地併吞報紙。每一步看來都像程序問題，而每一步都讓下一步顯得更小。",
     },
     today: {
       en: "Questions to ask: Are checks on power being described as obstacles to the majority's will? Do rules actually bind the powerful, or only the inconvenient? Which institution near me is being quietly repurposed?",

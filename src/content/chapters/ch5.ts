@@ -66,7 +66,7 @@ export const ch5: ChapterContent = {
           en: "Documented sequence: the Law for the Restoration of the Professional Civil Service (7 April 1933) removed Jews and political opponents from Germany's civil service within months of the regime taking office. Exclusion entered through the paperwork of an experienced bureaucracy — not through open violence first.",
           zh: "有案可查的序列：《公職恢復法》（1933年4月7日）在政權上台數月之內，便將猶太人與政治異議者逐出德國公務體系。排除最先穿過的，是一個熟練官僚體系的公文，而不是公開的暴力。",
         },
-        citationIds: ["c-ushmm-learning"],
+        citationIds: ["c-ushmm-learning", "c-un-treaty-genocide"],
       },
       citationIds: ["c-ushmm-learning"],
     },
@@ -102,8 +102,8 @@ export const ch5: ChapterContent = {
           zh: "1945年11月，盟國把納粹政權倖存的領導層送上紐倫堡的國際軍事法庭——史稱紐倫堡審判。法庭審判了二十二位首要人物；十二人判處死刑，三人無罪開釋。更深的遺產在法理：不只國家，個人也可能在國際法之下被究責；而「奉命行事」被裁定為酌量因素，而非免責理由。審判並不完美——勝者審判敗者，盟軍自身的作為並不在案卷之內——這些界線至今仍是法律學者爭論的題目。存續下來的原則是：職位不能洗白責任。",
         },
         {
-          en: "Within a few years, that principle was written into instruments still in force. The Universal Declaration of Human Rights, adopted by the UN General Assembly on 10 December 1948, translated the experience of “barbarous acts” into a common standard of rights; the Convention on the Prevention and Punishment of the Crime of Genocide, adopted the previous day, gave a legal name — coined by Raphael Lemkin — to a crime the world had failed to name in time; and the four Geneva Conventions of 1949, now ratified by every state, codified protections for the wounded, prisoners of war, and civilians. None of these texts prevented later atrocities by themselves. They made it harder to claim that no rules existed.",
-          zh: "短短數年之間，這項原則被寫入至今仍然生效的文書。1948年12月10日聯合國大會通過的《世界人權宣言》，把「野蠻行為」的經驗翻譯成權利的共同標準；前一日通過的《防止及懲治種族滅絕罪公約》，為世界來不及命名的罪行補上了法律名稱——由拉斐爾．萊姆金（Raphael Lemkin）鑄造；1949年的四部《日內瓦公約》——如今已獲所有國家批准——則把對傷者、戰俘與平民的保護寫成法典。這些文本沒有一部能憑自身阻止後來的暴行；它們做到的，是讓「世上沒有規則可言」這句話更難說出口。",
+          en: "Within a few years, that principle was written into instruments of different legal force. The Universal Declaration of Human Rights — adopted by the UN General Assembly as a declaration on 10 December 1948, not a binding treaty — translated the experience of “barbarous acts” into a common standard of rights; the Convention on the Prevention and Punishment of the Crime of Genocide, adopted the previous day and entered into force on 12 January 1951, gave a legal name — coined by Raphael Lemkin — to a crime the world had failed to name in time; and the four Geneva Conventions of 1949, now ratified by every state, codified protections for the wounded, prisoners of war, and civilians. The declaration and the treaties differ in legal form and effect. None of these texts prevented later atrocities by themselves. They made it harder to claim that no rules existed.",
+          zh: "短短數年之間，這項原則被寫入法律效力不同的文書。1948年12月10日聯合國大會以宣言形式通過的《世界人權宣言》——並非具拘束力的條約——把「野蠻行為」的經驗翻譯成權利的共同標準；前一日通過的《防止及懲治種族滅絕罪公約》於1951年1月12日生效，為世界來不及命名的罪行補上了法律名稱——由拉斐爾．萊姆金（Raphael Lemkin）鑄造；1949年的四部《日內瓦公約》——如今已獲所有國家批准——則把對傷者、戰俘與平民的保護寫成法典。宣言與條約的法律形式與效力各不相同。這些文本沒有一部能憑自身阻止後來的暴行；它們做到的，是讓「世上沒有規則可言」這句話更難說出口。",
         },
         {
           en: "Western Europe attempted a guardrail of a different kind: economic interdependence. The Schuman Declaration of 9 May 1950 proposed pooling coal and steel so that war between France and Germany would become “not merely unthinkable, but materially impossible.” Historians treat the resulting European project with more care than its anniversary speeches do: peace also rested on NATO, the realities of occupation, nuclear deterrence, and simple exhaustion; the community excluded Europe's east for decades; and member states fought colonial wars even while integrating. Education and memory did quieter work as well — Yad Vashem was mandated by Israeli law in 1953, the United States Holocaust Memorial Museum opened in 1993, and school curricula across Europe made the catastrophe a required subject of study.",
@@ -143,15 +143,15 @@ export const ch5: ChapterContent = {
           zh: "在機構層次，責任繫於法院、新聞、公務體系與大學——這些機構的設計目的，正是要在政治轉為敵意的時刻持續運作；它們的獨立性是一種基礎建設，不是撐住，就是失守。在國際層次，國家與國家之間的機構承擔著任何公民都無法獨力履行的義務：國際聯盟未能阻止1931年的滿洲或1935年的衣索比亞遭侵略；1945年的《聯合國憲章》與1948年的《種族滅絕公約》，正是在深知這項失敗之下寫成；依據2002年生效的《羅馬規約》設立的國際刑事法院，此後發出的起訴有些國家執行，有些國家無視。各層次相互咬合——機構由個人組成，個人的槓桿也仰賴機構——但它們不可互換，也各自對自己負責。",
         },
       ],
-      citationIds: ["c-un-udhr", "c-ohchr-genocide-convention"],
+      citationIds: ["c-un-udhr", "c-ohchr-genocide-convention", "c-un-treaty-genocide"],
     },
     {
       id: "honest-disagreements",
       heading: { en: "Where historians genuinely disagree", zh: "歷史學家真正分歧之處" },
       paragraphs: [
         {
-          en: "Serious disagreement is not a scandal; it is how a discipline stays honest. On the causes of the First World War, Fritz Fischer's 1961 thesis that Germany deliberately reached for world power has contended for decades with accounts — most prominently Christopher Clark's The Sleepwalkers (2012) — that distribute responsibility across all the great powers and emphasize contingency. On the Nazi war and the Holocaust, “intentionalist” readings that foreground ideology contend with “functionalist” readings that foreground institutional dynamics, while economic histories such as Adam Tooze's The Wages of Destruction (2006) trace how radicalization and economic desperation intertwined. These debates are about weighting — not about whether the crimes occurred.",
-          zh: "嚴肅的分歧並非醜聞；那是一門學科保持誠實的方式。關於一次大戰的成因，弗里茨．費雪（Fritz Fischer）1961年「德國蓄意奪取世界強權」的論點，與把責任分配給所有大國、強調偶然性的論述——最著名者如克里斯多福．克拉克（Christopher Clark）的《夢遊者》（The Sleepwalkers，2012）——已交鋒數十年。關於納粹的戰爭與大屠殺，強調意識形態的「意圖論」與強調制度動態的「功能論」長期對峙，而亞當．圖茲（Adam Tooze）的《The Wages of Destruction》（2006）等經濟史著作，則追蹤激進化與經濟絕望如何相互糾纏。這些辯論爭的是權重，不是罪行是否發生。",
+          en: "Serious disagreement is not a scandal; it is how a discipline stays honest. On the causes of the First World War, Fritz Fischer's 1961 thesis that Germany deliberately reached for world power has contended for decades with accounts — most prominently Christopher Clark's The Sleepwalkers (2012) — that distribute responsibility across all the great powers and emphasize contingency. On the Nazi war and the Holocaust, “intentionalist” readings that foreground ideology contend with “functionalist” readings that foreground institutional dynamics, while economic histories such as Adam Tooze's The Wages of Destruction (2006) trace how radicalization and economic desperation intertwined. These debates are about weighting — not about whether the crimes occurred. Each summary here compresses a far longer argument; the books themselves, with their evidence and page-level documentation, are the place to weigh them.",
+          zh: "嚴肅的分歧並非醜聞；那是一門學科保持誠實的方式。關於一次大戰的成因，弗里茨．費雪（Fritz Fischer）1961年「德國蓄意奪取世界強權」的論點，與把責任分配給所有大國、強調偶然性的論述——最著名者如克里斯多福．克拉克（Christopher Clark）的《夢遊者》（The Sleepwalkers，2012）——已交鋒數十年。關於納粹的戰爭與大屠殺，強調意識形態的「意圖論」與強調制度動態的「功能論」長期對峙，而亞當．圖茲（Adam Tooze）的《The Wages of Destruction》（2006）等經濟史著作，則追蹤激進化與經濟絕望如何相互糾纏。這些辯論爭的是權重，不是罪行是否發生。此處的每一段摘要都壓縮了遠為漫長的論證；要衡量這些論點，終究要回到原著本身——連同其證據與逐頁的註腳。",
         },
         {
           en: "The ethics of strategic bombing remain genuinely contested among serious historians and philosophers. The British and American air campaigns against German and Japanese cities — Hamburg in 1943, Dresden in 1945, the night of 9–10 March 1945 over Tokyo, and finally Hiroshima and Nagasaki — killed civilians on an enormous scale. The philosopher A. C. Grayling has argued that deliberate area bombing of civilian populations was morally indefensible; military historians such as Richard Overy have weighed the same record against the context of total war initiated by the Axis, the technology and intelligence actually available, and the alternatives commanders believed they faced. Engaging this debate does not soften what is established: who began these wars, and what was done in the occupied lands, are matters of record — the argument is over what the Allies were justified in doing in response.",
@@ -283,6 +283,21 @@ export const ch5: ChapterContent = {
       note: {
         en: "Automated check blocked (HTTP 403, bot protection); canonical institutional URL; browser verification pending.",
         zh: "自動檢查遭封鎖（HTTP 403，防爬蟲）；此為該機構正式頁面；待瀏覽器驗證。",
+      },
+    },
+    {
+      id: "c-un-treaty-genocide",
+      publisher: "United Nations Treaty Collection",
+      title: {
+        en: "Convention on the Prevention and Punishment of the Crime of Genocide — status of the treaty",
+        zh: "《防止及懲治種族滅絕罪公約》——條約現況",
+      },
+      url: "https://treaties.un.org/pages/ViewDetails.aspx?chapter=4&clang=_en&mtdsg_no=IV-1&src=TREATY",
+      kind: "primary",
+      accessDate: "2026-10-27",
+      note: {
+        en: "Verified HTTP 200 on 2026-10-27. Records adoption 9 December 1948 and entry into force 12 January 1951.",
+        zh: "2026-10-27 驗證 HTTP 200。記載1948年12月9日通過、1951年1月12日生效。",
       },
     },
     {

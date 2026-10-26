@@ -17,9 +17,10 @@ const nextConfig: NextConfig = {
   // Static export has no image optimization server (and the site uses no
   // next/image components today; kept for future-proofing, as in the reference).
   images: { unoptimized: true },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+  // No typescript.ignoreBuildErrors bypass: the source must type-check
+  // cleanly on its own merits (`bun run typecheck` / `bunx tsc --noEmit`),
+  // so a green build genuinely means a type-safe build. (Removed during the
+  // 2026-10-27 public-release sanitization after tsc was verified clean.)
   reactStrictMode: false,
 };
 

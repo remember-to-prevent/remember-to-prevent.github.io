@@ -36,8 +36,8 @@ export const ch3: ChapterContent = {
       heading: { en: "The unsettled post-1918 order", zh: "1918年後未竟的秩序" },
       paragraphs: [
         {
-          en: "The Treaty of Versailles ended the First World War and planted grievances that outlasted it. The war-guilt clause, reparations, lost territory, and imposed military limits were read in Germany as national humiliation — and the claim that the army had been stabbed in the back at home became a poisonous myth, blaming democrats, socialists, and Jews for a defeat suffered in the field. The settlement was too harsh to be accepted as legitimate by the defeated, yet too weak to be enforced against a state determined to overturn it.",
-          zh: "《凡爾賽條約》終結了第一次世界大戰，卻種下了比條約本身更長壽的怨懟。戰爭罪責條款與賠款、失土、被迫接受的軍備限制，在德國被視為國族羞辱——而「軍隊是在後方被人從背後捅了一刀」的說法，成為一則惡毒的神話，把戰場上的戰敗歸咎於民主派、社會主義者與猶太人。這項和局對戰敗者而言太過苛刻、難以視為正當；對一個決心推翻它的國家而言，卻又不夠有力、難以貫徹。",
+          en: "The armistice of November 1918 silenced the guns; the Treaty of Versailles — signed on 28 June 1919 and in force from 10 January 1920 — formally settled the war between Germany and its contracting parties, and planted grievances that outlasted it. The war-guilt clause, reparations, lost territory, and imposed military limits were read in Germany as national humiliation — and the claim that the army had been stabbed in the back at home became a poisonous myth, blaming democrats, socialists, and Jews for a defeat suffered in the field. The settlement was too harsh to be accepted as legitimate by the defeated, yet too weak to be enforced against a state determined to overturn it.",
+          zh: "1918年11月的停戰協定使炮火沉寂；《凡爾賽條約》——1919年6月28日簽署、1920年1月10日生效——正式處理德國與各締約方之間的戰爭狀態，卻種下了比條約本身更長壽的怨懟。戰爭罪責條款與賠款、失土、被迫接受的軍備限制，在德國被視為國族羞辱——而「軍隊是在後方被人從背後捅了一刀」的說法，成為一則惡毒的神話，把戰場上的戰敗歸咎於民主派、社會主義者與猶太人。這項和局對戰敗者而言太過苛刻、難以視為正當；對一個決心推翻它的國家而言，卻又不夠有力、難以貫徹。",
         },
         {
           en: "The League of Nations embodied a new idea — collective security, in which aggression against one member would be answered by all. But the League commanded no army of its own, its Council required unanimity to act, and the United States, whose president had proposed it, never joined. When Japan's Kwantung Army staged the Mukden railway incident and seized Manchuria in September 1931, the League's Lytton Report condemned the occupation — and Japan simply walked out of the League in 1933. No power was willing to reverse the conquest by force or embargo.",
@@ -151,8 +151,8 @@ export const ch3: ChapterContent = {
           zh: "北方隨即爆發冬季戰爭：1939年11月30日蘇聯進攻芬蘭，並為此被逐出國聯；在芬蘭於1940年3月割地求和之前，蘇聯付出的血價遠超世人預期。該年春天德國揮師西進——4月取丹麥與挪威，5月攻低地國家與法國。德軍穿越阿登的突擊包圍了盟軍；殘餘部隊自敦克爾克撤離；法國於1940年6月22日簽署停戰協定，維琪的威權合作政權在非占領區取代了共和國。",
         },
         {
-          en: "Britain fought on alone through 1940. The Battle of Britain (July–October 1940) was the first campaign fought entirely in the air, and the Royal Air Force's narrow denial of air superiority defeated the invasion threat. German bombing then turned on the cities themselves: the Blitz, from September 1940 to May 1941, killed tens of thousands of British civilians in London, Coventry, Liverpool, and other cities — a deliberate campaign of terror against homes. The same war would soon return to German and Japanese cities on a still greater scale, as the next section must record.",
-          zh: "英國於1940年獨力作戰。不列顛空戰（1940年7月至10月）是史上第一場完全在空中決勝的戰役，皇家空軍以微弱優勢保住制空權，粉碎了入侵威脅。德軍轟炸隨即轉向城市本身：1940年9月至1941年5月的「大轟炸」（the Blitz），在倫敦、考文垂、利物浦等城市造成數以萬計的英國平民死亡——這是一場針對家園的蓄意恐嚇。而同一場戰爭，不久之後也將以更大的規模還諸德國與日本的城市，下一節必須記下這一點。",
+          en: "After France's defeat, Britain carried on the war with its empire, Commonwealth partners and other Allied forces — among the RAF's pilots were airmen from Poland, Czechoslovakia, Canada, New Zealand and the occupied countries. The Battle of Britain (July–October 1940) was the first campaign fought entirely in the air, and the Royal Air Force's narrow denial of air superiority defeated the invasion threat. German bombing then turned on the cities themselves: the Blitz, from September 1940 to May 1941, killed tens of thousands of British civilians in London, Coventry, Liverpool, and other cities — a deliberate campaign of terror against homes. The same war would soon return to German and Japanese cities on a still greater scale, as the next section must record.",
+          zh: "法國戰敗後，英國與其帝國、英聯邦夥伴及其他盟軍共同持續作戰——皇家空軍的飛行員中，便有來自波蘭、捷克斯洛伐克、加拿大、紐西蘭與被占領歐洲的空勤人員。不列顛空戰（1940年7月至10月）是史上第一場完全在空中決勝的戰役，皇家空軍以微弱優勢保住制空權，粉碎了入侵威脅。德軍轟炸隨即轉向城市本身：1940年9月至1941年5月的「大轟炸」（the Blitz），在倫敦、考文垂、利物浦等城市造成數以萬計的英國平民死亡——這是一場針對家園的蓄意恐嚇。而同一場戰爭，不久之後也將以更大的規模還諸德國與日本的城市，下一節必須記下這一點。",
         },
       ],
       callout: {
@@ -182,15 +182,15 @@ export const ch3: ChapterContent = {
           zh: "針對城市的戰爭在各條戰線同時進行。德國曾轟炸華沙、鹿特丹、考文垂與倫敦；自1942年起，盟軍對德國的戰略轟炸——1943年漢堡的火焰風暴、1945年德勒斯登的毀滅——以及1945年起對日本城市的燃燒彈轟炸，以巨大的規模殺害平民，僅1945年3月9日至10日的東京一夜，便約有十萬人被燒死。轟炸城市究竟是縮短了戰爭，還是以過高的道德代價換來縮短，至今仍是歷史學家之間真實存在的辯論——那是關於戰爭「之內」的抉擇的辯論，永遠不能變成關於誰發動戰爭的辯論。這個區別至關重要：前者是仍在進行的學術問題；後者是已成定論的事實。",
         },
         {
-          en: "The atomic bombs dropped on Hiroshima and Nagasaki on 6 and 9 August 1945 killed tens of thousands at once — with combined deaths by the end of that year commonly estimated at roughly 110,000 to 210,000, as burns, injuries, and radiation continued their work. Japan announced surrender on 15 August, and the formal instrument was signed on 2 September 1945 aboard USS Missouri in Tokyo Bay. The deadliest war in human history — an estimated 70 to 85 million dead — was over. The interactive timeline below returns to these years event by event, from Manchuria to Tokyo Bay, because the sequence itself is evidence: how many warnings, how many exits, how many chances to act while the price of acting was still low.",
-          zh: "1945年8月6日與9日投於廣島與長崎的原子彈，瞬間造成數萬人死亡——燒灼傷、創傷與輻射持續發威，至該年年底，兩城合計死亡通常估計約在11萬至21萬人之間。日本於8月15日宣布投降，正式降書於1945年9月2日在東京灣的密蘇里號軍艦上簽署。人類史上最致命的戰爭——估計死亡七千萬至八千五百萬人——就此結束。下方互動時間軸將逐年逐事重返這些年，從滿洲到東京灣，因為「順序」本身就是證據：有多少警訊、多少出口、多少在行動代價仍然低廉時付諸行動的機會。",
+          en: "The atomic bombs dropped on Hiroshima and Nagasaki on 6 and 9 August 1945 killed tens of thousands at once, and the dying continued as burns, injuries, and radiation did their work. The two cities' deaths are estimated separately: by the end of 1945, Hiroshima's City estimate was about 140,000 (±10,000), while Nagasaki's national peace memorial hall records about 70,000 — different institutions, different methods; other research estimates differ, and none is a precise count. Japan announced surrender on 15 August, and the formal instrument was signed on 2 September 1945 aboard USS Missouri in Tokyo Bay. The deadliest war in human history — estimates of its dead range from about 60 to 85 million — was over. The interactive timeline below returns to these years event by event, from Manchuria to Tokyo Bay, because the sequence itself is evidence: how many warnings, how many exits, how many chances to act while the price of acting was still low.",
+          zh: "1945年8月6日與9日投於廣島與長崎的原子彈，瞬間造成數萬人死亡，燒灼傷、創傷與輻射持續奪命。兩市的死亡估計各自獨立：至1945年底，廣島市方估計約14萬人（誤差約1萬），長崎的國立追悼機構則記錄約7萬人——機構不同、方法不同；其他研究估計亦異，且皆非精確計數。日本於8月15日宣布投降，正式降書於1945年9月2日在東京灣的密蘇里號軍艦上簽署。人類史上最致命的戰爭——死亡估計約在6,000萬至8,500萬之間——就此結束。下方互動時間軸將逐年逐事重返這些年，從滿洲到東京灣，因為「順序」本身就是證據：有多少警訊、多少出口、多少在行動代價仍然低廉時付諸行動的機會。",
         },
       ],
       callout: {
         kind: "methodology",
         text: {
-          en: "How victim-group figures are estimated: the approximately six million Jewish dead is a convergent figure — census deficits, deportation and camp records, and survivor testimony all arrive near it, and major memorial institutions present it as the standard approximation. Figures for other victim groups carry wider documented ranges: hundreds of thousands of Roma and Sinti (commonly estimated 220,000–500,000); roughly a quarter of a million disabled people murdered in the “euthanasia” programs; and about 3.3 million of the 5.7 million Soviet prisoners of war who died in German captivity. The ranges mark the limits of documentation — never doubt of the crimes themselves.",
-          zh: "各受害群體的數字如何估計：約六百萬猶太遇難者是多方趨同的數字——人口普查缺額、遣送與集中營紀錄、倖存者證詞各自逼近此數，主要紀念機構亦以之作為標準概數。其他受害群體的數字則有較寬的文獻區間：羅姆人與辛提人以十萬計（常見估計為22萬至50萬）；在「安樂死」計畫中遇害的身心障礙者約二十五萬人；570萬名蘇聯戰俘中，約330萬人死於德國俘虜營。這些區間標記的是文獻的邊界——永遠不是對罪行本身的懷疑。",
+          en: "How victim-group figures are estimated: the approximately six million Jewish dead is a convergent figure — census deficits, deportation and camp records, and survivor testimony all arrive near it, and major memorial institutions present it as the standard approximation. Figures for other victim groups carry wider documented ranges: hundreds of thousands of Roma and Sinti — the USHMM's current estimate is at least 250,000 and possibly as many as 500,000; roughly a quarter of a million disabled people murdered in the “euthanasia” programs; and about 3.3 million of the 5.7 million Soviet prisoners of war who died in German captivity. The ranges mark the limits of documentation — never doubt of the crimes themselves.",
+          zh: "各受害群體的數字如何估計：約六百萬猶太遇難者是多方趨同的數字——人口普查缺額、遣送與集中營紀錄、倖存者證詞各自逼近此數，主要紀念機構亦以之作為標準概數。其他受害群體的數字則有較寬的文獻區間：羅姆人與辛提人以十萬計——美國大屠殺紀念博物館目前的估計為至少25萬人、可能多達50萬人；在「安樂死」計畫中遇害的身心障礙者約二十五萬人；570萬名蘇聯戰俘中，約330萬人死於德國俘虜營。這些區間標記的是文獻的邊界——永遠不是對罪行本身的懷疑。",
         },
         citationIds: ["b1-ushmm-learn"],
       },
@@ -200,6 +200,8 @@ export const ch3: ChapterContent = {
         "b1-avalon-wannsee",
         "b1-nww2m-auschwitz",
         "b1-nww2m-atomic",
+        "b1-hiroshima-archives",
+        "b1-nagasaki-memorial",
         "b1-nww2m-deaths",
         "b1-britannica-wwii",
       ],
@@ -309,6 +311,36 @@ export const ch3: ChapterContent = {
       note: {
         en: "Verified HTTP 200 on 2026-10-17.",
         zh: "2026-10-17 驗證 HTTP 200。",
+      },
+    },
+    {
+      id: "b1-hiroshima-archives",
+      publisher: "Hiroshima City / visual archives of the atomic bombing damage",
+      title: {
+        en: "Atomic Bomb Damage — damage overview (1976 city estimate submitted to the UN)",
+        zh: "原爆災害——災害概要（1976年向聯合國提交的廣島市估計）",
+      },
+      url: "https://visual-archives-hiroshima.jp/en/damage/",
+      kind: "institutional",
+      accessDate: "2026-10-27",
+      note: {
+        en: "Verified HTTP 200 on 2026-10-27. Records Hiroshima's estimate of about 140,000 (±10,000) deaths by the end of 1945.",
+        zh: "2026-10-27 驗證 HTTP 200。記載廣島至1945年底約14萬人（誤差約1萬）死亡的估計。",
+      },
+    },
+    {
+      id: "b1-nagasaki-memorial",
+      publisher: "Nagasaki National Peace Memorial Hall for the Atomic Bomb Victims",
+      title: {
+        en: "Floor map — record of Nagasaki A-bomb damage",
+        zh: "樓層導覽——長崎原爆災害紀錄",
+      },
+      url: "https://www.peace-nagasaki.go.jp/en/floormap",
+      kind: "institutional",
+      accessDate: "2026-10-27",
+      note: {
+        en: "Verified HTTP 200 on 2026-10-27. Records about 70,000 deaths by the end of December 1945.",
+        zh: "2026-10-27 驗證 HTTP 200。記載至1945年12月底約7萬人死亡。",
       },
     },
     {

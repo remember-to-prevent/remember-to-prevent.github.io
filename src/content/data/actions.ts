@@ -116,8 +116,8 @@ export const actions: ActionContent = {
           zh: "練習對語言而非對人表示異議：指出模式，不樹立敵人。",
         },
         {
-          en: "In one conversation this month, try a genuine question instead of a rebuttal — questions change more minds than counter-arguments do.",
-          zh: "本月在一場對話中，以真誠的提問代替反駁——問題改變人心的次數，多於反論。",
+          en: "In one conversation this month, try a genuine question instead of a rebuttal — it keeps the exchange going when another round of point-scoring would end it.",
+          zh: "本月在一場對話中，以真誠的提問代替反駁——當下一輪唇槍舌劍只會終結對話時，提問能讓交流繼續。",
         },
         {
           en: "When you correct something, do basic fact-checking first and cite the source you checked; a correction without a source is just another claim.",
@@ -214,8 +214,8 @@ export const actions: ActionContent = {
         },
       ],
       limits: {
-        en: "Humanitarian aid treats the symptoms of war, not its causes, and access can be closed at any border. Support it without illusion: it matters precisely because prevention has failed.",
-        zh: "人道救援處理戰爭的症狀而非病因，而且任一邊界都可能被封鎖。請在沒有幻覺的情況下支持它：它之所以重要，正因為預防已經失敗。",
+        en: "Humanitarian aid most often treats the symptoms of war rather than its causes, and access can be closed at any border. Support it without illusion: it matters precisely because prevention has failed.",
+        zh: "人道救援多數時候處理戰爭的症狀而非病因，而且任一邊界都可能被封鎖。請在沒有幻覺的情況下支持它：它之所以重要，正因為預防已經失敗。",
       },
     },
     {
@@ -277,16 +277,16 @@ export const actions: ActionContent = {
         },
         {
           label: {
-            en: "UNESCO — Global Citizenship Education",
-            zh: "UNESCO——全球公民教育",
+            en: "UNESCO — Global Citizenship Education: what you need to know",
+            zh: "UNESCO——全球公民與和平教育：基本介紹",
           },
-          url: "https://www.unesco.org/en/education/global-citizenship-education",
+          url: "https://www.unesco.org/en/global-citizenship-peace-education/need-know",
           publisher: "UNESCO",
         },
       ],
       limits: {
-        en: "Local dialogue rarely changes national trajectories, and one volunteer will not reverse institutional decay. But isolation demonstrably feeds radicalization, and cohesion is slow infrastructure that only accumulates.",
-        zh: "地方對話鮮少改變國家走向，一名志工也逆轉不了機構的衰敗。但孤立確實滋長激進化，而凝聚是緩慢的基礎建設——只能累積，無法速成。",
+        en: "Local dialogue rarely changes national trajectories, and one volunteer will not reverse institutional decay. But isolation can feed radicalization, and cohesion is slow infrastructure that only accumulates.",
+        zh: "地方對話鮮少改變國家走向，一名志工也逆轉不了機構的衰敗。但孤立可能滋長激進化，而凝聚是緩慢的基礎建設——只能累積，無法速成。",
       },
     },
     {

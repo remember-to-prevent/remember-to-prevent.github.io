@@ -14,6 +14,9 @@ import {
   b2UshmmLearn,
   b2YadvashemHolocaust,
   b2YadvashemNames,
+  b2HistorycomWwiDeaths,
+  b2HistorycomLeningrad,
+  b2CoxBlockade,
 } from "@/content/data/casualties";
 
 /**
@@ -38,8 +41,8 @@ export const ch4: ChapterContent = {
   },
   lead: [
     {
-      en: "Most of the dead of the First World War were soldiers. In the Second World War, the majority of the dead were civilians — bombed, starved, persecuted, displaced. Behind every aggregate number are families, names, and unfinished lives.",
-      zh: "第一次世界大戰的死難者多為軍人。到了第二次世界大戰，死難者的大多數是平民——被轟炸、被餓死、被迫害、被迫流離。每一個總計數字背後，都是家庭、名字與未竟的人生。",
+      en: "The First World War's dead were counted above all in soldiers' graves — yet even there, civilians died in numbers the world was still learning to count. In the Second World War, the majority of the dead were civilians — bombed, starved, persecuted, displaced. Behind every aggregate number are families, names, and unfinished lives.",
+      zh: "第一次世界大戰的死難，首先以軍人的墳墓計數——然而即使在那場戰爭，平民死亡也已達到世人仍在學習計數的規模。到了第二次世界大戰，死難者的大多數是平民——被轟炸、被餓死、被迫害、被迫流離。每一個總計數字背後，都是家庭、名字與未竟的人生。",
     },
     {
       en: "This chapter counts what can be counted — honestly, and in ranges — and remembers what cannot. It moves from the statistics, through the Holocaust's accounting and the loss of home, to the wounds that outlived the fighting and the hunger that wars made.",
@@ -60,8 +63,8 @@ export const ch4: ChapterContent = {
           zh: "因此，下方圖表從不顯示單一總數。每個長條橫跨由具名來源記載的最小值與最大值，每個數列都附有定義、地理範圍與附註說明。學術意見分歧之處，分歧被畫了出來，而非被藏起來。",
         },
         {
-          en: "One comparison, though, survives almost every definition: in the First World War the majority of the dead were soldiers; in the Second World War the majority were civilians. The National WWII Museum's research starter counts roughly 45 million civilian deaths against about 15 million battle deaths, and HISTORY's reference article states plainly that of the war's 60 to 80 million dead, “most were civilians.” Whatever number you prefer, the shape of the tragedy is the same.",
-          zh: "然而有一項比較幾乎經得起各種定義的檢驗：第一次世界大戰的死難者多為軍人；第二次世界大戰的死難者多為平民。國家二戰博物館的研究入門資料估計平民死亡約4,500萬，相對於戰鬥陣亡約1,500萬；HISTORY的參考文章則明言，在這場戰爭6,000萬至8,000萬死者中，「大多數是平民」。無論你採信哪個數字，悲劇的形狀都是一樣的。",
+          en: "One comparison, though, needs care rather than a slogan. In the First World War, the balance between military and civilian dead shifts with every definition — whether epidemic disease and blockade-related deaths are counted decides it. In the Second World War, the estimates discussed in this chapter agree that the majority of the dead were civilians: HISTORY's overview gives 50–55 million civilian deaths against 21–25 million military deaths.",
+          zh: "然而有一項比較需要的是審慎，而非口號。在第一次世界大第一次世界大戰，軍人與平民死亡的相對比例隨定義而變——疫病與封鎖相關死亡是否計入，便足以左右結果。在第二次世界大戰，本章引用的各項估計一致以平民為死難者的大多數：HISTORY 概述給出平民死亡5,000萬至5,500萬，相對於軍人死亡2,100萬至2,500萬。",
         },
       ],
       callout: {
@@ -78,12 +81,12 @@ export const ch4: ChapterContent = {
       heading: { en: "The dead and the wounded", zh: "死者與傷者" },
       paragraphs: [
         {
-          en: "The First World War's military dead are commonly cited at around nine to ten million. Its civilian toll is harder to fix, because it shades into epidemiology: Britannica attributes as many as roughly thirteen million civilian deaths to the war when epidemic disease is included — more than the military dead — while narrower tallies that exclude the 1918 influenza pandemic settle near five to ten million. The chart below follows the narrower convention and says so in its note.",
-          zh: "第一次世界大戰的軍人陣亡常見引用約900萬至1,000萬。平民死亡則較難定奪，因為它與流行病學交疊：若計入疫病死亡，Britannica估計戰爭相關平民死亡可達約1,300萬——多於軍人陣亡；若排除1918年流感大流行，較窄的統計則落在約500萬至1,000萬。下圖採用較窄的慣例，並在附註中說明。",
+          en: "The First World War's military dead are estimated at about 8.5 million by Britannica's overview — soldiers dead from wounds and disease — while HISTORY's dedicated tally puts them slightly above 9.7 million; the chart spans those two attributed endpoints, and its note says so. The civilian toll is harder to fix, because it shades into epidemiology: HISTORY's tally records more than 6.8 million civilian deaths, while Britannica attributes roughly thirteen million civilian deaths to the war when the 1918 influenza pandemic is included. The chart's civilian endpoints are different definitions, not one interval — and they must not be read as a confidence band.",
+          zh: "第一次世界大戰的軍人死亡，Britannica 概述估計約850萬——士兵死於傷病；HISTORY 專文統計則略高於970萬。下圖橫跨這兩個具名端點，並在附註中說明。平民死亡較難定奪，因為它與流行病學交疊：HISTORY 統計平民死亡逾680萬；Britannica 在計入1918年流感大流行時，則估計戰爭相關平民死亡約1,300萬。下圖平民兩端是不同定義，而非同一區間——不應解讀為信賴區間。",
         },
         {
-          en: "The Second World War multiplied every figure, and disagreement multiplied with it. HISTORY's reference article gives 60 to 80 million total dead; the National WWII Museum's research-starter table lists about 15 million battle deaths, 25 million battle wounded and 45 million civilian deaths, cautioning that worldwide casualty estimates “vary widely”; broader compilations that include famine, disease and forced labour reach toward 85 million. The chart below follows that broader convention — military deaths around 21–25.5 million, civilian deaths around 50–56 million — with each series' definition stated in its note.",
-          zh: "第二次世界大戰使所有數字倍增，分歧也隨之倍增。HISTORY的參考文章給出總死亡6,000萬至8,000萬；國家二戰博物館的研究入門表列陣亡約1,500萬、戰鬥負傷約2,500萬、平民死亡約4,500萬，並提醒全球傷亡估計「差異極大」；若將饑荒、疫病與強制勞動計入，較寬的彙編可達8,500萬。下圖採用較寬的慣例——軍人陣亡約2,100萬至2,550萬、平民死亡約5,000萬至5,600萬——各數列的定義均見於附註。",
+          en: "The Second World War multiplied every figure, and disagreement multiplied with it. HISTORY's overview gives approximately 21–25 million military deaths and 50–55 million civilian deaths — around 60 to 80 million total dead — while broader compilations that include famine, disease and forced labour reach toward 85 million. The National WWII Museum's research starter lists about 15 million battle deaths and 25 million battle wounded in narrower categories, but its own page contains internally inconsistent totals, so it is cited here only for those narrower categories, never to assemble a global total. The chart below follows HISTORY's categories — military deaths around 21–25 million, civilian deaths around 50–55 million — with each series' definition stated in its note.",
+          zh: "第二次世界大戰使所有數字倍增，分歧也隨之倍增。HISTORY 概述給出軍人死亡約2,100萬至2,500萬、平民死亡約5,000萬至5,500萬——合計約6,000萬至8,000萬；若將饑荒、疫病與強制勞動計入，較寬的彙編可達8,500萬。國家二戰博物館的研究入門表以較窄類別列陣亡約1,500萬、戰鬥負傷約2,500萬，但該頁自身存在內部不一致的數字，故僅就這些較窄類別引用，絕不用以拼組全球總數。下圖採用 HISTORY 的分類——軍人死亡約2,100萬至2,500萬、平民死亡約5,000萬至5,500萬——各數列的定義均見於附註。",
         },
         {
           en: "Beyond the dead stand the wounded. The museum's research starter lists some 25 million battle wounded in the Second World War alone; the First World War left millions more, many permanently disabled, whose rehabilitation stretched pension systems and reshaped family life for a generation. The dead are counted more easily than the maimed; both belong in any honest accounting.",
@@ -97,12 +100,13 @@ export const ch4: ChapterContent = {
       heading: { en: "The Holocaust's human accounting", zh: "大屠殺：從數字到名字" },
       paragraphs: [
         {
-          en: "The Holocaust has its own accounting, kept by institutions built for that purpose. The United States Holocaust Memorial Museum defines it as the “systematic, state-sponsored persecution and murder of six million Jews by the Nazi regime and its allies and collaborators,” and Yad Vashem in Jerusalem works from the same figure. The chart below shows the documented range around six million: the width of the bar is a property of counting, not of doubt.",
-          zh: "大屠殺有自己的清點方式，由專為此而立的機構承擔。美國大屠殺紀念博物館將其定義為「納粹政權及其盟友與協作者對六百萬猶太人有系統、由國家支持的迫害與謀殺」；耶路撒冷的亞德瓦舍姆亦採用同一概數。下圖呈現圍繞六百萬的文獻區間：長條的寬度源於清點工作，而非對罪行的懷疑。",
+          en: "The Holocaust has its own accounting, kept by institutions built for that purpose. The United States Holocaust Memorial Museum defines it as the “systematic, state-sponsored persecution and murder of six million Jews by the Nazi regime and its allies and collaborators,” and Yad Vashem in Jerusalem works from the same figure. The chart below presents approximately six million as a point estimate — the standard institutional approximation; there is no evidentiary interval to draw, and none is needed.",
+          zh: "大屠殺有自己的清點方式，由專為此而立的機構承擔。美國大屠殺紀念博物館將其定義為「納粹政權及其盟友與協作者對六百萬猶太人有系統、由國家支持的迫害與謀殺」；耶路撒冷的亞德瓦舍姆亦採用同一概數。下圖以單點呈現約六百萬——機構採用的標準概數；沒有需要描繪的證據區間，也無需增設。",
+
         },
         {
-          en: "Jews were the centre of the Nazi genocide, but not its only victims. Some 3.3 million Soviet prisoners of war died in German custody, most of starvation, exposure and shooting — a mortality no other captured population faced. The genocide of the Roma and Sinti, the Porajmos, was documented so deliberately incompletely that scholars can bound it only at roughly 200,000 to 500,000 dead. Around a quarter of a million people with disabilities were murdered in the “euthanasia” programs and their successors, and between 1.8 and 2 million non-Jewish Polish civilians were killed under occupation.",
-          zh: "猶太人是納粹種族滅絕的核心對象，但不是唯一的受難者。約330萬蘇聯戰俘死於德方看守之下，多因饑餓、寒凍與槍殺——這是其他被俘群體未曾經歷的死亡率。對羅姆人與辛提人的滅絕（Porajmos）因文獻遭蓄意銷毀，學界僅能界定約20萬至50萬的死難範圍。約25萬名身心障礙者死於「安樂死」計畫及其後續；另有約180萬至200萬非猶太裔波蘭平民死於占領之下。",
+          en: "Jews were the centre of the Nazi genocide, but not its only victims. About 3.3 million Soviet prisoners of war died in German custody, most of starvation, exposure and shooting — per the USHMM, a mortality no other captured population faced. For the Roma and Sinti (the Porajmos), documentation was deliberately destroyed: the USHMM's current estimate runs from at least 250,000 to possibly as many as 500,000 dead. Around a quarter of a million people with disabilities were murdered in the “euthanasia” programs and their successors, and about 1.8 million non-Jewish Polish civilians were killed under occupation — each figure is attributed, and the groups are not additive.",
+          zh: "猶太人是納粹種族滅絕的核心對象，但不是唯一的受難者。約330萬蘇聯戰俘死於德方看守之下，多因饑餓、寒凍與槍殺——依美國大屠殺紀念博物館，這是其他被俘群體未曾經歷的死亡率。對羅姆人與辛提人的滅絕（Porajmos）因文獻遭蓄意銷毀，美國大屠殺紀念博物館目前的估計為至少25萬人、可能多達50萬人。約25萬名身心障礙者死於「安樂死」計畫及其後續；另有約180萬非猶太裔波蘭平民死於占領之下——每個數字皆有出處，且各群體數字不可加總。",
         },
         {
           en: "Numbers at this scale numb the mind; institutions have answered with names. Yad Vashem's Shoah Victims' Names Recovery Project gathers a Page of Testimony for each murdered Jew — name, dates, places, a photograph where one survives — submitted by relatives and acquaintances. The Central Database the project feeds has recovered the identities of some five million individuals, and has even reunited families divided by the war. To read one Page of Testimony is to understand what the ranges above actually contain.",
@@ -159,8 +163,8 @@ export const ch4: ChapterContent = {
           zh: "威爾弗雷德・歐文——負傷、罹患彈震症、1917年在克雷格洛克哈特戰爭醫院接受治療、1918年11月4日即停戰前一周陣亡——留下了那個時代對傷殘倖存者返家處境最精確的證詞。他的詩〈傷殘〉描寫一個未成年從軍、想像著足球場歡呼的年輕人，回到家鄉後迎來的是截然不同的對待。",
         },
         {
-          en: "After 1945 the same wounds continued in new uniforms. Veterans carried psychological injury into civilian life; families lived beside it; and recognition came slowly — what the First World War called shell shock is understood today as post-traumatic stress disorder, a designation that took most of the twentieth century to establish. Post-war memory itself was uneven: some nations built memorials within a decade, others were too divided to memorialize anything, and some groups — occupied civilians, colonized troops, survivors of persecution — waited decades for acknowledgment. There is no single lesson in this history of memory, only the reminder that recognition itself had to be fought for, and is still unfinished.",
-          zh: "1945年之後，同樣的傷口以新的形式延續。退伍軍人帶著心理創傷回到平民生活；家人與之共同生活；而承認來得很慢——一次大戰所稱的彈震症，今日被理解為創傷後壓力症候群，這個命名花了大半個二十世紀才確立。戰後記憶本身也不均質：有的國家十年內便立起紀念碑，有的因分歧太深而無從紀念；有些群體——被占領的平民、殖民地的部隊、迫害的倖存者——等了數十年才獲得承認。這段記憶史沒有單一的教訓，只有一個提醒：承認本身就是需要爭取的，而且至今仍未完成。",
+          en: "After 1945 the same wounds continued in new uniforms. Veterans carried psychological injury into civilian life; families lived beside it; and recognition came slowly — some conditions historically described as shell shock overlap with what is now diagnosed as post-traumatic stress disorder, a category formally established only in 1980, but the wartime term covered varied conditions and cannot be retrospectively equated with the modern diagnosis. Post-war memory itself was uneven: some nations built memorials within a decade, others were too divided to memorialize anything, and some groups — occupied civilians, colonized troops, survivors of persecution — waited decades for acknowledgment. There is no single lesson in this history of memory, only the reminder that recognition itself had to be fought for, and is still unfinished.",
+          zh: "1945年之後，同樣的傷口以新的形式延續。退伍軍人帶著心理創傷回到平民生活；家人與之共同生活；而承認來得很慢——歷史上稱為「彈震症」的部分症狀，與今日診斷的創傷後壓力症候群有所重疊，該診斷類別遲至1980年才正式確立；但這個戰時用語涵蓋多種不同狀況，不能將所有個案回溯等同於現代診斷。戰後記憶本身也不均質：有的國家十年內便立起紀念碑，有的因分歧太深而無從紀念；有些群體——被占領的平民、殖民地的部隊、迫害的倖存者——等了數十年才獲得承認。這段記憶史沒有單一的教訓，只有一個提醒：承認本身就是需要爭取的，而且至今仍未完成。",
         },
       ],
       callout: {
@@ -186,8 +190,8 @@ export const ch4: ChapterContent = {
           zh: "戰爭摧毀餵養人們的體系：田地無人耕種，貿易與運輸中斷，市場崩潰，人道救援通道遭拒絕或遭操縱。在兩次世界大戰中，饑餓都不是戰爭的意外，而是它日常運作的一部分——有時是武器，有時是副產品，而通常是軍事政策、行政抉擇、天候與封鎖的複合結果。",
         },
         {
-          en: "The cases are documented, and each is distinct. The First World War's Allied blockade of Germany is the clearest example of contested accounting: excess civilian deaths from wartime shortage are estimated between roughly 424,000 and 763,000, and scholarship still divides the weight between the blockade itself, harvest failure, distribution and epidemic disease — Avner Offer's The First World War: An Agrarian Interpretation is the standard study of the agricultural dimension. The siege of Leningrad starved a city for 872 days; some 800,000 to 1.1 million people died, most of them civilians. Bengal's 1943 famine, under British wartime administration, killed an estimated two to three million. Occupied Greece's famine of 1941–42 left a toll so uncertain that published estimates differ several-fold. The Dutch “Hunger Winter” of 1944–45 — a German embargo on food transport imposed after a railway strike — killed around 20,000 people in the western Netherlands.",
-          zh: "以下案例均有文獻，且各有不同。一戰協約國對德封鎖是最清楚的「具爭議帳目」：戰時短缺造成的超額平民死亡估計約42.4萬至76.3萬，而封鎖本身、歉收、分配與疫病各占多少權重，學界仍有分歧——Avner Offer 的《第一次世界大戰：農業視角》是此一農業層面的標準研究。列寧格勒圍城戰使一座城市挨餓872天，約80萬至110萬人死亡，其中多數是平民。1943年孟加拉饑荒發生於英國戰時治理之下，估計造成200萬至300萬人死亡。被占領希臘1941–42年的饑荒，死亡人數如此不確定，以致已發表的估計相差數倍。荷蘭1944–45年的「饑餓冬天」——鐵路罷工後德方對糧食運輸實施的禁運——在荷蘭西部造成約2萬人死亡。",
+          en: "The cases are documented, and each is distinct. The First World War's Allied blockade of Germany is the clearest example of contested accounting: excess civilian deaths from wartime shortage are estimated at roughly 424,000 to 763,000 — a span summarized in Cox's 2024 survey of the blockade — and scholarship still divides the weight between the blockade itself, harvest failure, distribution and epidemic disease; Avner Offer's The First World War: An Agrarian Interpretation is the standard study of the agricultural dimension. The siege of Leningrad starved a city for 872 days; HISTORY's account estimates about 800,000 civilian deaths over the full siege, about 650,000 of them in 1942 alone. Bengal's 1943 famine, under British wartime administration, killed about three million people by Britannica's figure; scholarly estimates differ, some lower. In occupied Greece, the National WWII Museum records nearly 100,000 starvation deaths across the 1941–44 occupation; estimates including disease run higher. The Dutch “Hunger Winter” of 1944–45 — a German embargo on food transport imposed after a railway strike — killed around 20,000 people in the western Netherlands, by the Anne Frank House's record.",
+          zh: "以下案例均有文獻，且各有不同。一戰協約國對德封鎖是最清楚的「具爭議帳目」：戰時短缺造成的超額平民死亡估計約42.4萬至76.3萬——此區間見於 Cox 2024 年對封鎖的綜述——而封鎖本身、歉收、分配與疫病各占多少權重，學界仍有分歧；Avner Offer 的《第一次世界大戰：農業視角》是此一農業層面的標準研究。列寧格勒圍城戰使一座城市挨餓872天；依 HISTORY 的記述，整個圍城期間估計約80萬名平民死亡，其中僅1942年即約65萬人。1943年孟加拉饑荒發生於英國戰時治理之下，依 Britannica 的數字約300萬人死亡；學術估計不一，部分較低。在被占領的希臘，國家二戰博物館記載1941–44年整個占領期近10萬人餓死；計入疾病則估計更高。荷蘭1944–45年的「饑餓冬天」——鐵路罷工後德方對糧食運輸實施的禁運——依安妮之家的記錄，在荷蘭西部造成約2萬人死亡。",
         },
         {
           en: "A caution belongs here, because this subject is often oversimplified. Resource insecurity may contribute to instability under specific conditions — but it does not automatically cause war. Wars are not all fought over food. Not all famines share the same cause, and not every famine of this period was intentional policy. Hunger in war is a pattern worth understanding; it is not a single-key explanation for anything.",
@@ -210,6 +214,9 @@ export const ch4: ChapterContent = {
   ],
   citations: [
     b2BritannicaWwi,
+    b2HistorycomWwiDeaths,
+    b2HistorycomLeningrad,
+    b2CoxBlockade,
     b2HistorycomWwii,
     b2Nww2mDeaths,
     b2UshmmLearn,

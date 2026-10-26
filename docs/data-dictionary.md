@@ -8,7 +8,7 @@ Related: [`sources.md`](sources.md) (the citation records behind every `citation
 
 ## 1. Content model — `src/content/types.ts`
 
-All content is authored as typed TypeScript data. The compiler enforces the contract; the conventions in the file header state the editorial rules: `Localized` carries English (`en`) and Traditional Chinese (`zh`) text; numbers that vary across scholarship **must** be expressed as ranges with notes; every dataset row cites its sources via `citationIds`; all citations use access date `"2026-10-17"`.
+All content is authored as typed TypeScript data. The compiler enforces the contract; the conventions in the file header state the editorial rules: `Localized` carries English (`en`) and Traditional Chinese (`zh`) text; numbers that vary across scholarship are expressed either as attributed ranges (both endpoints sourced) or as single attributed point estimates (`point`) with notes — endpoints are never invented to force a range; every dataset row cites its sources via `citationIds`; citations use access date `"2026-10-17"` (original) or `"2026-10-27"` (remediation additions).
 
 ### Primitives
 
@@ -79,11 +79,12 @@ All content is authored as typed TypeScript data. The compiler enforces the cont
 | --- | --- | --- |
 | `RangeSeries.id` | `string` | Kebab-case series id (e.g. `"wwi-military"`). |
 | `RangeSeries.label` | `Localized` | Category label on the y-axis, tooltips, and table. |
-| `RangeSeries.min` / `max` | `number` | **Documented estimate range** — the bar spans exactly this. Unit: millions unless stated. |
-| `RangeSeries.note` | `Localized` | **Required** definition / scope / caveat when estimates differ (and they always differ). Rendered in the tooltip and the accessible table. |
+| `RangeSeries.min` / `max` | `number` | **Attributed estimate range** — the bar spans exactly this, both endpoints sourced. Unit: millions unless stated. Mutually exclusive with `point`. |
+| `RangeSeries.point` | `number` | **Single attributed approximate point estimate** (millions) — rendered as a thin ≈ marker, used when the source gives one approximation rather than a defensible interval. Mutually exclusive with `min`/`max`. |
+| `RangeSeries.note` | `Localized` | **Required** definition / scope / caveat when estimates differ (and they always differ). Rendered in the selection panel and the accessible table. |
 | `RangeSeries.citationIds` | `string[]` | Resolves in `ChartDataset.citations`. |
 | `ChartDataset.id` / `title` / `subtitle` | — | Dataset identity and chart caption. |
-| `ChartDataset.unit` | `Localized` | e.g. "millions of deaths (documented ranges) / 死亡人數（百萬，文獻區間）". |
+| `ChartDataset.unit` | `Localized` | e.g. "millions of deaths (attributed estimates) / 死亡人數（百萬；具名來源估計）". |
 | `ChartDataset.series` / `citations` | arrays | The range series and the dataset's citation registry. |
 
 ### `ActionLink`, `ActionPathway`, `ActionContent` (Chapter 06)
@@ -122,7 +123,7 @@ All content is authored as typed TypeScript data. The compiler enforces the cont
 | Field | Type | Meaning |
 | --- | --- | --- |
 | `MapParticipant.id` | `string` | ISO 3166-1 **numeric** id as used by `world-atlas` countries-110m (e.g. `"840"` = USA); mapped to the topology's feature ids at render time. |
-| `MapParticipant.side` | `"allies" \| "central" \| "axis" \| "neutral"` | Side coloring. |
+| `MapParticipant.side` | `"allies" \| "central" \| "axis" \| "occupied" \| "neutral"` | Alignment/status of the governing authority at the snapshot period: `allies`/`central`/`axis` = alignment (incl. governments-in-exile and colonial territories under Allied metropolitan authority); `occupied` = under Axis military occupation whose pre-war alignment was Allied (control, not allegiance — resistance noted in the disclosure); `neutral` = formally neutral. |
 | `MapParticipant.name` / `note` | `Localized` | Tooltip name and one-line status note (e.g. "Entered the war in April 1917."). |
 | `MapSnapshot.id` | `"wwi" \| "wwii"` | Which snapshot. |
 | `MapSnapshot.dateLabel` | `Localized` | The dated snapshot label shown above the map. |
@@ -194,80 +195,80 @@ Citation registry: `b3-britannica-wwii` · `b3-britannica-nanjing` · `b3-ushmm-
 Theaters present: asia-pacific, africa, europe.
 
 ### `src/content/data/casualties.ts` — dataset `casualties`
-**The Human Cost in Ranges** / 以區間呈現的人類代價 — subtitle: *"First and Second World War deaths by category — scholarly estimates differ; bars show ranges, not counts."*. Unit: **millions of deaths (documented ranges) / 死亡人數（百萬，文獻區間）**. 4 series; citation registry: 3 records.
+**The Human Cost in Ranges** / 以區間呈現的人類代價 — subtitle: *"First and Second World War deaths by category. Bars span attributed estimates; ≈ markers mark single-source approximations. Nothing here is a precise count, and the series are not additive."*. Unit: **millions of deaths (attributed estimates) / 死亡人數（百萬；具名來源估計）**. 4 series; citation registry: 4 records.
 
-| id | label (EN) | label（繁體中文） | min–max (millions) | citation ids |
+| id | label (EN) | label（繁體中文） | value (millions) | citation ids |
 | --- | --- | --- | --- | --- |
-| `wwi-military` | WWI — military deaths | 一戰——軍人陣亡 | 9–10 | `b2-britannica-wwi` |
-| `wwi-civilian` | WWI — civilian deaths | 一戰——平民死亡 | 5–10 | `b2-britannica-wwi` |
-| `wwii-military` | WWII — military deaths | 二戰——軍人陣亡 | 21–25.5 | `b2-historycom-wwii`, `b2-nww2m-deaths` |
-| `wwii-civilian` | WWII — civilian deaths | 二戰——平民死亡 | 50–56 | `b2-historycom-wwii`, `b2-nww2m-deaths` |
+| `wwi-military` | WWI — military deaths | 一戰——軍人死亡 | 8.5–9.7 (range) | `b2-britannica-wwi`, `b2-historycom-wwi-deaths` |
+| `wwi-civilian` | WWI — civilian deaths | 一戰——平民死亡 | 6.8–13 (range) | `b2-historycom-wwi-deaths`, `b2-britannica-wwi` |
+| `wwii-military` | WWII — military deaths | 二戰——軍人死亡 | 21–25 (range) | `b2-historycom-wwii`, `b2-nww2m-deaths` |
+| `wwii-civilian` | WWII — civilian deaths | 二戰——平民死亡 | 50–55 (range) | `b2-historycom-wwii` |
 
 **Series notes (EN) — the required `note` field, rendered in tooltips and the table alternative:**
 
-- `wwi-military` — Deaths in uniform from all causes; commonly cited around 9–10 million. Series differ on how missing-in-action and died-of-wounds are counted.
-- `wwi-civilian` — Civilian deaths from violence, disease and blockade-related hardship. The range is definition-driven: Britannica attributes roughly 13 million civilian deaths to the war when the 1918 influenza pandemic is included; narrower tallies run near 5–10 million.
-- `wwii-military` — All theaters, all belligerents, including deaths in captivity and among the missing. HISTORY's reference article gives 21–25 million military deaths; The National WWII Museum's narrower battle-death table lists about 15 million and cautions that estimates “vary widely.”
-- `wwii-civilian` — Includes the Holocaust, other mass killings, bombing, famine and disease among civilians — the majority of WWII's dead. HISTORY gives 50–55 million civilian deaths; the museum cautions that China's civilian toll alone “might well be more than 50,000,000.”
+- `wwi-military` — Endpoints are two named institutional tallies, not a confidence interval: Britannica's overview counts about 8.5 million soldiers dead from wounds and disease; HISTORY's dedicated tally records slightly more than 9.7 million military dead.
+- `wwi-civilian` — Endpoints are different definitions, not one interval: HISTORY's tally records more than 6.8 million civilian deaths; Britannica attributes roughly 13 million civilian deaths when the 1918 influenza pandemic is included.
+- `wwii-military` — HISTORY's overview gives approximately 21–25 million military deaths; the museum's simpler table counts about 15 million battle deaths, a narrower category that is not directly comparable (that page contains internally inconsistent totals and is not used to derive figures).
+- `wwii-civilian` — HISTORY's overview gives approximately 50–55 million civilian deaths; broader compilations reach toward 85 million total dead. The museum's contradictory China footnote is no longer quoted.
 
-Citation registry: `b2-britannica-wwi` · `b2-historycom-wwii` · `b2-nww2m-deaths`.
+Citation registry: `b2-britannica-wwi` · `b2-historycom-wwi-deaths` · `b2-historycom-wwii` · `b2-nww2m-deaths`.
 
 ### `src/content/data/casualties.ts` — dataset `holocaust`
-**Victims of Nazi Persecution and Genocide** / 納粹迫害與種族滅絕的受難者 — subtitle: *"Documented ranges for major victim groups — no single figure can summarize them."*. Unit: **millions of victims (documented ranges) / 受難人數（百萬，文獻區間）**. 5 series; citation registry: 2 records.
+**Victims of Nazi Persecution and Genocide** / 納粹迫害與種族滅絕的受難者 — subtitle: *"Selected victim groups — not an exhaustive list. Categories overlap and the sources differ: do not add these figures to each other, to war-death totals, or to the hunger cases."*. Unit: **millions of victims (attributed estimates) / 受難人數（百萬；具名來源估計）**. 5 series; citation registry: 2 records.
 
-| id | label (EN) | label（繁體中文） | min–max (millions) | citation ids |
+| id | label (EN) | label（繁體中文） | value (millions) | citation ids |
 | --- | --- | --- | --- | --- |
-| `jews` | Jews | 猶太人 | 5.7–6 | `b2-ushmm-learn`, `b2-yadvashem-holocaust` |
-| `soviet-pows` | Soviet prisoners of war | 蘇聯戰俘 | 3.1–3.5 | `b2-ushmm-learn` |
-| `polish-civilians` | Non-Jewish Polish civilians | 非猶太裔波蘭平民 | 1.8–2 | `b2-ushmm-learn` |
-| `roma` | Roma and Sinti | 羅姆人與辛提人 | 0.2–0.5 (rendered 200–500k) | `b2-ushmm-learn`, `b2-yadvashem-holocaust` |
-| `disabled` | Disabled people | 身心障礙者 | 0.25–0.3 (rendered 250–300k) | `b2-ushmm-learn` |
+| `jews` | Jews | 猶太人 | ≈ 6 (point) | `b2-ushmm-learn`, `b2-yadvashem-holocaust` |
+| `soviet-pows` | Soviet prisoners of war | 蘇聯戰俘 | ≈ 3.3 (point) | `b2-ushmm-learn` |
+| `polish-civilians` | Non-Jewish Polish civilians | 非猶太裔波蘭平民 | ≈ 1.8 (point) | `b2-ushmm-learn` |
+| `roma` | Roma and Sinti | 羅姆人與辛提人 | 0.25–0.5 (range) | `b2-ushmm-learn`, `b2-yadvashem-holocaust` |
+| `disabled` | Disabled people | 身心障礙者 | 0.25–0.3 (range) | `b2-ushmm-learn` |
 
 **Series notes (EN) — the required `note` field, rendered in tooltips and the table alternative:**
 
-- `jews` — The USHMM defines the Holocaust as the “persecution and murder of six million Jews by the Nazi regime and its allies and collaborators”; Yad Vashem uses the same figure. The range reflects documentation, not doubt about the crime.
-- `soviet-pows` — Soviet POWs who died in German custody, mainly from starvation, exposure and shooting — around 3.3 million, a mortality no other captured population faced.
-- `polish-civilians` — Polish civilians killed under occupation — in reprisals, camps, the destruction of Warsaw and occupation policy; commonly cited 1.8–2 million.
-- `roma` — The genocide of Roma and Sinti (the Porajmos). Documentation was deliberately destroyed, so scholarship can bound the toll only roughly, at some 200,000–500,000 — a bound, not a count.
-- `disabled` — People with disabilities murdered in the “euthanasia” programs — Aktion T4 and its decentralized successors; commonly cited 250,000–300,000.
+- `jews` — Approximately six million, the standard institutional approximation (USHMM; Yad Vashem). Point estimate — no artificial bounds.
+- `soviet-pows` — Approximately 3.3 million died in German custody (USHMM). Point estimate.
+- `polish-civilians` — About 1.8 million killed under occupation (USHMM). Point estimate; other compilations run higher.
+- `roma` — The USHMM currently estimates at least 250,000 and possibly as many as 500,000 murdered; older, lower estimates survive in the literature and should be attributed by author and date.
+- `disabled` — The USHMM documents the toll of the “euthanasia” programs at roughly 250,000–300,000.
 
 Citation registry: `b2-ushmm-learn` · `b2-yadvashem-holocaust`.
 
 ### `src/content/data/casualties.ts` — dataset `hunger`
 **War and Hunger: Selected Cases** / 戰爭與饑餓：案例選輯 — subtitle: *"Conflict destroyed food systems with lethal results — cases chosen for documentation, not exhaustiveness."*. Unit: **millions of deaths (documented ranges) / 死亡人數（百萬，文獻區間）**. 5 series; citation registry: 5 records.
 
-| id | label (EN) | label（繁體中文） | min–max (millions) | citation ids |
+| id | label (EN) | label（繁體中文） | value (millions) | citation ids |
 | --- | --- | --- | --- | --- |
-| `bengal-1943` | Bengal famine, 1943 | 孟加拉饑荒，1943年 | 2–3 | `b2-britannica-bengal` |
-| `leningrad` | Siege of Leningrad, 1941–44 | 列寧格勒圍城戰，1941–44 | 0.8–1.1 | `b2-britannica-leningrad` |
-| `greece` | Greek famine, 1941–42 | 希臘饑荒，1941–42 | 0.1–0.45 (rendered 100–450k) | `b2-nww2m-greece` |
-| `wwi-blockade` | WWI Allied blockade of Germany | 一戰協約國對德封鎖 | 0.4–0.76 (rendered 400–760k) | `b2-cambridge-offer` |
-| `dutch-hunger-winter` | Dutch “Hunger Winter”, 1944–45 | 荷蘭「饑餓冬天」，1944–45 | 0.018–0.022 (rendered 18–22k) | `b2-annefrank-dutch` |
+| `bengal-1943` | Bengal famine, 1943 | 孟加拉饑荒，1943年 | ≈ 3 (point) | `b2-britannica-bengal` |
+| `leningrad` | Siege of Leningrad, 1941–44 | 列寧格勒圍城戰，1941–44 | ≈ 0.8 (point) | `b2-historycom-leningrad`, `b2-britannica-leningrad` |
+| `greece` | Greek famine under occupation, 1941–44 | 希臘占領期饑荒，1941–44 | ≈ 0.1 (point) | `b2-nww2m-greece` |
+| `wwi-blockade` | WWI Allied blockade of Germany | 一戰協約國對德封鎖 | 0.424–0.763 (range) | `b2-cox-blockade`, `b2-cambridge-offer` |
+| `dutch-hunger-winter` | Dutch “Hunger Winter”, 1944–45 | 荷蘭「饑餓冬天」，1944–45 | ≈ 0.02 (point) | `b2-annefrank-dutch` |
 
 **Series notes (EN) — the required `note` field, rendered in tooltips and the table alternative:**
 
-- `bengal-1943` — Famine in wartime Bengal under British administration: requisition, inflation, transport priorities and denied imports all contributed. Britannica cites “some three million” deaths; scholarly estimates cluster at 2–3 million.
-- `leningrad` — Mostly civilian starvation deaths during the 872-day siege (8 September 1941 – 27 January 1944); total deaths including military casualties run higher still.
-- `greece` — The first winter of Axis occupation: requisition, blockade conditions and broken transport. The National WWII Museum records nearly 100,000 starvation deaths in occupied Greece 1941–44; scholarly estimates including disease run to several hundred thousand — hence a deliberately wide range.
-- `wwi-blockade` — CONTESTED: excess civilian deaths in wartime Germany attributed to the Allied blockade and shortage — estimates from roughly 424,000 to 763,000. Scholarship divides the weight between blockade, harvest failure, distribution and epidemic disease (the standard study is Avner Offer's The First World War: An Agrarian Interpretation).
-- `dutch-hunger-winter` — Deaths in the occupied western Netherlands after food transport was cut following the September 1944 railway strike; the Anne Frank House records about 20,000 deaths from the hunger winter.
+- `bengal-1943` — Britannica reports about three million deaths from malnutrition or disease; scholarly estimates differ, some lower. Point estimate.
+- `leningrad` — HISTORY's account estimates about 800,000 civilian deaths over the full 872-day siege; in 1942 alone about 650,000 perished. Point estimate; military casualties excluded.
+- `greece` — The National WWII Museum records nearly 100,000 starvation deaths across the whole 1941–44 occupation — not the first winter alone; estimates including disease run higher. Point estimate.
+- `wwi-blockade` — CONTESTED: endpoints trace to German official estimates (roughly 424,000 by one excess-death calculation; 763,000 claimed by the German Board of Public Health by December 1918), a span summarized in Cox's 2024 survey; Offer's study remains the standard work.
+- `dutch-hunger-winter` — The Anne Frank House records about 20,000 deaths. Point estimate.
 
-Citation registry: `b2-cambridge-offer` · `b2-britannica-leningrad` · `b2-britannica-bengal` · `b2-nww2m-greece` · `b2-annefrank-dutch`.
+Citation registry: `b2-cambridge-offer` · `b2-cox-blockade` · `b2-historycom-leningrad` · `b2-britannica-leningrad` · `b2-britannica-bengal` · `b2-nww2m-greece` · `b2-annefrank-dutch`.
 
 ### `src/content/data/theaters.ts` — map snapshots `mapWwi` / `mapWwii`
 
-**`wwi` snapshot** — 38 participants (allies 18, central 10, neutral 10).
+**`wwi` snapshot** — 38 participants (allies 20, central 8, neutral 10).
 
-- dateLabel (EN): "Simplified snapshot · mid-1917 (after U.S. entry, before Russian exit)"
-- dateLabel（繁體中文）: "簡化時點 · 1917年中（美國參戰後、俄國退出前）"
-- disclosure (EN, rendered on-screen): "Simplified teaching snapshot. The base map shows modern state boundaries for orientation only — historical borders differed, and colonial empires (British, French, German, Ottoman, and others) are not drawn. Austria-Hungary and the Ottoman Empire are approximated by successor territories. Entry and exit dates varied by state."
+- dateLabel (EN): "Approximate period snapshot · mid-1917 (after U.S. entry, before Russian exit)"
+- dateLabel（繁體中文）: "概略時期示意 · 1917年中（美國參戰後、俄國退出前）"
+- disclosure (EN, rendered on-screen): "Simplified teaching snapshot for an approximate period (mid-1917). The base map shows modern state boundaries for orientation only — historical borders differed, and colonial empires (British, French, German, Ottoman, and others) are not drawn. Categories mark the alignment of the governing authority in that period, not military control: Belgium, Serbia and Romania were occupied by the Central Powers yet remained Allied-aligned. Austria-Hungary and the Ottoman Empire are approximated by successor territories. Entry and exit dates varied by state."
 - disclosure（繁體中文）: "簡化的教學示意圖。底圖以現代國界作定位之用——歷史疆界與此不同，英、法、德、鄂圖曼等殖民帝國未予描繪。奧匈帝國與鄂圖曼帝國以繼承領土近似標示。各國參戰與退出時點亦互有差異。"
 
-**`wwii` snapshot** — 100 participants (allies 54, axis 31, neutral 15).
+**`wwii` snapshot** — 99 participants (allies 62, axis 10, occupied 14, neutral 13). One entry was removed: the redundant "Senegambia region" (686) that painted Senegal, superseded by the corrected Senegal entry.
 
-- dateLabel (EN): "Simplified snapshot · late 1942 (Axis at maximum extent)"
-- dateLabel（繁體中文）: "簡化時點 · 1942年底（軸心國勢力最大時）"
-- disclosure (EN, rendered on-screen): "Simplified teaching snapshot at the Axis maximum extent. The base map shows modern boundaries for orientation only; historical borders differed, colonial empires are not drawn, and occupied countries are shown under 'Axis' to depict control rather than allegiance — resistance movements fought throughout. The USSR's multi-republic territory is shown as occupied-or-rear by date of snapshot. Italy, Romania, Bulgaria, Finland and others changed sides later in the war."
+- dateLabel (EN): "Approximate period snapshot · late 1942 (Axis at maximum extent)"
+- dateLabel（繁體中文）: "概略時期示意 · 1942年底（軸心國勢力最大時）"
+- disclosure (EN, rendered on-screen): "Simplified teaching snapshot for an approximate period (the Axis maximum extent, late 1942). The base map shows modern boundaries for orientation only; historical borders differed and colonial empires are not drawn. 'Axis' marks states and client regimes aligned with the Axis powers; 'Allied' marks Allied-aligned states, governments-in-exile, and colonial territories under Allied metropolitan authority; 'Occupied' marks territories under Axis military occupation whose pre-war alignment was Allied — occupation is control, not allegiance, and resistance movements fought throughout. The USSR's multi-republic territory is shown as occupied front or Soviet rear as of this period. Italy, Romania, Bulgaria, Finland and others changed sides later in the war."
 - disclosure（繁體中文）: "軸心國勢力極盛時的簡化教學示意圖。底圖以現代疆界作定位之用；歷史疆界與此不同，殖民帝國未予描繪，被占領國家標為「軸心」以呈現控制而非忠誠——各地抵抗運動從未停止。蘇聯多共和國領土依時點標為占領區或後方。義大利、羅馬尼亞、保加利亞、芬蘭等國於戰爭後期改變立場。"
 
 Participants are listed in full in the file (ISO numeric id · side · bilingual name · one-line note); the component renders them as map colors plus an accessible table. Chapter 05's `patterns.ts` and Chapter 06's `actions.ts` / `one-minute.ts` are summarized in § 4.
@@ -278,10 +279,11 @@ Participants are listed in full in the file (ISO numeric id · side · bilingual
 
 ### Range charts (`src/components/rtp/range-chart.tsx`, `use-echart.ts`)
 
-- **Bars span min–max, exactly.** Each series row is drawn as two stacked ECharts bar segments: a *transparent* segment of length `min` and a visible gradient segment of length `max − min`. The visible bar therefore begins at `min` and ends at `max` — the bar **is** the documented range, never a point estimate.
-- **Value label formatting.** The right-hand bar label (and tooltip value) is formatted by `formatValue(min, max)`:
-  - `max ≥ 1` → the range in millions with minimal decimals (`formatNum` prints integers bare, one decimal for values ≥ 1, two decimals below 1) — e.g. `9–10`, `5.7–6`, `0.8–1.1` (rendered `0.8–1.1`).
-  - `max < 1` → **shown in thousands**: `Math.round(min×1000)–Math.round(max×1000)` + `k` — e.g. the Dutch Hunger Winter series (0.018–0.022 million) renders as `18–22k`. The unit chip "millions / 百萬" still labels the axis; the `k` suffix marks the sub-million exception.
+- **Bars span min–max, exactly; point estimates render as thin ≈ markers.** Each series row is drawn as two stacked ECharts bar segments: a *transparent* offset segment and a visible gradient segment of length `max − min` (range series) or a thin marker of width `2 × axisMax × 0.004` centered on `point` (point-estimate series). The visible bar **is** the attributed range; the marker **is** the single-source approximation — never a fabricated interval.
+- **Value label formatting (audit RTP-F004 fix).** Every display path — bar label, tooltip, panel chip, table cell — uses one module-level formatter in **millions**, so a value can never render with a contradictory double unit:
+  - ranges → `formatRange(min, max)` — `formatNum` prints integers bare, up to 2 decimals at/above 1, up to 3 below — e.g. `9–10`, `8.5–9.7`, `0.25–0.5`, `0.018–0.022`;
+  - point estimates → `formatPoint(point)` — e.g. `≈ 6`, `≈ 0.02`, rendered with an "Approximate estimate / 近似估計" chip.
+  - The removed bug: sub-million values used to render `Math.round(min×1000)–…k` **followed by the word "millions/百萬"** (e.g. "200–500k millions"). The `k` branch is gone entirely.
 - **Axis.** x-axis is a value axis with `max = max(series.max) × 1.08`; axis labels print integers for values ≥ 1 and one decimal below 1. The y-axis is a category axis (inverse order), 150 px truncate-overflow labels. ECharts 6 `outerBoundsMode: "same" / outerBoundsContain: "axisLabel"` replaces the deprecated `grid.containLabel`.
 - **Tooltip** (item trigger) shows: series label; the formatted range with the unit; the **full definitional note** (`RangeSeries.note`); and the publisher names of every cited source — so the caveat travels with the number.
 - **Accessibility.** The chart container carries `role="img"` with an aria-label of title + subtitle; on-screen hints state "Tap a point or bar to explore the values" and "Keyboard users: use the accessible table alternative below each chart." A **"View as table" toggle** swaps the canvas for a real `<table>` (columns: Category · Range of estimates · Notes & definition · Sources; sr-only caption; sticky header; scrollable body) — the same data, definitions included.
@@ -297,7 +299,7 @@ Participants are listed in full in the file (ISO numeric id · side · bilingual
 ### Theaters map (`src/components/rtp/theaters-map.tsx`)
 
 - ECharts `map` series on a registered `rtp-world` GeoJSON derived at module load from the bundled `world-atlas/countries-110m` topology via `topojson-client` — **no runtime CDN fetch**.
-- Participant sides color the matching features by ISO numeric id; colors: Allies `#96774c` (paper) / `#b08d5b` (ink), Central/Axis `#7e2d26` / `#a93f2b`, neutral `#ddd3bb` / `#3a352e`. Non-participants render in the neutral color.
+- Participant sides color the matching features by ISO numeric id; colors: Allies `#96774c` (paper) / `#b08d5b` (ink), Central/Axis `#7e2d26` / `#a93f2b`, **occupied `#a97e6f` / `#b98a77` (muted clay — control, not allegiance)**, neutral `#ddd3bb` / `#3a352e`. Non-participants render in the neutral color. The legend lists only the categories present in the active snapshot.
 - A WWI/WWII snapshot toggle (`aria-pressed` buttons), the dated snapshot label, and the on-screen disclosure are part of the panel; a participants table alternative lists every participant with side and note. Tooltips show the localized name + one-line note.
 - Roam/zoom and selection are disabled — the map is a static teaching snapshot (see [`methodology.md`](methodology.md) § 6).
 

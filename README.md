@@ -26,7 +26,7 @@ Everything is evidence-based: every major claim carries a citation near where it
 bun run dev        # starts Next.js dev server on port 3000
 ```
 
-In this sandbox environment, open the site through the **Preview Panel** — not by browsing `localhost` URLs. For production-style serving, see Commands below.
+After starting the dev server, open `http://localhost:3000` in your browser. For production-style serving, see Commands below.
 
 ## Tech stack
 
@@ -72,6 +72,7 @@ src/content/
   ui.ts                       bilingual UI chrome strings
 scripts/make-og-image.ts      regenerates public/og-image.png from an original SVG (bun scripts/make-og-image.ts)
 .github/workflows/deploy.yml  GitHub Actions: lint → static export (verified) → Pages deploy
+.github/workflows/pr-validation.yml  GitHub Actions: PR-only validation (typecheck · lint · data · export) — never deploys
 docs/                         sources · methodology · data-dictionary · limitations · image-rights
 public/                       favicon.svg · og-image.png · robots.txt
 ```
@@ -89,7 +90,8 @@ All narrative content is authored as **typed TypeScript data** — English + Tra
 ```bash
 bun run dev        # dev server on port 3000 (tee dev.log)
 bun run lint       # eslint .
-bunx tsc --noEmit  # type check (site code clean; pre-existing errors only in scaffold examples/ and skills/)
+bun run typecheck  # tsc --noEmit (clean)
+bun run validate:data  # historical-data integrity assertions (bilingual fields, citations, map codes)
 bun scripts/make-og-image.ts   # regenerate the OG image
 bun run build      # production build (standalone output, sandbox runtime)
 NEXT_OUTPUT=export bun run build:export   # static export → out/ (GitHub Pages build)
@@ -112,8 +114,8 @@ bun run start      # serve the standalone production build
 
 ## Quality verification — what was actually checked
 
-- **ESLint clean** across the repository (`bunx eslint .` → exit 0).
-- **TypeScript clean for all site code** (`bunx tsc --noEmit`; residual errors are confined to the scaffold's `examples/` and `skills/` folders, untouched by this project).
+- **ESLint clean** across the repository (`bun run lint` → exit 0).
+- **TypeScript clean** (`bun run typecheck` → exit 0; the scaffold's `examples/` platform demos were removed from the public source in the 2026-10-27 sanitization, eliminating their unresolved `socket.io` imports).
 - **Chart ↔ table switching fixed and verified**: the chart containers now stay mounted (hidden via CSS while the table is shown), so the ECharts instance is never orphaned from its DOM node; the hook's ResizeObserver repaints the canvas when the chart view becomes active again. All three Chapter 04 range charts and the Chapter 02 world map were driven through **three full chart → table → chart cycles each** (plus map WWI ↔ WWII switching) on both the dev preview and the exported static site, with programmatic verification that the canvas is visible and fully repainted after every switch — including after live viewport resizes (desktop 1280 → mobile 375) and on fresh mobile page loads.
 - **Traditional Chinese main heading** 「銘記歷史／防止重演」 verified on desktop (72 px display, 2 lines) and mobile 375 px (343 px wide, no overflow, no horizontal document scroll), with the English heading "Remember to Prevent" unchanged; the header wordmark and JSON-LD alternate name were updated to match, and the language switch + `localStorage` persistence were re-verified.
 - **Static export build verified end-to-end**: fresh `bun install --frozen-lockfile` + `NEXT_OUTPUT=export bun run build:export` (exactly what GitHub Actions runs) → `out/index.html`, 271 `_next` assets, self-hosted fonts, root-relative asset paths; the exported site was served locally and browser-tested with zero console entries and zero page errors.

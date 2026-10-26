@@ -116,16 +116,32 @@ export interface TimelineData {
   citations: Citation[];
 }
 
-/** A numeric series expressed as a documented range (unit: millions unless stated). */
-export interface RangeSeries {
+/**
+ * A numeric series in one of two evidence shapes (unit: millions unless stated):
+ * - a documented range (min < max), both endpoints attributed; or
+ * - a single attributed approximate point estimate (`point`), used when the
+ *   source gives one approximation rather than a defensible interval.
+ * Never invent endpoints to force a range (audit RTP-F008 et al.).
+ */
+export type RangeSeries = {
   id: string;
   label: Localized;
-  min: number;
-  max: number;
   /** Definition / scope / caveat — REQUIRED when estimates differ. */
   note: Localized;
   citationIds: string[];
-}
+} & (
+  | {
+      min: number;
+      max: number;
+      point?: undefined;
+    }
+  | {
+      min?: undefined;
+      max?: undefined;
+      /** Single attributed approximate estimate, in millions. */
+      point: number;
+    }
+);
 
 export interface ChartDataset {
   id: string;
@@ -201,7 +217,15 @@ export interface PatternCard {
 export interface MapParticipant {
   /** ISO numeric id string, e.g. "840". */
   id: string;
-  side: "allies" | "central" | "axis" | "neutral";
+  /**
+   * Alignment / status of the territory at the snapshot period (audit RTP-F003):
+   * "allies" | "central" | "axis" = alignment of the governing authority;
+   * "occupied" = under Axis military occupation whose pre-war alignment was
+   * Allied (control, not allegiance — resistance noted in disclosure);
+   * "neutral" = formally neutral. Never mark an occupied population as
+   * voluntarily aligned with the occupying power.
+   */
+  side: "allies" | "central" | "axis" | "neutral" | "occupied";
   /** Country name shown in tooltip. */
   name: Localized;
   /** One-line status note, e.g. "Entered the war in April 1917." */
