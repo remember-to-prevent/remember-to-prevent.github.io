@@ -28,8 +28,13 @@ import {
  * Site-wide dark reading theme: every chapter is a warm charcoal passage;
  * the tone steps (ink / deep / warm) give the story a subtle rhythm as it
  * darkens through the Second World War and reopens toward action.
+ *
+ * Rendered identically by every route entry point (`/`, `/en/`, `/zh-TW/`);
+ * the route decides the language context via LanguageProvider. The tree is
+ * byte-for-byte the one the former src/app/page.tsx assembled — no content,
+ * data or component changes.
  */
-export default function Page() {
+export function SiteApp() {
   return (
     <div className="flex min-h-screen flex-col bg-ink text-paper">
       <SiteHeader />

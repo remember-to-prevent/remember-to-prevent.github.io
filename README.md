@@ -40,11 +40,30 @@ After starting the dev server, open `http://localhost:3000` in your browser. For
 ## Structure
 
 ```
-src/app/page.tsx              assembles the whole page: hero → 6 chapters with
-                              interactives → footer (the only user-visible route is /)
-src/app/layout.tsx            fonts, metadata (canonical/OG/Twitter/robots), JSON-LD, LanguageProvider
+src/app/
+  (en)/page.tsx              `/` — original single-page entry (default English,
+                              stored-preference behaviour, #ch1…#ch6 anchors kept);
+                              canonical consolidates into /en/
+  (en)/en/page.tsx            `/en/` — canonical English entry point (language locked,
+                              self-canonical + reciprocal hreflang)
+  (en)/layout.tsx             English root layout: <html lang="en">, fonts, JSON-LD,
+                              metadataBase (remember-to-prevent.com), Toaster
+  (zh)/zh-TW/page.tsx         `/zh-TW/` — canonical Traditional Chinese entry point
+                              (language locked, self-canonical + reciprocal hreflang)
+  (zh)/layout.tsx             Traditional Chinese root layout: <html lang="zh-TW"> …
+  sitemap.ts                  static sitemap.xml — /en/ + /zh-TW/ only, generated
+                              from src/lib/site-meta.ts (single source of truth)
+  globals.css                 editorial palette + typography + reveal/nav styles
+src/lib/site-meta.ts           SITE_URL, language paths, localized SEO strings — the
+                              single source of truth for canonical/hreflang/sitemap
+src/lib/fonts.ts               shared next/font instances (used by both root layouts)
 src/components/rtp/
-  site-header.tsx             sticky header: wordmark, always-visible scrollable chapter nav, EN/繁中 switch
+  site-app.tsx                the whole scrollytelling page tree, rendered by all three
+                              route entry points (/ · /en/ · /zh-TW/)
+  site-jsonld.tsx             shared schema.org WebSite JSON-Ld (with production url)
+  site-header.tsx             sticky header: wordmark, always-visible scrollable chapter
+                              nav, EN/繁中 switch — switches navigate to the language
+                              route at the chapter actually being read
   hero.tsx                    the masthead with the required hero wording
   chapter.tsx                 chapter shell: question, sections, labelled callouts, source lists
   timeline.tsx                interactive vertical timelines (filterable, expandable, keyboard/touch)
@@ -58,6 +77,8 @@ src/components/rtp/
   citation.tsx                superscript citation markers with accessible popovers + source lists
   poppy.tsx                   the original poppy mark (inline SVG)
   use-echart.ts               lazy, SSR-safe ECharts hook (tree-shaken imports, ResizeObserver)
+src/lib/i18n.tsx               language store (localStorage `rtp.language`); /en/ and /zh-TW/
+                              lock the language, / honours the stored preference
 src/content/
   types.ts                    the content contract (ChapterContent, TimelineEvent, RangeSeries,
                               ChartDataset, ActionPathway, PatternCard, MapSnapshot, Citation, Callout…)
@@ -73,11 +94,11 @@ src/content/
 scripts/make-og-image.ts      regenerates public/og-image.png from an original SVG (bun scripts/make-og-image.ts)
 .github/workflows/deploy.yml  GitHub Actions: lint → static export (verified) → Pages deploy
 .github/workflows/pr-validation.yml  GitHub Actions: PR-only validation (typecheck · lint · data · export) — never deploys
-docs/                         sources · methodology · data-dictionary · limitations · image-rights
-public/                       favicon.svg · og-image.png · robots.txt
+docs/                         sources · methodology · data-dictionary · limitations · image-rights · milestones
+public/                       favicon.svg · og-image.png · robots.txt (advertises /sitemap.xml)
 ```
 
-> The scaffold's unused `/api` route (`src/app/api/route.ts`, a Hello-World handler nothing on the site ever called) was removed because API routes are incompatible with `output: "export"`. The site is fully client-side; no functionality was lost.
+> Three route entry points share one page tree (`src/components/rtp/site-app.tsx`): `/` (legacy, English default, saved-language behaviour), `/en/` and `/zh-TW/` (crawlable language-specific HTML). The scaffold's unused `/api` route (`src/app/api/route.ts`, a Hello-World handler nothing on the site ever called) was removed because API routes are incompatible with `output: "export"`. The site is fully client-side; no functionality was lost.
 
 ## Content pipeline
 
@@ -110,7 +131,7 @@ bun run start      # serve the standalone production build
 
 **One-time GitHub setup (repository owner):** Repository → Settings → Pages → Build and deployment → Source → **GitHub Actions**. Then push to `main`. The site should appear at `https://remember-to-prevent.github.io/` within a few minutes of the run completing. If Pages previously served the README (old branch-based source), this settings change plus the new workflow replaces that behaviour — no `docs/` folder or branch artifact is used.
 
-**Custom domain (remember-to-prevent.com) — future step, not yet active.** `metadataBase` currently points at the live default URL (`https://remember-to-prevent.github.io/`) so canonical/OG URLs resolve correctly today. When the domain is ready: in the DNS provider point the apex `A` records at GitHub's Pages servers (or a `CNAME` for a subdomain), then set the custom domain in Repository → Settings → Pages, and change the single `metadataBase` line in `src/app/layout.tsx` to `https://remember-to-prevent.com/`. No DNS changes have been made by this project.
+**Custom domain (remember-to-prevent.com) — ACTIVE.** The domain serves the GitHub Pages build (verified live), and `metadataBase` in both root layouts resolves every canonical, hreflang, Open Graph and sitemap URL against `https://remember-to-prevent.com/`. SEO entry points: `/en/` (canonical English, `x-default`) and `/zh-TW/` (canonical Traditional Chinese) carry reciprocal hreflang including self; the legacy `/` remains fully functional and canonicalizes into `/en/`. `robots.txt` advertises `/sitemap.xml`, which lists exactly the two canonical language URLs (single source of truth: `src/lib/site-meta.ts`). Search Console verification and sitemap submission are owner actions — see `docs/milestones/2026-11-01-bilingual-seo-sitemap-search-console.md`.
 
 ## Quality verification — what was actually checked
 

@@ -53,6 +53,21 @@ function writeLang(next: Lang) {
   for (const listener of listeners) listener();
 }
 
+/**
+ * Persist a language choice WITHOUT notifying subscribers. Used by the
+ * header when a language switch means navigating to another route: the
+ * preference must be stored (so `/` keeps honouring it) but re-rendering
+ * the current page in the new language for a frame before the navigation
+ * starts would flash.
+ */
+export function persistLangSilently(next: Lang) {
+  try {
+    window.localStorage.setItem(STORAGE_KEY, next);
+  } catch {
+    /* storage unavailable — preference simply won't persist */
+  }
+}
+
 /* ------------------------------------------------------------------ */
 
 interface LanguageContextValue {
@@ -64,8 +79,23 @@ interface LanguageContextValue {
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const lang = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+export function LanguageProvider({
+  children,
+  fixedLang,
+}: {
+  children: ReactNode;
+  /**
+   * Locks the rendered language for the language-specific routes (`/en/`,
+   * `/zh-TW/`). Their HTML is exported with the fixed language baked in, and
+   * a saved `rtp.language` preference must never silently change what those
+   * URLs render — the header's language switch navigates to the other route
+   * instead. Undefined on `/`, which keeps the original stored-preference
+   * behaviour unchanged.
+   */
+  fixedLang?: Lang;
+}) {
+  const storedLang = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const lang = fixedLang ?? storedLang;
 
   useEffect(() => {
     document.documentElement.lang = lang === "zh" ? "zh-TW" : "en";
