@@ -4,9 +4,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { chapters } from "@/content";
 import { ui } from "@/content/ui";
-import { useLang } from "@/lib/i18n";
+import { persistLangSilently, useLang } from "@/lib/i18n";
+import { LANG_PATH } from "@/lib/site-meta";
+import type { Lang } from "@/content/types";
 import { PoppyMark } from "@/components/rtp/poppy";
 import { cn } from "@/lib/utils";
+
+/** Base path for the static export (empty for this organization root site). */
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 /**
  * Sticky editorial header. On every screen size the chapter navigation stays
@@ -17,7 +22,7 @@ import { cn } from "@/lib/utils";
  * overlaps the wordmark or the language switch.
  */
 export function SiteHeader() {
-  const { lang, setLang, t } = useLang();
+  const { lang, t } = useLang();
   const [active, setActive] = useState<string>("ch1");
   const [scrolled, setScrolled] = useState(false);
   const navRef = useRef<HTMLDivElement | null>(null);
@@ -89,6 +94,31 @@ export function SiteHeader() {
     el.scrollBy({ left: direction * amount, behavior: reduce ? "auto" : "smooth" });
   };
 
+  /* Language switch = navigation to the language-specific route
+     (`/`, `/en/`, `/zh-TW/` all behave identically). The target preserves the
+     chapter the reader is ACTUALLY viewing — the IntersectionObserver state
+     above — rather than a possibly stale location.hash. At the hero the
+     reader is sent to the top of the other language (no anchor), and because
+     every switch is a push-state navigation, back/forward keep working
+     natively. The choice is persisted silently so `/` keeps honouring it
+     without flashing the current page in the new language first. */
+  const switchLang = useCallback(
+    (next: Lang) => {
+      if (next === lang) return;
+      persistLangSilently(next);
+      // The observer band (rootMargin -30%/-60%) sits between 30% and 40% of
+      // the viewport height; if the hero still covers it, the reader is at
+      // the top of the page.
+      const hero = document.getElementById("top");
+      const atTop = hero
+        ? hero.getBoundingClientRect().bottom > window.innerHeight * 0.4
+        : window.scrollY < 120;
+      const anchor = atTop ? "" : `#${active}`;
+      window.location.assign(`${BASE_PATH}${LANG_PATH[next]}${anchor}`);
+    },
+    [active, lang],
+  );
+
   return (
     <header
       className={cn(
@@ -125,13 +155,13 @@ export function SiteHeader() {
         >
           <LangButton
             pressed={lang === "en"}
-            onClick={() => setLang("en")}
+            onClick={() => switchLang("en")}
             label={ui.header.langEn}
             full={t(ui.header.langEnFull)}
           />
           <LangButton
             pressed={lang === "zh"}
-            onClick={() => setLang("zh")}
+            onClick={() => switchLang("zh")}
             label={ui.header.langZh}
             full={t(ui.header.langZhFull)}
           />

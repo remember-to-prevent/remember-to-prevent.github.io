@@ -12,3 +12,6 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+# Canonical sitemap of the two language entry points (/en/ and /zh-TW/).
+Sitemap: https://remember-to-prevent.com/sitemap.xml
